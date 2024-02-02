@@ -387,7 +387,7 @@ export default function IconLabelTabs({ recipe }) {
 
   const Section = ({ section }) => (
     <div key={section.section}>
-      <Typography variant="h6">{section.section}:</Typography>
+      <Typography variant="h6">{section.section}</Typography>
       {section.items.map((ingredient) => (
         <div key={ingredient.id}>
           {/* <FormControlLabel control={<Checkbox />} label={`${ingredient.name} (${ingredient.amount} ${ingredient.unit})`} /> */}

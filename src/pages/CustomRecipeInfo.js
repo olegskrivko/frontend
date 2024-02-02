@@ -70,6 +70,8 @@ import Carousel from "react-material-ui-carousel";
 import Chart from "react-google-charts";
 import TotalCalories from "../../src/components/recipeDetails/TotalCalories";
 import { BASE_URL } from "../middleware/config";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 // const tips = [
 //   {
@@ -243,12 +245,12 @@ const Home = () => {
   );
 };
 const QuestionRating = () => {
-  const [taste, setTaste] = useState(50);
-  const [visualAppeal, setVisualAppeal] = useState(50);
-  const [originality, setOriginality] = useState(50);
-  const [accuracy, setAccuracy] = useState(50);
-  const [availability, setAvailability] = useState(50);
-  const [difficulty, setDifficulty] = useState(50);
+  const [taste, setTaste] = useState(5);
+  const [visualAppeal, setVisualAppeal] = useState(5);
+  const [originality, setOriginality] = useState(5);
+  const [accuracy, setAccuracy] = useState(5);
+  const [availability, setAvailability] = useState(5);
+  const [difficulty, setDifficulty] = useState(5);
 
   const [wouldMakeAgain, setWouldMakeAgain] = useState(null);
 
@@ -276,105 +278,94 @@ const QuestionRating = () => {
         md={6}
         lg={6}
         sx={{
-          margin: "20px 0",
+          margin: "0 0",
+          paddingTop: "0 !important",
         }}
       >
-        <Box mb={3}>
+        <Box
+          mb={0}
+          sx={{
+            margin: "0 0 0 0",
+          }}
+        >
           <Typography>Taste:</Typography>
           <Slider
             value={taste}
             onChange={(_, newValue) => setTaste(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
 
-        <Box mb={3}>
+        <Box
+          mb={0}
+          sx={{
+            margin: "0 0",
+          }}
+        >
           <Typography>Accuracy of Instructions:</Typography>
           <Slider
             value={accuracy}
             onChange={(_, newValue) => setAccuracy(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
 
-        <Box mb={3}>
+        <Box
+          mb={0}
+          sx={{
+            margin: "0 0",
+          }}
+        >
           <Typography>Originality:</Typography>
           <Slider
             value={originality}
             onChange={(_, newValue) => setOriginality(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
       </Grid>
@@ -386,105 +377,79 @@ const QuestionRating = () => {
         md={6}
         lg={6}
         sx={{
-          margin: "20px 0",
+          margin: "0 0",
+          paddingTop: "0 !important",
         }}
       >
-        <Box mb={3}>
+        <Box mb={0}>
           <Typography>Visual Appeal:</Typography>
           <Slider
             value={visualAppeal}
             onChange={(_, newValue) => setVisualAppeal(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
 
-        <Box mb={3}>
+        <Box m={0}>
           <Typography>Availability of Ingredients:</Typography>
           <Slider
             value={availability}
             onChange={(_, newValue) => setAvailability(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
 
-        <Box mb={3}>
+        <Box mb={0}>
           <Typography>Difficulty:</Typography>
           <Slider
             value={difficulty}
             onChange={(_, newValue) => setDifficulty(newValue)}
             valueLabelDisplay="auto"
-            step={5}
+            step={1} // Set the step to 1
             marks={[
-              { value: 0, label: "0" },
+              { value: 0, label: "" },
+              { value: 1, label: "" },
+              { value: 2, label: "" },
+              { value: 3, label: "" },
+              { value: 4, label: "" },
               { value: 5, label: "" },
+              { value: 6, label: "" },
+              { value: 7, label: "" },
+              { value: 8, label: "" },
+              { value: 9, label: "" },
               { value: 10, label: "" },
-              { value: 15, label: "" },
-              { value: 20, label: "" },
-              { value: 25, label: "" },
-              { value: 30, label: "" },
-              { value: 35, label: "" },
-              { value: 40, label: "" },
-              { value: 45, label: "" },
-              { value: 50, label: "" },
-              { value: 55, label: "" },
-              { value: 60, label: "" },
-              { value: 65, label: "" },
-              { value: 70, label: "" },
-              { value: 75, label: "" },
-              { value: 80, label: "" },
-              { value: 85, label: "" },
-              { value: 90, label: "" },
-              { value: 95, label: "" },
-              { value: 100, label: "100" },
             ]}
+            max={10} // Set the maximum value to 10
           />
         </Box>
       </Grid>
@@ -630,16 +595,85 @@ const TipsCarousel = ({ tips }) => {
     </Carousel>
   );
 };
-const TotalNutritionDonutChart = ({ ingredients }) => {
-  const calculateTotalNutrition = (data) => {
+// const TotalNutritionDonutChart = ({ ingredients, servings }) => {
+//   const calculateTotalNutrition = (data) => {
+//     return data.reduce(
+//       (total, category) => {
+//         category.items.forEach((item) => {
+//           const allowedUnit = item.ingredient.allowedUnits.find((unit) => unit.unit.name === item.unit);
+
+//           if (allowedUnit) {
+//             const adjustedQuantity = item.quantity * allowedUnit.conversionFactor;
+//             // total.calories += (item.ingredient.calories / 100) * adjustedQuantity;
+//             total.fat += (item.ingredient.fat / 100) * adjustedQuantity;
+//             total.carbohydrates += (item.ingredient.carbohydrates / 100) * adjustedQuantity;
+//             total.fiber += (item.ingredient.fiber / 100) * adjustedQuantity;
+//             total.sugar += (item.ingredient.sugar / 100) * adjustedQuantity;
+//             total.protein += (item.ingredient.protein / 100) * adjustedQuantity;
+//           } else {
+//             console.error(`Conversion factor not found for unit ${item.unit} in ingredient ${item.ingredient.name}`);
+//           }
+//         });
+
+//         return total;
+//       },
+//       // { calories: 0, fat: 0, carbohydrates: 0, fiber: 0, sugar: 0, protein: 0 }
+//       { fat: 0, carbohydrates: 0, fiber: 0, sugar: 0, protein: 0 }
+//     );
+//   };
+//   // Calculate the total nutrition for all ingredients
+//   const totalNutrition = calculateTotalNutrition(ingredients);
+
+//   const chartData = Object.entries(totalNutrition).map(([nutrient, amount]) => [nutrient, amount]);
+
+//   return (
+//     <div style={{ textAlign: "center" }}>
+//       <Chart
+//         width={"100%"}
+//         height={"300px"}
+//         chartType="PieChart"
+//         loader={<div>Loading Chart</div>}
+//         data={[["Nutrient", "Amount"], ...chartData]}
+//         options={{
+//           pieHole: 0.3,
+//           legend: { position: "right" },
+//           pieSliceText: "none",
+//           slices: [
+//             { color: "#FFB6C1" }, // Light Pink - Fat
+//             { color: "#FF69B4" }, // Deep Pink - Saturated Fat
+//             { color: "#FFD700" }, // Gold - Carbohydrates
+//             // Add more colors as needed
+//           ],
+//           tooltip: {
+//             text: "value",
+//             textStyle: {
+//               fontName: "Arial",
+//               fontSize: 12,
+//             },
+//           },
+//           pieStartAngle: 100,
+//           pieSliceTextStyle: {
+//             color: "black",
+//             fontName: "Arial",
+//             fontSize: 14,
+//           },
+//         }}
+//       />
+//     </div>
+//   );
+// };
+
+const TotalNutritionDonutChart = ({ ingredients, servings, perServing = true }) => {
+  const calculateTotalNutrition = (data, servings) => {
+    const factor = perServing ? 1 : 100 / servings;
+
     return data.reduce(
       (total, category) => {
         category.items.forEach((item) => {
           const allowedUnit = item.ingredient.allowedUnits.find((unit) => unit.unit.name === item.unit);
 
           if (allowedUnit) {
-            const adjustedQuantity = item.quantity * allowedUnit.conversionFactor;
-            total.calories += (item.ingredient.calories / 100) * adjustedQuantity;
+            const adjustedQuantity = item.quantity * allowedUnit.conversionFactor * factor;
             total.fat += (item.ingredient.fat / 100) * adjustedQuantity;
             total.carbohydrates += (item.ingredient.carbohydrates / 100) * adjustedQuantity;
             total.fiber += (item.ingredient.fiber / 100) * adjustedQuantity;
@@ -652,23 +686,30 @@ const TotalNutritionDonutChart = ({ ingredients }) => {
 
         return total;
       },
-      { calories: 0, fat: 0, carbohydrates: 0, fiber: 0, sugar: 0, protein: 0 }
+      { fat: 0, carbohydrates: 0, fiber: 0, sugar: 0, protein: 0 }
     );
   };
-  // Calculate the total nutrition for all ingredients
-  const totalNutrition = calculateTotalNutrition(ingredients);
+
+  const totalNutrition = calculateTotalNutrition(ingredients, servings);
 
   const chartData = Object.entries(totalNutrition).map(([nutrient, amount]) => [nutrient, amount]);
 
+  // Capitalize the legend labels (can use chartData if capitalization is not needed)
+  const capitalizedChartData = chartData.map(([nutrient, amount]) => [nutrient.charAt(0).toUpperCase() + nutrient.slice(1), amount]);
+
+  const viewLabel = perServing ? "Per Serving" : "Per 100g";
+
   return (
     <div style={{ textAlign: "center" }}>
+      <h3>{viewLabel}</h3>
       <Chart
-        width={"100%"}
-        height={"300px"}
+        width={600} // Adjust the width as needed
+        height={400} // Adjust the height as needed
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
-        data={[["Nutrient", "Amount"], ...chartData]}
+        data={[["Nutrient", "Amount"], ...capitalizedChartData]}
         options={{
+          chartArea: { left: 20, top: 10, width: "70%", height: "70%" }, // Adjust the values as needed
           pieHole: 0.3,
           legend: { position: "right" },
           pieSliceText: "none",
@@ -676,7 +717,13 @@ const TotalNutritionDonutChart = ({ ingredients }) => {
             { color: "#FFB6C1" }, // Light Pink - Fat
             { color: "#FF69B4" }, // Deep Pink - Saturated Fat
             { color: "#FFD700" }, // Gold - Carbohydrates
-            // Add more colors as needed
+            { color: "#00CED1" }, // Dark Turquoise - Fiber
+            { color: "#8A2BE2" }, // Blue Violet - Sugar
+            { color: "#3CB371" }, // Medium Sea Green - Protein
+            { color: "#FF8C00" }, // Dark Orange - Vitamins
+            { color: "#9370DB" }, // Medium Purple - Minerals
+            { color: "#20B2AA" }, // Light Sea Green - Antioxidants
+            { color: "#FF4500" }, // Orange Red - Other
           ],
           tooltip: {
             text: "value",
@@ -694,8 +741,43 @@ const TotalNutritionDonutChart = ({ ingredients }) => {
         }}
       />
     </div>
+    // <div style={{ textAlign: "center" }}>
+    //   <h3>{viewLabel}</h3>
+    //   <Chart
+    //     width={"100%"}
+    //     height={"300px"}
+    //     chartType="PieChart"
+    //     loader={<div>Loading Chart</div>}
+    //     data={[["Nutrient", "Amount"], ...chartData]}
+    //     options={{
+    //       pieHole: 0.3,
+    //       legend: { position: "right" },
+    //       pieSliceText: "none",
+    //       slices: [
+    //         { color: "#FFB6C1" }, // Light Pink - Fat
+    //         { color: "#FF69B4" }, // Deep Pink - Saturated Fat
+    //         { color: "#FFD700" }, // Gold - Carbohydrates
+    //         // Add more colors as needed
+    //       ],
+    //       tooltip: {
+    //         text: "value",
+    //         textStyle: {
+    //           fontName: "Arial",
+    //           fontSize: 12,
+    //         },
+    //       },
+    //       pieStartAngle: 100,
+    //       pieSliceTextStyle: {
+    //         color: "black",
+    //         fontName: "Arial",
+    //         fontSize: 14,
+    //       },
+    //     }}
+    //   />
+    // </div>
   );
 };
+
 const IngredientTable = ({ ingredients }) => {
   const calculateTotalNutrition = (data) => {
     return data.reduce(
@@ -799,11 +881,15 @@ function IconLabelTabs({ recipe }) {
   const label = { inputProps: { "aria-label": "Checkbox demo" } };
   return (
     <div style={{ margin: "2rem 0" }}>
-      <Tabs value={value} centered onChange={handleChange} aria-label="icon label tabs example">
-        <Tab icon={<RestaurantIcon />} label="INGREDIENTS" sx={{ fontSize: "0.7rem" }} />
+      <Tabs value={value} variant="fullWidth" indicatorColor="secondary" centered onChange={handleChange} aria-label="icon label tabs example">
+        <Tab icon={<RestaurantIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="INGREDIENTS" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
+        <Tab icon={<BlenderIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="TOOLS" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
+        <Tab icon={<ShoppingCartIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="PRICE" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
+        <Tab icon={<DonutSmallIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="NUTRITION" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
+        {/* <Tab icon={<RestaurantIcon />} label="INGREDIENTS" sx={{ fontSize: "0.7rem" }} />
         <Tab icon={<BlenderIcon />} label="TOOLS" sx={{ fontSize: "0.7rem" }} />
         <Tab icon={<ShoppingCartIcon />} label="PRICE" sx={{ fontSize: "0.7rem" }} />
-        <Tab icon={<DonutSmallIcon />} label="NUTRITION" sx={{ fontSize: "0.7rem" }} />
+        <Tab icon={<DonutSmallIcon />} label="NUTRITION" sx={{ fontSize: "0.7rem" }} /> */}
       </Tabs>
 
       <TabPanel value={value} index={0}>
@@ -865,7 +951,7 @@ function IconLabelTabs({ recipe }) {
               margin: "20px 0",
             }}
           >
-            <TotalNutritionDonutChart ingredients={recipe.ingredients} />
+            <TotalNutritionDonutChart ingredients={recipe.ingredients} servings={recipe.servings} />
           </Grid>
         </Grid>
       </TabPanel>
@@ -961,6 +1047,142 @@ const RecipeTimeComponent = ({ recipe, targetLabel }) => {
 
   return <Typography>{`${targetLabel} ${getTimeByLabel(recipe.times, targetLabel)}`}</Typography>;
 };
+// const RecipeDescription = ({ recipe }) => {
+//   const [expanded, setExpanded] = useState(false);
+//   const { description } = recipe;
+
+//   const truncatedDescription = expanded ? description : `${description.slice(0, 150)}...`;
+
+//   const handleToggleExpand = () => {
+//     setExpanded(!expanded);
+//   };
+
+//   return (
+//     <Box>
+//       <Typography variant="body2" sx={{ textAlign: "justify" }}>
+//         {truncatedDescription}
+//       </Typography>
+//       {description.length > 150 && (
+//         <IconButton size="small" onClick={handleToggleExpand} sx={{ padding: 0, marginTop: 1 }}>
+//           {expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+//         </IconButton>
+//       )}
+//     </Box>
+//   );
+// };
+// const RecipeDescription = ({ recipe }) => {
+//   const [expanded, setExpanded] = useState(false);
+//   const { description } = recipe;
+
+//   const truncatedDescription = expanded ? description : `${description.slice(0, 150)}...`;
+//   const linkText = expanded ? "Read Less" : "Read More";
+
+//   const handleToggleExpand = () => {
+//     setExpanded(!expanded);
+//   };
+
+//   return (
+//     <div>
+//       <Typography variant="body2" sx={{ textAlign: "justify" }}>
+//         {truncatedDescription}
+//       </Typography>
+//       {description.length > 150 && (
+//         <Typography variant="body2" color="primary" sx={{ cursor: "pointer", textDecoration: "underline", marginTop: 1 }} onClick={handleToggleExpand}>
+//           {linkText}
+//         </Typography>
+//       )}
+//     </div>
+//   );
+// };
+const RecipeDescription = ({ recipe }) => {
+  const [expanded, setExpanded] = useState(false);
+  const { description } = recipe;
+
+  const truncatedDescription = expanded ? description : `${description.slice(0, 150)}...`;
+  const linkText = expanded ? "Read Less" : "Read More";
+
+  const handleToggleExpand = () => {
+    setExpanded(!expanded);
+  };
+
+  return (
+    <div>
+      <Typography variant="body2" sx={{ textAlign: "justify" }}>
+        {truncatedDescription}
+        {description.length > 150 && (
+          <span>
+            <Typography variant="body2" color="primary" sx={{ cursor: "pointer", display: "inline-block" }} onClick={handleToggleExpand}>
+              {linkText}
+            </Typography>
+          </span>
+        )}
+      </Typography>
+    </div>
+  );
+};
+// const RecipeDescription = ({ recipe }) => {
+//   const [expanded, setExpanded] = useState(false);
+//   const { description } = recipe;
+
+//   const truncatedDescription = expanded ? description : `${description.slice(0, 150)}...`;
+//   const linkText = expanded ? "Read Less" : "Read More";
+
+//   const handleToggleExpand = () => {
+//     setExpanded(!expanded);
+//   };
+
+//   return (
+//     <div>
+//       <Typography variant="body2" sx={{ textAlign: "justify" }}>
+//         {truncatedDescription}
+//         {description.length > 150 && (
+//           <span>
+//             {" "}
+//             <Typography variant="body2" color="primary" sx={{ cursor: "pointer", textDecoration: "underline" }} onClick={handleToggleExpand}>
+//               {linkText}
+//             </Typography>
+//           </span>
+//         )}
+//       </Typography>
+//     </div>
+//   );
+// };
+
+// const RecipeDescription = ({ recipe }) => {
+//   const [expanded, setExpanded] = useState(false);
+//   const { description } = recipe;
+
+//   const truncatedDescription = expanded ? description : `${description.slice(0, 150)}...`;
+
+//   const handleToggleExpand = () => {
+//     setExpanded(!expanded);
+//   };
+
+//   return (
+//     <Box position="relative" overflow="hidden" maxHeight={expanded ? "none" : 100}>
+//       <Typography variant="body2" sx={{ textAlign: "justify" }}>
+//         {truncatedDescription}
+//       </Typography>
+//       {!expanded && description.length > 150 && (
+//         <>
+//           <Box
+//             position="absolute"
+//             bottom={0}
+//             left={0}
+//             width="100%"
+//             height={50}
+//             style={{
+//               background: "linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1))",
+//             }}
+//           />
+//           <Button onClick={handleToggleExpand} color="primary" style={{ zIndex: 1 }}>
+//             Read More
+//           </Button>
+//         </>
+//       )}
+//     </Box>
+//   );
+// };
 
 const CustomRecipeInfo = () => {
   const { id } = useParams();
@@ -1120,7 +1342,96 @@ const CustomRecipeInfo = () => {
               {recipe.title}
             </Typography>
           )}
-          <Stack direction="row" spacing={1}>
+
+          {recipe && recipe.source && recipe.source.name && recipe.updatedAt && (
+            <Typography
+              variant="subtitle2"
+              sx={{
+                margin: "0.8rem 0",
+              }}
+            >
+              Recipe by{" "}
+              <Link href={recipe.source.url} rel="noreferrer" target="_blank" underline="always">
+                {recipe.source.name && recipe.source.name === "Unknown" ? "Cookify" : "Unknown"}
+              </Link>{" "}
+            </Typography>
+          )}
+
+          {/* {recipe && recipe.description && (
+            <Typography variant="body2" sx={{ textAlign: "justify" }}>
+              {recipe.description}
+            </Typography>
+          )} */}
+          {recipe && recipe.description && <RecipeDescription recipe={recipe} />}
+          {/* <Typography
+            variant="subtitle2"
+            sx={{
+              margin: "1rem 0 0 0",
+            }}
+          >
+            Updated on {formatUpdatedAt(recipe.updatedAt)}
+          </Typography> */}
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
+          <Chip label="95%" style={{ backgroundColor: "#424242", color: "#ffffff" }} />
+          <Typography style={{ marginLeft: "4px" }}>would make this again</Typography>
+        </Grid>
+        {/* <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
+          {recipe && recipe.tags && <RecipeTags tags={recipe.tags} />}
+        </Grid> */}
+
+        {/* Image Section */}
+        <Grid item xs={12} sm={12} md={7} lg={7} position="relative">
+          {recipe && recipe.coverImage && (
+            <>
+              <CardMedia
+                component="img"
+                image={recipe.coverImage}
+                alt={recipe.title}
+                style={{
+                  width: "100%",
+                  height: "400px",
+                  objectFit: "cover",
+                }}
+              />
+              <IconButton
+                aria-label="add to favorites"
+                sx={{
+                  position: "absolute",
+                  top: "40px",
+                  right: "20px",
+                  background: "#FFFFFF", // Customize as needed
+                }}
+              >
+                <FavoriteIcon />
+              </IconButton>
+            </>
+          )}
+          <Stack direction="row" spacing={1} position="absolute" bottom={10} right={10}>
+            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
+              Save <BookmarkIcon />
+            </Button>
+            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
+              Download <DownloadIcon />
+            </Button>
+            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
+              Share <ShareIcon />
+            </Button>
+          </Stack>
+          {/* {recipe && recipe.coverImage && (
+            <CardMedia
+              component="img"
+              image={recipe.coverImage}
+              alt={recipe.title}
+              style={{
+                width: "100%",
+                height: "400px",
+                objectFit: "cover",
+              }}
+            />
+          )} */}
+          {/* <Stack direction="row" spacing={1}>
             <Button
               variant="contained"
               color="primary"
@@ -1153,59 +1464,9 @@ const CustomRecipeInfo = () => {
             >
               Share <ShareIcon />
             </Button>
-          </Stack>
-          {recipe && recipe.source && recipe.source.name && recipe.updatedAt && (
-            <Typography
-              variant="subtitle2"
-              sx={{
-                margin: "1rem 0",
-              }}
-            >
-              Recipe by{" "}
-              <Link href={recipe.source.url} rel="noreferrer" target="_blank" underline="always">
-                {recipe.source.name && recipe.source.name === "Unknown" ? "Cookify" : "Unknown"}
-              </Link>{" "}
-            </Typography>
-          )}
-
-          {recipe && recipe.description && (
-            <Typography variant="body2" sx={{ textAlign: "justify" }}>
-              {recipe.description}
-            </Typography>
-          )}
-          <Typography
-            variant="subtitle2"
-            sx={{
-              margin: "1rem 0 0 0",
-            }}
-          >
-            Updated on {formatUpdatedAt(recipe.updatedAt)}
-          </Typography>
+          </Stack> */}
         </Grid>
 
-        <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
-          <Chip label="95%" style={{ backgroundColor: "#424242", color: "#ffffff" }} />
-          <Typography style={{ marginLeft: "4px" }}>would make this again</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
-          {recipe && recipe.tags && <RecipeTags tags={recipe.tags} />}
-        </Grid>
-
-        {/* Image Section */}
-        <Grid item xs={12} sm={12} md={7} lg={7}>
-          {recipe && recipe.coverImage && (
-            <CardMedia
-              component="img"
-              image={recipe.coverImage}
-              alt={recipe.title}
-              style={{
-                width: "100%",
-                height: "400px",
-                objectFit: "cover",
-              }}
-            />
-          )}
-        </Grid>
         {/* Icons Sections */}
         <Grid item xs={12} sm={12} md={5} lg={5}>
           {recipe ? (
@@ -1558,6 +1819,7 @@ const CustomRecipeInfo = () => {
         variant="h6"
         sx={{
           margin: "20px 0",
+          paddingBottom: "24px !important",
         }}
       >
         Rate the Recipe
