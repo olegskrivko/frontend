@@ -701,18 +701,18 @@ const TotalNutritionDonutChart = ({ ingredients, servings, perServing = true }) 
 
   return (
     <div style={{ textAlign: "center" }}>
-      <h3>{viewLabel}</h3>
+      <h5>{viewLabel}</h5>
       <Chart
-        width={600} // Adjust the width as needed
-        height={400} // Adjust the height as needed
+        width={300} // Adjust the width as needed
+        height={300} // Adjust the height as needed
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
         data={[["Nutrient", "Amount"], ...capitalizedChartData]}
         options={{
-          chartArea: { left: 20, top: 10, width: "70%", height: "70%" }, // Adjust the values as needed
+          chartArea: { left: 10, top: 10, width: "100%", height: "100%" }, // Adjust the values as needed
           pieHole: 0.3,
-          legend: { position: "right" },
-          pieSliceText: "none",
+          legend: { position: "none" },
+          pieSliceText: "Nutrient",
           slices: [
             { color: "#FFB6C1" }, // Light Pink - Fat
             { color: "#FF69B4" }, // Deep Pink - Saturated Fat
@@ -858,11 +858,11 @@ function IconLabelTabs({ recipe }) {
     <div>
       {ingredients.map((ingredientGroup) => (
         <div key={ingredientGroup.name}>
-          <Typography variant="h6">{ingredientGroup.name}:</Typography>
+          <Typography variant="h6">{ingredientGroup.name}</Typography>
           {ingredientGroup.items.map((ingredient) => (
             <div key={ingredient._id}>
               {console.log(ingredient)} {/* Log the entire ingredient object */}
-              <FormControlLabel control={<Checkbox color="default" icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleIcon />} />} label={`${ingredient.ingredient.name} (${ingredient.quantity} ${ingredient.unit})`} />
+              <FormControlLabel control={<Checkbox checked color="default" icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleIcon />} />} label={`${ingredient.ingredient.name} (${ingredient.quantity} ${ingredient.unit})`} />
             </div>
           ))}
         </div>
@@ -951,7 +951,9 @@ function IconLabelTabs({ recipe }) {
               margin: "20px 0",
             }}
           >
-            <TotalNutritionDonutChart ingredients={recipe.ingredients} servings={recipe.servings} />
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+              <TotalNutritionDonutChart ingredients={recipe.ingredients} servings={recipe.servings} />
+            </div>
           </Grid>
         </Grid>
       </TabPanel>
@@ -1484,7 +1486,7 @@ const CustomRecipeInfo = () => {
                 </Grid>
                 <Grid item>
                   <Typography>
-                    <TotalCalories ingredients={recipe.ingredients} /> kcal
+                    <TotalCalories ingredients={recipe.ingredients} servings={recipe.servings} /> kcal
                   </Typography>
                 </Grid>
               </Grid>
