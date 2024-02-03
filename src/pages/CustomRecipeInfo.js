@@ -703,13 +703,13 @@ const TotalNutritionDonutChart = ({ ingredients, servings, perServing = true }) 
     <div style={{ textAlign: "center" }}>
       <h5>{viewLabel}</h5>
       <Chart
-        width={300} // Adjust the width as needed
-        height={300} // Adjust the height as needed
+        width={280} // Adjust the width as needed
+        height={280} // Adjust the height as needed
         chartType="PieChart"
         loader={<div>Loading Chart</div>}
         data={[["Nutrient", "Amount"], ...capitalizedChartData]}
         options={{
-          chartArea: { left: 10, top: 10, width: "100%", height: "100%" }, // Adjust the values as needed
+          chartArea: { left: 10, top: 10, bottom: 10, right: 10, width: "100%", height: "100%" }, // Adjust the values as needed
           pieHole: 0.3,
           legend: { position: "none" },
           pieSliceText: "Nutrient",
