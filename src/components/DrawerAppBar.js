@@ -16,6 +16,8 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
+import { useAuth } from "../middleware/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
 // const navItems = ["Home", "Tools", "Prices", "Recipes", "Contact"];
@@ -28,6 +30,7 @@ const navItems = {
   "/contact": "Contact",
   "/recipeinfo": "Recipe Info",
   "/dashboard": "Dashboard",
+  "/auth": "Users",
 };
 
 // Update navItems based on the BASE_URL
@@ -38,9 +41,16 @@ const navItems = {
 function DrawerAppBar(props) {
   // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const { isAuthenticated, logout } = useAuth();
+  const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/auth"); // Redirect to the login page after logout
   };
 
   const drawer = (
@@ -60,6 +70,14 @@ function DrawerAppBar(props) {
           </ListItem>
         ))}
       </List>
+      {isAuthenticated() && (
+        <Link style={{ textDecoration: "none", width: "100%" }}>
+          <ListItemText onClick={handleLogout} primary={"Logout"} />
+        </Link>
+        // <Button onClick={handleLogout} sx={{ color: "#dadada" }}>
+        //   Logout
+        // </Button>
+      )}
 
       {/* <List>
         {navItems.map((item) => (
@@ -107,6 +125,11 @@ function DrawerAppBar(props) {
                   <Button sx={{ color: "#fff", fontWeight: "400" }}>{itemName}</Button>
                 </Link>
               ))}
+              {isAuthenticated() && (
+                <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
+                  Logout
+                </Button>
+              )}
 
               {/* {navItems.map((item) => (
                 <Link key={item} to={`/${item}`}>
@@ -141,13 +164,5 @@ function DrawerAppBar(props) {
     </Box>
   );
 }
-
-// DrawerAppBar.propTypes = {
-//   /**
-//    * Injected by the documentation to work in an iframe.
-//    * You won't need it on your project.
-//    */
-//   window: PropTypes.func,
-// };
 
 export default DrawerAppBar;

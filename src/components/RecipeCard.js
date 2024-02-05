@@ -40,13 +40,6 @@ export default function RecipeCard({ recipe }) {
     setExpanded(!expanded);
   };
 
-  // export default function RecipeReviewCard() {
-  //   const [expanded, setExpanded] = React.useState(false);
-
-  //   const handleExpandClick = () => {
-  //     setExpanded(!expanded);
-  //   };
-
   return (
     <Grid
       item
@@ -61,7 +54,8 @@ export default function RecipeCard({ recipe }) {
         height: "100%",
       }}
     >
-      <Card sx={{ maxWidth: 345, background: "#F3F1EF" }}>
+      {/* <Card sx={{ maxWidth: 345, background: "#F3F1EF" }}></Card> */}
+      <Card sx={{ maxWidth: 345 }}>
         <CardContent>
           <Typography
             variant="body1"
@@ -73,42 +67,15 @@ export default function RecipeCard({ recipe }) {
               fontWeight: "600",
             }}
           >
-            <Link
-              to={`/recipes/${recipe.id}`}
-              style={{ textDecoration: "none", color: "inherit" }}
-            >
+            <Link to={`/recipes/${recipe._id}`} style={{ textDecoration: "none", color: "inherit" }}>
               {recipe.title}
             </Link>
           </Typography>
         </CardContent>
-        {/* <CardContent
-          sx={{
-            display: "flex",
-            
-            alignItems: "center",
-          }}
-        >
-          <Typography
-            variant="subtitle1"
-            sx={{
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              width: "100%", // Ensures proper width for ellipsis,
-              textOverflow: "ellipsis",
-            }}
-          >
-            {recipe.title}
-          </Typography>
-          <CardActions disableSpacing>
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          </CardActions>
-        </CardContent> */}
 
         <CardMedia
           component="img"
-          image={recipe.image}
+          image={recipe.coverImage}
           alt={recipe.title}
           sx={{
             width: "100%", // Take up full width
@@ -135,21 +102,16 @@ export default function RecipeCard({ recipe }) {
           >
             <AccessTimeIcon color="action" sx={{ mr: 1 }} />
             <Typography color="gray" sx={{ marginRight: "1rem" }}>
-              {recipe.readyInMinutes} mins
+              {recipe.totalTime} mins
             </Typography>
 
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
+            <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
               {/* <MoreVertIcon /> */}
               <ExpandMoreIcon />
             </ExpandMore>
           </div>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
           <CardContent>
             <Typography variant="h6" paragraph>
               Ingredients:
@@ -169,7 +131,7 @@ export default function RecipeCard({ recipe }) {
               ))}
             </ul>
           </CardContent>
-        </Collapse>
+        </Collapse> */}
       </Card>
     </Grid>
   );
