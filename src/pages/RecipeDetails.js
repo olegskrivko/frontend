@@ -50,6 +50,8 @@ import RecipePreparationButton from "../components/recipeDetails/RecipePreparati
 import RecipeTags from "../components/recipeDetails/RecipeTags";
 import RecipeUpdated from "../components/recipeDetails/RecipeUpdated";
 import ParentComponent from "../components/recipeDetails/ParentComponent";
+import { useAuth } from "../middleware/AuthContext";
+
 // BASE_URL
 import { BASE_URL } from "../middleware/config";
 
@@ -65,18 +67,27 @@ const RecipeDetails = () => {
   const { id } = useParams();
 
   const API_URL = `${BASE_URL}/recipes/${id}`;
+  const REVIEWS_URL = `${BASE_URL}/recipes/${id}/reviews`;
+  const [reviews, setReviews] = useState([]);
 
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { obtainAccessToken, user } = useAuth();
+
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
-        const response = await fetch(API_URL);
+        const accessToken = await obtainAccessToken();
+        const response = await fetch(API_URL, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
-          console.log(data);
+          console.log("RECIPE DATA", data);
           setRecipe(data);
         } else {
           throw new Error("Failed to fetch recipe details");
@@ -88,9 +99,31 @@ const RecipeDetails = () => {
       }
     };
 
+    const fetchReviews = async () => {
+      try {
+        const accessToken = await obtainAccessToken();
+        const response = await fetch(REVIEWS_URL, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
+        if (response.ok) {
+          const data = await response.json();
+          console.log("reviews", data); // Log the fetched reviews
+          setReviews(data);
+        } else {
+          throw new Error("Failed to fetch reviews");
+        }
+      } catch (error) {
+        setError(error.message);
+      }
+    };
+
     fetchRecipeDetails();
+    fetchReviews();
+    // [API_URL, REVIEWS_URL]
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [API_URL]);
+  }, [API_URL, REVIEWS_URL]);
 
   if (loading) {
     return <Typography variant="h4">Loading Recipe Details...</Typography>;
@@ -605,12 +638,30 @@ const RecipeDetails = () => {
           >
             Reviews
           </Typography>
-          <ReviewComponent />
+          <ReviewComponent key={reviews._id} reviewData={reviews} />
+          {/* <ReviewComponent /> */}
         </Grid>
       </Grid>
       {/* You May Also Like */}
       <Typography variant="h6">You May Also Like</Typography>
       <SimilarRecipes />
+      {/* Reviews */}
+      {/* <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            margin: "20px 0",
+          }}
+        >
+          <Typography variant="h6">Reviews</Typography>
+          <ReviewComponent key={reviews._id} reviewData={reviews} />
+    
+        </Grid>
+      </Grid> */}
     </React.Fragment>
   );
 };

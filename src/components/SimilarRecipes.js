@@ -8,7 +8,7 @@ import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import Container from "@mui/material/Container";
-
+import { useAuth } from "../middleware/AuthContext";
 // Icons
 
 // Installed Components
@@ -23,10 +23,17 @@ const SimilarRecipes = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const { obtainAccessToken, user } = useAuth();
+
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/recipes`);
+        const accessToken = await obtainAccessToken();
+        const response = await fetch(`${BASE_URL}/recipes`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`,
+          },
+        });
         if (response.ok) {
           const data = await response.json();
           setRecipes(data);

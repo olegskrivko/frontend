@@ -1,7 +1,8 @@
 import React from "react";
 import { Avatar, Card, CardContent, Typography, Chip, Rating } from "@mui/material";
 import { green } from "@mui/material/colors";
-const ChatCard = ({ avatarUrl, senderName, message, timestamp, rating, ratings }) => {
+const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rating, ratings }) => {
+  console.log("useruseruser", user);
   const cardStyle = {
     display: "flex",
     alignItems: "flex-start",
@@ -69,16 +70,16 @@ const ChatCard = ({ avatarUrl, senderName, message, timestamp, rating, ratings }
         >
           <Avatar alt={senderName} src={avatarUrl} style={avatarStyle} />
           <Typography variant="subtitle1" style={{ display: "flex" }}>
-            {senderName}
+            {user.username}
           </Typography>
           <Chip secondary label="Recipe Wizard" style={chipStyle} color="primary" />
         </div>
 
         <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
-          {message}
+          {text}
         </Typography>
         <Typography variant="caption" color="textSecondary">
-          {timestamp}
+          {createdAt}
         </Typography>
         {fakeRatings && (
           <div style={ratingsContainerStyle}>

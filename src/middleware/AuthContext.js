@@ -1,6 +1,6 @@
 // AuthContext.js
 import { createContext, useContext, useState } from "react";
-
+import { BASE_URL } from "../middleware/config";
 const AuthContext = createContext();
 
 export const useAuth = () => {
@@ -12,10 +12,11 @@ export const AuthProvider = ({ children }) => {
   const [accessToken, setAccessToken] = useState(localStorage.getItem("token") || null);
 
   const login = (userData) => {
-    setUser(userData);
+    setUser(userData.user);
     setAccessToken(userData.token);
     localStorage.setItem("token", userData.token);
     console.log("Logged in with token:", userData.token);
+    console.log("User data:", userData.user); // Add this line
   };
 
   const logout = () => {
@@ -59,7 +60,7 @@ export const AuthProvider = ({ children }) => {
     }
 
     // If no stored token, make a POST request to obtain a new token
-    const response = await fetch("http://localhost:3000/api/users/login", {
+    const response = await fetch(`${BASE_URL}/users/login`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -128,6 +128,7 @@ import React, { useState } from "react";
 import { Container, Typography, TextField, Button, Link } from "@mui/material";
 import { useAuth } from "../middleware/AuthContext"; // Update the import
 import { useNavigate, useLocation } from "react-router-dom";
+import { BASE_URL } from "../middleware/config";
 
 const AuthPage = () => {
   const { login } = useAuth(); // Use the useAuth hook to access the login function
@@ -144,7 +145,7 @@ const AuthPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const url = isLogin ? "http://localhost:3000/api/users/login" : "http://localhost:3000/api/users/register";
+    const url = isLogin ? `${BASE_URL}/users/login` : `${BASE_URL}/users/register`;
 
     try {
       const response = await fetch(url, {

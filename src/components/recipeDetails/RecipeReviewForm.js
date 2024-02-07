@@ -223,13 +223,14 @@
 import React, { useState } from "react";
 import { Typography, TextField, Button } from "@mui/material";
 import { useAuth } from "../../middleware/AuthContext";
+import { BASE_URL } from "../../middleware/config";
 
 const RecipeReviewForm = ({ recipeId }) => {
   const [reviewText, setReviewText] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const { obtainAccessToken } = useAuth();
+  const { obtainAccessToken, user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -237,8 +238,13 @@ const RecipeReviewForm = ({ recipeId }) => {
     try {
       setLoading(true);
 
+      if (!user || !user.id) {
+        throw new Error("User ID not available");
+      }
+
       // Assuming formData includes the necessary fields for your review
       const formData = {
+        user: user.id,
         reviewText,
         // Include other fields if needed
       };
@@ -246,8 +252,11 @@ const RecipeReviewForm = ({ recipeId }) => {
       // Call your function to obtain an access token (login)
       const accessToken = await obtainAccessToken();
       console.log("accessToken", accessToken);
+
       // Submit the review with the obtained access token
-      const response = await fetch(`http://localhost:3000/api/recipes/${recipeId}/reviews`, {
+      //const API_URL = `${BASE_URL}/recipes/${id}/reviews`;
+      //   const API_URL = `http://localhost:3000/recipes/${recipeId}/reviews`;
+      const response = await fetch(`${BASE_URL}/recipes/${recipeId}/reviews`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -255,7 +264,7 @@ const RecipeReviewForm = ({ recipeId }) => {
         },
         body: JSON.stringify(formData),
       });
-
+      console.log("formData", formData);
       if (!response.ok) {
         throw new Error("Failed to submit review. Please try again later.");
       }
