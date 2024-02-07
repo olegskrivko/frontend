@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 // import { useAuth } from "../middleware/AuthContext";
+import { useAuth } from "../../middleware/AuthContext";
+import { BASE_URL } from "../../middleware/config";
 
 // React MUI components
 import Grid from "@mui/material/Grid";
@@ -11,7 +13,7 @@ import Slider from "@mui/material/Slider";
 
 // icons
 
-const QuestionRating = () => {
+const QuestionRating = ({ recipeId }) => {
   const [taste, setTaste] = useState(5);
   const [visualAppeal, setVisualAppeal] = useState(5);
   const [originality, setOriginality] = useState(5);
@@ -20,20 +22,59 @@ const QuestionRating = () => {
   const [difficulty, setDifficulty] = useState(5);
 
   const [wouldMakeAgain, setWouldMakeAgain] = useState(null);
+  const { obtainAccessToken, user } = useAuth();
 
   const handleButtonClick = (value) => {
     setWouldMakeAgain(value);
   };
 
-  const handleSubmit = () => {
-    // Implement your logic to submit the review with the chosen ratings.
-    console.log("Taste:", taste);
-    console.log("Visual Appeal:", visualAppeal);
-    console.log("Originality:", originality);
-    console.log("Accuracy:", accuracy);
-    console.log("Availability:", availability);
-    console.log("Difficulty:", difficulty);
-    console.log("Would Make Again:", wouldMakeAgain);
+  // const handleSubmit = () => {
+  //   // Implement your logic to submit the review with the chosen ratings.
+  //   console.log("Taste:", taste);
+  //   console.log("Visual Appeal:", visualAppeal);
+  //   console.log("Originality:", originality);
+  //   console.log("Accuracy:", accuracy);
+  //   console.log("Availability:", availability);
+  //   console.log("Difficulty:", difficulty);
+  //   console.log("Would Make Again:", wouldMakeAgain);
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      if (!user || !user.id) {
+        throw new Error("User ID not available");
+      }
+
+      const ratingsData = {
+        taste,
+        visualAppeal,
+        originality,
+        accuracy,
+        availability,
+        difficulty,
+        wouldMakeAgain,
+      };
+
+      const accessToken = await obtainAccessToken();
+
+      const response = await fetch(`${BASE_URL}/recipes/${recipeId}/reviews`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ user: user.id, ...ratingsData }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to submit ratings. Please try again later.");
+      }
+
+      console.log("Ratings submitted successfully!");
+    } catch (error) {
+      console.error("Error submitting ratings:", error);
+    }
   };
 
   return (

@@ -17,7 +17,7 @@ import StepContent from "@mui/material/StepContent";
 import IconButton from "@mui/material/IconButton";
 // import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
-
+import { useSnackbar } from "notistack";
 // Icons
 import ShareIcon from "@mui/icons-material/Share";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -75,6 +75,26 @@ const RecipeDetails = () => {
   const [error, setError] = useState(null);
 
   const { obtainAccessToken, user } = useAuth();
+
+  const handleShare = async ({ enqueueSnackbar }) => {
+    try {
+      if (navigator.share) {
+        // Use Web Share API if available
+        await navigator.share({
+          title: recipe.title,
+          text: recipe.description,
+          url: window.location.href,
+        });
+      } else {
+        // Fallback for browsers that don't support Web Share API
+        throw new Error("Web Share API not supported");
+      }
+    } catch (error) {
+      console.error("Error sharing recipe:", error);
+      // You can use the notistack to display an error message
+      enqueueSnackbar("Error sharing recipe. Please try again later.", { variant: "error" });
+    }
+  };
 
   useEffect(() => {
     const fetchRecipeDetails = async () => {
@@ -214,6 +234,7 @@ const RecipeDetails = () => {
                   right: "20px",
                   background: "#FFFFFF", // Customize as needed
                 }}
+                onClick={handleShare}
               >
                 <ShareIcon />
               </IconButton>
@@ -601,7 +622,7 @@ const RecipeDetails = () => {
       </Grid>
 
       <Grid container spacing={3}>
-        <QuestionRating />
+        <QuestionRating recipeId={id} />
       </Grid>
       {/* RecipeReviewForm */}
       <Grid container spacing={3}>

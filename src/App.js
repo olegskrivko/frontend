@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { SnackbarProvider } from "notistack";
 import Home from "./pages/Home";
 import Contact from "./pages/Contact";
 import Layout from "./pages/Layout";
@@ -16,25 +17,27 @@ import { AuthProvider } from "./middleware/AuthContext";
 
 function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Layout />}>
-            <Route index element={<Home />} />
-            <Route path="recipes" element={<RecipesPage />} />
-            {/* <Route path="recipes/:recipeId" element={<RecipeDetails />} /> */}
-            <Route path="recipes/:id" element={<RecipeDetails />} />
-            <Route path="contact" element={<Contact />} />
-            <Route path="recipeinfo" element={<RecipeInfo />} />
-            <Route path="dashboard" element={<Dashboard />} />
-            <Route path="tools" element={<Tools />} />
-            <Route path="prices" element={<Prices />} />
-            <Route path="auth" element={<AuthPage />} />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+    <SnackbarProvider maxSnack={3}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Layout />}>
+              <Route index element={<Home />} />
+              <Route path="recipes" element={<RecipesPage />} />
+              {/* <Route path="recipes/:recipeId" element={<RecipeDetails />} /> */}
+              <Route path="recipes/:id" element={<RecipeDetails />} />
+              <Route path="contact" element={<Contact />} />
+              <Route path="recipeinfo" element={<RecipeInfo />} />
+              <Route path="dashboard" element={<Dashboard />} />
+              <Route path="tools" element={<Tools />} />
+              <Route path="prices" element={<Prices />} />
+              <Route path="auth" element={<AuthPage />} />
+              <Route path="*" element={<NotFound />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
+      </AuthProvider>
+    </SnackbarProvider>
   );
 }
 
