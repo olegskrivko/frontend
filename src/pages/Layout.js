@@ -1,36 +1,15 @@
-// import { Outlet } from "react-router-dom";
-// import DrawerAppBar from "../components/DrawerAppBar";
-// import Container from "@mui/material/Container";
-// import React from "react";
-// import Footer from "../components/Footer";
-
-// const Layout = () => {
-//   return (
-//     <React.Fragment>
-//       <DrawerAppBar />
-//       <Container>
-//         <Outlet />
-//       </Container>
-//       <Footer />
-//     </React.Fragment>
-//   );
-// };
-
-// export default Layout;
-
 import React from "react";
-import DrawerAppBar from "../components/DrawerAppBar";
-import Container from "@mui/material/Container";
 import { Outlet } from "react-router-dom";
+import DrawerAppBar from "../components/DrawerAppBar";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 import Footer from "../components/Footer";
 
 const Layout = () => {
   return (
-    <div
-      style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}
-    >
+    <Box style={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <DrawerAppBar />
-      <div style={{ flex: "1 0 auto", width: "100%" }}>
+      <Box style={{ flex: "1 0 auto", width: "100%" }}>
         <Container
           component="main"
           sx={{
@@ -43,9 +22,9 @@ const Layout = () => {
         >
           <Outlet />
         </Container>
-      </div>
+      </Box>
       <Footer />
-    </div>
+    </Box>
   );
 };
 

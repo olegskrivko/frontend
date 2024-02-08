@@ -57,6 +57,7 @@ const SimilarRecipes = () => {
       <Grid container spacing={3} justifyContent="center" style={{ marginTop: "4px" }}>
         {recipes.slice(0, 6).map((recipe, index) => (
           <Grid
+            key={recipe._id}
             item
             xs={6}
             sm={4}
@@ -93,7 +94,7 @@ const SimilarRecipes = () => {
                     fontSize: "0.9rem",
                   }}
                 >
-                  <Link to={`/recipes/${recipe.id}`} style={{ textDecoration: "none", color: "inherit" }}>
+                  <Link to={`/recipes/${recipe._id}`} style={{ textDecoration: "none", color: "inherit" }}>
                     {recipe.title}
                   </Link>
                 </Typography>

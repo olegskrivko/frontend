@@ -1,49 +1,25 @@
+// RecipeCard.js
+import React from "react";
+import { Link } from "react-router-dom";
+// React MUI
 import Grid from "@mui/material/Grid";
-import * as React from "react";
-import { styled } from "@mui/material/styles";
 import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
 import CardMedia from "@mui/material/CardMedia";
 import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
-// import Collapse from "@mui/material/Collapse";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import { red } from "@mui/material/colors";
+import Box from "@mui/material/Box";
+// Icons
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import MoreVertIcon from "@mui/icons-material/MoreVert";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
-import { Link } from "react-router-dom";
-import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
-import Collapse from "@mui/material/Collapse";
-
-import { Button, Chip } from "@mui/material";
-const ExpandMore = styled((props) => {
-  const { expand, ...other } = props;
-  return <IconButton {...other} />;
-})(({ theme, expand }) => ({
-  transform: !expand ? "rotate(0deg)" : "rotate(180deg)",
-  marginLeft: "auto",
-  transition: theme.transitions.create("transform", {
-    duration: theme.transitions.duration.shortest,
-  }),
-}));
 
 export default function RecipeCard({ recipe }) {
-  console.log(recipe);
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-
   return (
     <Grid
       item
-      xs={12}
+      xs={6}
       sm={6}
       md={4}
       lg={4}
@@ -54,13 +30,11 @@ export default function RecipeCard({ recipe }) {
         height: "100%",
       }}
     >
-      {/* <Card sx={{ maxWidth: 345, background: "#F3F1EF" }}></Card> */}
       <Card sx={{ maxWidth: 345 }}>
         <CardContent>
           <Typography
             variant="body1"
             sx={{
-              // fontSize: "0.9rem",
               textOverflow: "ellipsis",
               whiteSpace: "nowrap",
               overflow: "hidden",
@@ -78,10 +52,10 @@ export default function RecipeCard({ recipe }) {
           image={recipe.coverImage}
           alt={recipe.title}
           sx={{
-            width: "100%", // Take up full width
-            height: "auto", // Automatically adjust height to maintain aspect ratio
-            display: "block", // Center the image within the container
-            objectFit: "cover", // Maintain aspect ratio and cover entire area
+            width: "100%",
+            height: "auto",
+            display: "block",
+            objectFit: "cover",
           }}
         />
 
@@ -92,8 +66,7 @@ export default function RecipeCard({ recipe }) {
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-
-          <div
+          <Box
             style={{
               marginLeft: "auto",
               display: "flex",
@@ -104,34 +77,8 @@ export default function RecipeCard({ recipe }) {
             <Typography color="gray" sx={{ marginRight: "1rem" }}>
               {recipe.totalTime} mins
             </Typography>
-
-            <ExpandMore expand={expanded} onClick={handleExpandClick} aria-expanded={expanded} aria-label="show more">
-              {/* <MoreVertIcon /> */}
-              <ExpandMoreIcon />
-            </ExpandMore>
-          </div>
+          </Box>
         </CardActions>
-        {/* <Collapse in={expanded} timeout="auto" unmountOnExit>
-          <CardContent>
-            <Typography variant="h6" paragraph>
-              Ingredients:
-            </Typography>
-            <ul style={{ listStyleType: "disc", paddingLeft: "20px" }}>
-              {recipe?.extendedIngredients?.map((item, index) => (
-                <li
-                  key={index}
-                  style={{
-                    fontSize: "0.9rem",
-                    textAlign: "left",
-                    marginLeft: "0",
-                  }}
-                >
-                  {item.original}
-                </li>
-              ))}
-            </ul>
-          </CardContent>
-        </Collapse> */}
       </Card>
     </Grid>
   );

@@ -3,7 +3,7 @@ import { Avatar, Card, CardContent, Typography, Chip, Rating } from "@mui/materi
 import { green } from "@mui/material/colors";
 
 const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rating, ratings }) => {
-  console.log("useruseruser", user);
+  // console.log("useruseruser", user);
   const cardStyle = {
     display: "flex",
     alignItems: "flex-start",
@@ -74,7 +74,8 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
           <Typography variant="subtitle1" style={{ display: "flex" }}>
             {user.username}
           </Typography>
-          <Chip secondary label="Recipe Wizard" style={chipStyle} color="primary" />
+          {/* <Chip secondary label="Recipe Wizard" style={chipStyle} color="primary" /> */}
+          <Chip secondary="true" label="Recipe Wizard" style={chipStyle} color="primary" />
         </div>
 
         <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
@@ -98,7 +99,7 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
 };
 
 const ReviewComponent = ({ reviewData }) => {
-  console.log("reviewDatareviewDatareviewData", reviewData);
+  // console.log("reviewDatareviewDatareviewData", reviewData);
 
   // Example review data with ratings
   // const reviewData = [

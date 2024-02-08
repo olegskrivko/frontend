@@ -16,17 +16,29 @@ const RecipeDescription = ({ recipe }) => {
 
   return (
     <div>
-      <Typography variant="body2" sx={{ textAlign: "justify" }}>
+      <div variant="body2" style={{ textAlign: "justify" }}>
         {truncatedDescription}
         {description.length > 150 && (
           <span>
-            <Typography variant="body2" color="primary" sx={{ cursor: "pointer", display: "inline-block" }} onClick={handleToggleExpand}>
+            <div style={{ cursor: "pointer", display: "inline-block" }} onClick={handleToggleExpand}>
               {linkText}
-            </Typography>
+            </div>
           </span>
         )}
-      </Typography>
+      </div>
     </div>
+    // <div>
+    //   <Typography variant="body2" sx={{ textAlign: "justify" }}>
+    //     {truncatedDescription}
+    //     {description.length > 150 && (
+    //       <span>
+    //         <Typography variant="body2" color="primary" sx={{ cursor: "pointer", display: "inline-block" }} onClick={handleToggleExpand}>
+    //           {linkText}
+    //         </Typography>
+    //       </span>
+    //     )}
+    //   </Typography>
+    // </div>
   );
 };
 

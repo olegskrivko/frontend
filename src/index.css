@@ -30,3 +30,19 @@ code {
   min-width: 100%;
   min-height: 100%;
 }
+
+body {
+  overflow-y: scroll;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Transparent thumb */
+}
+
+body::-webkit-scrollbar-track {
+  background-color: transparent; /* Transparent track */
+}

@@ -1,17 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {
-  Container,
-  Typography,
-  Button,
-  Grid,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
-
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import Grid from "@mui/material/Grid";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import CakeIcon from "@mui/icons-material/Cake";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
@@ -24,7 +17,6 @@ import Drinks from "../images/img-1.jpg";
 import Appetizers from "../images/img-2.jpg";
 import MainCourse from "../images/img-3.jpg";
 import Desserts from "../images/img-4.jpg";
-import RecipeList from "../components/RecipeList";
 import CookieIcon from "@mui/icons-material/Cookie";
 import SetMealIcon from "@mui/icons-material/SetMeal";
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
@@ -120,7 +112,7 @@ const categories = [
 ];
 
 const Home = () => {
-  const [selectedCategory, setSelectedCategory] = useState(0);
+  // const [selectedCategory, setSelectedCategory] = useState(0);
   const sliderRef = useRef(null);
   const initialCardCount = 6;
 
@@ -128,56 +120,56 @@ const Home = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    const API_KEY = "88345194a6e34c5e83770bdfa6af399c";
-    const API_URL = `https://api.spoonacular.com/recipes/random?number=${initialCardCount}&apiKey=${API_KEY}`;
+  // useEffect(() => {
+  //   const API_KEY = "88345194a6e34c5e83770bdfa6af399c";
+  //   const API_URL = `https://api.spoonacular.com/recipes/random?number=${initialCardCount}&apiKey=${API_KEY}`;
 
-    const fetchRecipes = async () => {
-      try {
-        const response = await fetch(API_URL);
-        if (response.ok) {
-          const data = await response.json();
-          console.log(data.recipes);
-          setRecipes(data.recipes);
-        } else {
-          throw new Error("Failed to fetch recipes");
-        }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
+  //   const fetchRecipes = async () => {
+  //     try {
+  //       const response = await fetch(API_URL);
+  //       if (response.ok) {
+  //         const data = await response.json();
+  //         console.log(data.recipes);
+  //         setRecipes(data.recipes);
+  //       } else {
+  //         throw new Error("Failed to fetch recipes");
+  //       }
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
 
-    fetchRecipes();
-  }, []);
+  //   fetchRecipes();
+  // }, []);
 
-  const handleCategoryChange = async (index) => {
-    setSelectedCategory(index);
-    setLoading(true);
+  // const handleCategoryChange = async (index) => {
+  //   setSelectedCategory(index);
+  //   setLoading(true);
 
-    try {
-      const API_KEY = "88345194a6e34c5e83770bdfa6af399c";
-      const API_URL = "https://api.spoonacular.com/recipes/complexSearch";
+  //   try {
+  //     const API_KEY = "88345194a6e34c5e83770bdfa6af399c";
+  //     const API_URL = "https://api.spoonacular.com/recipes/complexSearch";
 
-      const category = categories[index].name.toLowerCase();
-      const query = `?query=${category}&number=${initialCardCount}&apiKey=${API_KEY}`;
+  //     const category = categories[index].name.toLowerCase();
+  //     const query = `?query=${category}&number=${initialCardCount}&apiKey=${API_KEY}`;
 
-      const response = await fetch(API_URL + query);
+  //     const response = await fetch(API_URL + query);
 
-      if (response.ok) {
-        const data = await response.json();
-        // console.log(data.recipes);
-        setRecipes(data.results);
-      } else {
-        throw new Error("Failed to fetch recipes");
-      }
-    } catch (error) {
-      setError(error.message);
-    } finally {
-      setLoading(false);
-    }
-  };
+  //     if (response.ok) {
+  //       const data = await response.json();
+  //       // console.log(data.recipes);
+  //       setRecipes(data.results);
+  //     } else {
+  //       throw new Error("Failed to fetch recipes");
+  //     }
+  //   } catch (error) {
+  //     setError(error.message);
+  //   } finally {
+  //     setLoading(false);
+  //   }
+  // };
 
   const settings = {
     dots: false,
@@ -206,12 +198,7 @@ const Home = () => {
           </div>
         ))}
       </Slider>
-      <Grid
-        container
-        spacing={2}
-        justifyContent="center"
-        style={{ marginTop: "4px" }}
-      >
+      <Grid container spacing={2} justifyContent="center" style={{ marginTop: "4px" }}>
         {categories.map((category, index) => (
           <Grid item key={index}>
             <Button
@@ -221,7 +208,7 @@ const Home = () => {
               sx={{
                 background: "#1D1D1D !important",
               }}
-              onClick={() => handleCategoryChange(index)}
+              // onClick={() => handleCategoryChange(index)}
             >
               {category.title}
             </Button>
@@ -238,12 +225,12 @@ const Home = () => {
    
        
       </Grid> */}
-      <RecipeList
+      {/* <RecipeList
         recipes={recipes}
         loading={loading}
         initialCardCount={initialCardCount}
         error={error}
-      />
+      /> */}
     </Container>
   );
 };

@@ -50,7 +50,7 @@ import RecipePreparationButton from "../components/recipeDetails/RecipePreparati
 import RecipeTags from "../components/recipeDetails/RecipeTags";
 import RecipeUpdated from "../components/recipeDetails/RecipeUpdated";
 import ParentComponent from "../components/recipeDetails/ParentComponent";
-import { useAuth } from "../middleware/AuthContext";
+// import { useAuth } from "../middleware/AuthContext";
 
 // BASE_URL
 import { BASE_URL } from "../middleware/config";
@@ -74,7 +74,7 @@ const RecipeDetails = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const { obtainAccessToken, user } = useAuth();
+  // const { obtainAccessToken, user } = useAuth();
 
   const handleShare = async ({ enqueueSnackbar }) => {
     try {
@@ -99,15 +99,16 @@ const RecipeDetails = () => {
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
-        const accessToken = await obtainAccessToken();
-        const response = await fetch(API_URL, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        // const accessToken = await obtainAccessToken();
+        // const response = await fetch(API_URL, {
+        //   headers: {
+        //     Authorization: `Bearer ${accessToken}`,
+        //   },
+        // });
+        const response = await fetch(API_URL);
         if (response.ok) {
           const data = await response.json();
-          console.log("RECIPE DATA", data);
+          // console.log("RECIPE DATA", data);
           setRecipe(data);
         } else {
           throw new Error("Failed to fetch recipe details");
@@ -121,15 +122,17 @@ const RecipeDetails = () => {
 
     const fetchReviews = async () => {
       try {
-        const accessToken = await obtainAccessToken();
-        const response = await fetch(REVIEWS_URL, {
-          headers: {
-            Authorization: `Bearer ${accessToken}`,
-          },
-        });
+        // const accessToken = await obtainAccessToken();
+        // const response = await fetch(REVIEWS_URL, {
+        //   headers: {
+        //     Authorization: `Bearer ${accessToken}`,
+        //   },
+        // });
+        const response = await fetch(REVIEWS_URL);
+
         if (response.ok) {
           const data = await response.json();
-          console.log("reviews", data); // Log the fetched reviews
+          //console.log("reviews", data); // Log the fetched reviews
           setReviews(data);
         } else {
           throw new Error("Failed to fetch reviews");

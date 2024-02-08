@@ -149,7 +149,7 @@ function IconLabelTabs({ recipe }) {
           <Typography variant="h6">{ingredientGroup.name}</Typography>
           {ingredientGroup.items.map((ingredient) => (
             <div key={ingredient._id}>
-              {console.log(ingredient)} {/* Log the entire ingredient object */}
+              {/* {console.log(ingredient)}  */}
               <FormControlLabel control={<Checkbox checked color="default" icon={<RadioButtonUncheckedIcon />} checkedIcon={<CheckCircleIcon />} />} label={`${ingredient.ingredient.name} (${ingredient.quantity} ${ingredient.unit})`} />
             </div>
           ))}
@@ -192,7 +192,7 @@ function IconLabelTabs({ recipe }) {
           <div>
             {recipe.tools.map((instrument) => (
               <div
-                key={instrument.id} // Ensure each key is unique
+                key={instrument._id} // Ensure each key is unique
                 style={{
                   marginBottom: "0.5rem",
                   display: "flex",

@@ -1,5 +1,8 @@
-import * as React from "react";
-// import PropTypes from "prop-types";
+// DrawerAppBar.js
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+
+// React MUI
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import CssBaseline from "@mui/material/CssBaseline";
@@ -14,32 +17,24 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-import { Link } from "react-router-dom";
 import Container from "@mui/material/Container";
+
+// Custom Components
 import { useAuth } from "../middleware/AuthContext";
-import { useNavigate } from "react-router-dom";
 
 const drawerWidth = 240;
-// const navItems = ["Home", "Tools", "Prices", "Recipes", "Contact"];
-// const BASE_URL = process.env.REACT_APP_API_URL || "https://tiny-blue-moose-veil.cyclic.app/api";
+
 const navItems = {
   "/": "Home",
   "/recipes": "Recipes",
   "/tools": "Tools",
   "/prices": "Prices",
   "/contact": "Contact",
-  "/recipeinfo": "Recipe Info",
   "/dashboard": "Dashboard",
   "/auth": "Users",
 };
 
-// Update navItems based on the BASE_URL
-// Object.keys(navItems).forEach((path) => {
-//   navItems[path] = `${BASE_URL}${path}`;
-// });
-
 function DrawerAppBar(props) {
-  // const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
@@ -49,8 +44,10 @@ function DrawerAppBar(props) {
   };
 
   const handleLogout = () => {
+    console.log("Logging out...");
     logout();
-    navigate("/auth"); // Redirect to the login page after logout
+    console.log("Logout successful");
+    navigate("/"); // Redirect to the homepage after logout
   };
 
   const drawer = (
@@ -69,40 +66,22 @@ function DrawerAppBar(props) {
             </ListItemButton>
           </ListItem>
         ))}
-      </List>
-      {isAuthenticated() && (
-        <Link style={{ textDecoration: "none", width: "100%" }}>
-          <ListItemText onClick={handleLogout} primary={"Logout"} />
-        </Link>
-        // <Button onClick={handleLogout} sx={{ color: "#dadada" }}>
-        //   Logout
-        // </Button>
-      )}
-
-      {/* <List>
-        {navItems.map((item) => (
-          <ListItem key={item} disablePadding>
+        {isAuthenticated() && (
+          <ListItem disablePadding>
             <ListItemButton sx={{ textAlign: "center" }}>
-              <Link
-                to={`/${item}`}
-                style={{ textDecoration: "none", width: "100%" }}
-              >
-                <ListItemText primary={item} />
+              <Link to="/auth" style={{ textDecoration: "none", width: "100%" }}>
+                <ListItemText onClick={handleLogout} primary={"Logout"} />
               </Link>
             </ListItemButton>
           </ListItem>
-        ))}
-      </List> */}
+        )}
+      </List>
     </Box>
   );
-
-  // const container =
-  //   window !== undefined ? () => window().document.body : undefined;
 
   return (
     <Box sx={{ display: "flex", p: 3 }}>
       <CssBaseline />
-
       <AppBar
         component="nav"
         sx={{
@@ -126,16 +105,12 @@ function DrawerAppBar(props) {
                 </Link>
               ))}
               {isAuthenticated() && (
-                <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
-                  Logout
-                </Button>
-              )}
-
-              {/* {navItems.map((item) => (
-                <Link key={item} to={`/${item}`}>
-                  <Button sx={{ color: "#fff" }}>{item}</Button>
+                <Link to="/auth">
+                  <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
+                    Logout
+                  </Button>
                 </Link>
-              ))} */}
+              )}
             </Box>
           </Toolbar>
         </Container>
@@ -143,7 +118,6 @@ function DrawerAppBar(props) {
 
       <nav>
         <Drawer
-          // container={container}
           variant="temporary"
           open={mobileOpen}
           onClose={handleDrawerToggle}

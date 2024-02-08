@@ -19,13 +19,13 @@ function MultipleSteppers({ section }) {
   const [activeStep, setActiveStep] = React.useState(0);
   const [showReset, setShowReset] = React.useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
-  console.log(activeStep);
+  // console.log(activeStep);
 
   const handleNext = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    console.log(section.steps.length);
+    // console.log(section.steps.length);
     if (activeStep + 1 === section.steps.length) {
-      console.log("its max");
+      // console.log("its max");
       setShowReset(true);
       setShowConfetti(true);
       setTimeout(() => {
@@ -44,7 +44,7 @@ function MultipleSteppers({ section }) {
 
   const handleFinish = () => {
     setShowReset(true);
-    console.log("finished");
+    // console.log("finished");
   };
 
   const CustomStepIcon = (props) => {
