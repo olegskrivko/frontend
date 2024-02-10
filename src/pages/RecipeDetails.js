@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-
+// import html2canvas from "html2canvas";
 // React MUI components
 import Grid from "@mui/material/Grid";
-// import Card from "@mui/material/Card";
+import Card from "@mui/material/Card";
 import Typography from "@mui/material/Typography";
 import CardMedia from "@mui/material/CardMedia";
-// import CardContent from "@mui/material/CardContent";
+import CardContent from "@mui/material/CardContent";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,6 +18,7 @@ import IconButton from "@mui/material/IconButton";
 // import Container from "@mui/material/Container";
 import Chip from "@mui/material/Chip";
 import { useSnackbar } from "notistack";
+
 // Icons
 import ShareIcon from "@mui/icons-material/Share";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -30,7 +31,10 @@ import OutdoorGrillIcon from "@mui/icons-material/OutdoorGrill";
 import BlenderIcon from "@mui/icons-material/Blender";
 import SpaIcon from "@mui/icons-material/Spa";
 import StepIcon from "@mui/material/StepIcon";
+import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
+
 import TimelapseIcon from "@mui/icons-material/Timelapse";
+// import { createTheme } from "@mui/material/styles";
 
 // Installed Components
 import Confetti from "react-confetti";
@@ -42,18 +46,23 @@ import TipsCarousel from "../components/recipeDetails/TipsCarousel";
 import RecipeDescription from "../components/recipeDetails/RecipeDescription";
 import IconLabelTabs from "../components/recipeDetails/IconLabelTabs";
 import DietLabel from "../components/recipeDetails/DietLabel";
-import TotalCalories from "../components/recipeDetails/TotalCalories";
+// import TotalCalories from "../components/recipeDetails/TotalCalories";
 import ReviewComponent from "../components/ReviewComponent";
 import SimilarRecipes from "../components/SimilarRecipes";
 import RecipeTimeComponent from "../components/recipeDetails/RecipeTimeComponent";
 import RecipePreparationButton from "../components/recipeDetails/RecipePreparationButton";
 import RecipeTags from "../components/recipeDetails/RecipeTags";
+import RecipeMeals from "../components/recipeDetails/RecipeMeals";
+import RecipeCuisines from "../components/recipeDetails/RecipeCuisines";
+
 import RecipeUpdated from "../components/recipeDetails/RecipeUpdated";
 import ParentComponent from "../components/recipeDetails/ParentComponent";
+import ActivitiesInfo from "../components/recipeDetails/ActivitiesInfo";
 // import { useAuth } from "../middleware/AuthContext";
 
 // BASE_URL
 import { BASE_URL } from "../middleware/config";
+import RatingForm from "../components/recipeDetails/RatingForm";
 
 function CircularIndeterminate() {
   return (
@@ -62,8 +71,41 @@ function CircularIndeterminate() {
     </Box>
   );
 }
+const calculateTotalNutrition = (data, servings) => {
+  return data.reduce(
+    (total, category) => {
+      category.items.forEach((item) => {
+        const allowedUnit = item.ingredient.allowedUnits.find((unit) => unit.unit.name === item.unit);
+
+        if (allowedUnit) {
+          const adjustedQuantity = item.quantity * allowedUnit.conversionFactor;
+          total.calories += (item.ingredient.calories / 100) * adjustedQuantity;
+        } else {
+          console.error(`Conversion factor not found for unit ${item.unit} in ingredient ${item.ingredient.name}`);
+        }
+      });
+
+      return total;
+    },
+    { calories: 0 }
+  );
+};
+
+const TotalCalories = ({ ingredients, servings }) => {
+  const [totalCalories, setTotalCalories] = useState(0);
+
+  useEffect(() => {
+    const calculatedTotalNutrition = calculateTotalNutrition(ingredients, servings);
+    setTotalCalories(calculatedTotalNutrition.calories.toFixed());
+  }, [ingredients, servings]);
+
+  return <>{totalCalories}</>;
+};
 
 const RecipeDetails = () => {
+  // const theme = createTheme();
+  // const hoverBackgroundColor = theme.palette.action.hover;
+  // console.log(hoverBackgroundColor);
   const { id } = useParams();
 
   const API_URL = `${BASE_URL}/recipes/${id}`;
@@ -73,6 +115,8 @@ const RecipeDetails = () => {
   const [recipe, setRecipe] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+
+  const [calories, setCalories] = useState(0); // State for total calories
 
   // const { obtainAccessToken, user } = useAuth();
 
@@ -108,7 +152,10 @@ const RecipeDetails = () => {
         const response = await fetch(API_URL);
         if (response.ok) {
           const data = await response.json();
-          // console.log("RECIPE DATA", data);
+          console.log("RECIPE DATA", data);
+          const calculatedTotalNutrition = calculateTotalNutrition(data.ingredients, data.servings);
+          const adjustedCalories = calculatedTotalNutrition.calories / data.servings;
+          setCalories(adjustedCalories.toFixed());
           setRecipe(data);
         } else {
           throw new Error("Failed to fetch recipe details");
@@ -158,50 +205,86 @@ const RecipeDetails = () => {
 
   return (
     <React.Fragment>
+      {/* {calories > 0 && (
+        <Typography style={{ marginLeft: "16px" }}>
+          Total Calories: <TotalCalories ingredients={recipe.ingredients} servings={recipe.servings} />
+        </Typography>
+      )}
+      {calories} */}
       {/* General Info */}
       <Grid container spacing={3}>
         {/* Title | Rating | Action Buttons | Author | Description */}
         {/* {recipe && recipe.diets && <DietCheckbox recipeDiets={recipe.diets} dietName="Vegetarian" />} */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           {recipe && recipe.title && (
-            <Typography variant="h4" sx={{ fontWeight: "bold" }}>
+            <Typography gutterBottom variant="h4" sx={{ fontWeight: "bold" }}>
               {recipe.title}
             </Typography>
           )}
-          {recipe && recipe.source && recipe.source.name && recipe.updatedAt && (
+          {/* <div style={{ display: "flex", alignItems: "center" }}> */}
+          {recipe && recipe.source && recipe.source.name && (
             <Typography
+              gutterBottom
               variant="subtitle2"
               sx={{
-                margin: "0.8rem 0",
+                marginRight: "0.5rem", // Add right margin
               }}
             >
               Recipe by{" "}
-              <Link href={recipe.source.url} rel="noreferrer" target="_blank" underline="always">
+              <Link href={recipe.source.url} rel="noreferrer" target="_blank" style={{ textDecoration: "none" }}>
                 {recipe.source.name && recipe.source.name === "Unknown" ? "Cookify" : "Unknown"}
-              </Link>{" "}
+              </Link>
             </Typography>
           )}
+          {/* {recipe && recipe.updatedAt && (
+              <Typography
+                gutterBottom
+                variant="subtitle2"
+                sx={
+                  {
+                    // marginLeft: "0.5rem",
+                  }
+                }
+              >
+                {recipe && <RecipeUpdated timestamp={recipe.updatedAt} />}
+              </Typography>
+            )} */}
+          {/* </div> */}
+
           {recipe && recipe.description && <RecipeDescription recipe={recipe} />}
-          {recipe && recipe.updatedAt && <RecipeUpdated timestamp={recipe.updatedAt} />}
         </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
+        {/* <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
           <Chip label="95%" style={{ backgroundColor: "#424242", color: "#ffffff" }} />
           <Typography style={{ marginLeft: "4px" }}>would make this again</Typography>
-        </Grid>
-        <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
+        </Grid> */}
+        {/* <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
           {recipe && recipe.tags && <RecipeTags tags={recipe.tags} />}
+        </Grid> */}
+        <Grid item xs={12} sm={12} md={7} lg={7} sx={{ paddingTop: "1rem !important", display: "flex", alignItems: "center" }}>
+          {recipe && recipe.meals && <RecipeMeals meals={recipe.meals} />} {recipe && recipe.cuisines && <RecipeCuisines cuisines={recipe.cuisines} />}
         </Grid>
         {/* Image Section */}
         <Grid item xs={12} sm={12} md={7} lg={7} position="relative">
           {recipe && recipe.coverImage && (
-            <>
+            <Card
+              style={{
+                width: "100%",
+                height: "100%",
+                objectFit: "cover",
+              }}
+            >
               <CardMedia
                 component="img"
                 image={recipe.coverImage}
                 alt={recipe.title}
+                // style={{
+                //   width: "100%",
+                //   height: "400px",
+                //   objectFit: "cover",
+                // }}
                 style={{
                   width: "100%",
-                  height: "400px",
+                  height: "100%",
                   objectFit: "cover",
                 }}
               />
@@ -241,7 +324,7 @@ const RecipeDetails = () => {
               >
                 <ShareIcon />
               </IconButton>
-            </>
+            </Card>
           )}
           {/* <Stack direction="row" spacing={1} position="absolute" bottom={10} right={10}>
             <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
@@ -304,246 +387,252 @@ const RecipeDetails = () => {
         {/* Icons Sections */}
         <Grid item xs={12} sm={12} md={5} lg={5}>
           {recipe ? (
-            <>
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <LocalFireDepartmentIcon />
-                </Grid>
-                <Grid item>
-                  <Typography>
-                    <TotalCalories ingredients={recipe.ingredients} servings={recipe.servings} /> kcal
-                  </Typography>
-                </Grid>
-              </Grid>
-              {/* Difficulty */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <SignalCellularAltIcon />
-                </Grid>
-                <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid>
-              </Grid>
-              {/* Preparation */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <BlenderIcon />
-                </Grid>
-                <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Preparation" />}</Grid>
-              </Grid>
-              {/* Cooking */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <OutdoorGrillIcon />
-                </Grid>
-                <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Cooking" />}</Grid>
-              </Grid>
-              {/* Rest Time */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <TimelapseIcon />
-                </Grid>
-                <Grid item>
-                  <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Resting" />}</Grid>
-                </Grid>
-              </Grid>
-              {/* Total Time */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <AccessTimeIcon />
-                </Grid>
-                <Grid item>{recipe && recipe.totalTime && recipe.totalTime && <Typography>Ready in {recipe.totalTime} min</Typography>}</Grid>
-              </Grid>
-
-              {/* Price Per Serving */}
-              {/* <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <MonetizationOnIcon />
-                </Grid>
-                <Grid item>
-                  {recipe && recipe.pricePerServing && (
+            <Card sx={{ backgroundColor: "rgba(0, 0, 0, 0.04)", paddingBottom: "1rem" }}>
+              <CardContent sx={{ paddingBottom: "0 !important" }}>
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <LocalFireDepartmentIcon />
+                  </Grid>
+                  <Grid item>
                     <Typography>
-                      {recipe.pricePerServing.amount}
-                      {recipe.pricePerServing.currency} per serving
+                      {recipe && calories > 0 && calories} kcal per serving
+                      {/* <TotalCalories ingredients={recipe.ingredients} servings={recipe.servings} /> kcal */}
                     </Typography>
-                  )}
+                  </Grid>
                 </Grid>
-              </Grid> */}
-              {/* Vegetarian */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <SpaIcon />
+                {/* Difficulty */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SignalCellularAltIcon />
+                  </Grid>
+                  <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid>
                 </Grid>
-                <Grid item>
-                  {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Vegetarian" fallbackLabel="Non Vegetarian" />}
-                  {/* <Typography>{recipe.isVegetarian ? "Vegetarian" : "Non Vegetarian"}</Typography> */}
+                {/* Preparation */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <BlenderIcon />
+                  </Grid>
+                  <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Preparation" />}</Grid>
                 </Grid>
-              </Grid>
-              {/* Vegan */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <SpaIcon />
+                {/* Cooking */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <OutdoorGrillIcon />
+                  </Grid>
+                  <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Cooking" />}</Grid>
                 </Grid>
-                <Grid item>
-                  {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Vegan" fallbackLabel="Non Vegan" />}
-                  {/* <Typography>{recipe.isVegan ? "Vegan" : "Non Vegan"}</Typography> */}
+                {/* Rest Time */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <TimelapseIcon />
+                  </Grid>
+                  <Grid item>
+                    <Grid item>{recipe && recipe.times && <RecipeTimeComponent recipe={recipe} targetLabel="Resting" />}</Grid>
+                  </Grid>
                 </Grid>
-              </Grid>
-              {/* Gluten Free */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <SpaIcon />
+                {/* Total Time */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <AccessTimeIcon />
+                  </Grid>
+                  <Grid item>{recipe && recipe.totalTime && recipe.totalTime && <Typography>Ready in {recipe.totalTime} min</Typography>}</Grid>
                 </Grid>
-                <Grid item>
-                  {/* <Typography>{recipe.isGlutenFree ? "Gluten Free" : "Non Gluten Free"}</Typography> */}
-                  {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Gluten Free" fallbackLabel="Gluten Free" />}
+
+                {/* Price Per Serving */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <MonetizationOnIcon />
+                  </Grid>
+                  <Grid item>{recipe && recipe.totalTime && recipe.totalTime && <Typography> 2.67 $ per serving</Typography>}</Grid>
                 </Grid>
-              </Grid>
-              {/* Dairy Free */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <SpaIcon />
+                {/* Vegetarian */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SpaIcon />
+                  </Grid>
+                  <Grid item>
+                    {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Vegetarian" fallbackLabel="Non Vegetarian" />}
+                    {/* <Typography>{recipe.isVegetarian ? "Vegetarian" : "Non Vegetarian"}</Typography> */}
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  {/* <Typography>{recipe.isDairyFree ? "Dairy Free" : "Non Dairy Free"}</Typography> */}
-                  {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Dairy Free" fallbackLabel="Non Dairy Free" />}
+                {/* Vegan */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SpaIcon />
+                  </Grid>
+                  <Grid item>
+                    {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Vegan" fallbackLabel="Non Vegan" />}
+                    {/* <Typography>{recipe.isVegan ? "Vegan" : "Non Vegan"}</Typography> */}
+                  </Grid>
                 </Grid>
-              </Grid>
-              {/* Servings */}
-              <Grid
-                container
-                spacing={2}
-                alignItems="center"
-                style={{
-                  marginBottom: "5px",
-                }}
-              >
-                <Grid item>
-                  <RamenDiningIcon />
+                {/* Gluten Free */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SpaIcon />
+                  </Grid>
+                  <Grid item>
+                    {/* <Typography>{recipe.isGlutenFree ? "Gluten Free" : "Non Gluten Free"}</Typography> */}
+                    {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Gluten Free" fallbackLabel="Gluten Free" />}
+                  </Grid>
                 </Grid>
-                <Grid item>
-                  <div
-                    style={{
-                      display: "flex",
-                      alignItems: "center",
-                    }}
+                {/* Dairy Free */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SpaIcon />
+                  </Grid>
+                  <Grid item>
+                    {/* <Typography>{recipe.isDairyFree ? "Dairy Free" : "Non Dairy Free"}</Typography> */}
+                    {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Dairy Free" fallbackLabel="Non Dairy Free" />}
+                  </Grid>
+                </Grid>
+                {/* Servings */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  // style={{
+                  //   marginBottom: "5px",
+                  // }}
+                >
+                  <Grid
+                    item
+                    // style={{
+                    //   marginTop: "1rem",
+                    // }}
                   >
-                    <Typography
-                      variant="body1"
-                      sx={{
-                        marginRight: "1rem",
-                      }}
-                    >
-                      Servings
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      sx={{
-                        background: "#1D1D1D !important",
-                        minWidth: "2rem",
-                      }}
-                    >
-                      -
-                    </Button>
-                    <Typography
+                    <RamenDiningIcon />
+                  </Grid>
+                  <Grid
+                    item
+                    // style={{
+                    //   marginTop: "1rem",
+                    // }}
+                  >
+                    <div
                       style={{
-                        margin: "0 12px",
+                        display: "flex",
+                        alignItems: "center",
                       }}
                     >
-                      {recipe?.servings}
-                    </Typography>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      size="small"
-                      sx={{
-                        background: "#1D1D1D !important",
-                        minWidth: "2rem",
-                      }}
-                    >
-                      +
-                    </Button>
-                  </div>
+                      <Typography
+                        variant="body1"
+                        sx={{
+                          marginRight: "1rem",
+                        }}
+                      >
+                        Servings
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        sx={{
+                          background: "#1D1D1D !important",
+                          minWidth: "2rem",
+                        }}
+                      >
+                        -
+                      </Button>
+                      <Typography
+                        style={{
+                          margin: "0 12px",
+                        }}
+                      >
+                        {recipe?.servings}
+                      </Typography>
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        size="small"
+                        sx={{
+                          background: "#1D1D1D !important",
+                          minWidth: "2rem",
+                        }}
+                      >
+                        +
+                      </Button>
+                    </div>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </>
+              </CardContent>
+            </Card>
           ) : (
             <CircularIndeterminate />
             // <Typography variant="body1">Loading...</Typography>
@@ -564,11 +653,13 @@ const RecipeDetails = () => {
           sm={12}
           md={12}
           lg={12}
-          sx={{
-            margin: "20px 0",
-          }}
+          // sx={{
+          //   margin: "20px 0",
+          // }}
         >
-          <Typography variant="h6">Author Tips</Typography>
+          <Typography gutterBottom variant="h6">
+            Author Tips
+          </Typography>
           {recipe && recipe.tips && <TipsCarousel tips={recipe.tips} />}
         </Grid>
       </Grid>
@@ -578,6 +669,7 @@ const RecipeDetails = () => {
           {recipe && recipe.instructions && <ParentComponent recipeInstructions={recipe.instructions} />}
         </Grid>
       </Grid>
+
       {/* Similar Recipes */}
       <Grid container spacing={3}>
         <Grid
@@ -590,11 +682,38 @@ const RecipeDetails = () => {
             margin: "20px 0",
           }}
         >
-          <Typography variant="h6">Similar Recipes</Typography>
+          <Typography gutterBottom variant="h6">
+            Similar Recipes
+          </Typography>
           <SimilarRecipes />
         </Grid>
       </Grid>
+      {/* Activities */}
       <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            margin: "20px 0",
+          }}
+        >
+          <Typography gutterBottom variant="h6">
+            {/* Time to Burn <TotalCalories ingredients={recipe.ingredients} servings={recipe.servings} /> kcal */}
+          </Typography>
+          <Typography gutterBottom variant="h6">
+            How long would it take to burn off {recipe && calories > 0 && calories} kcal?
+          </Typography>
+          {recipe && calories > 0 && <ActivitiesInfo totalCalories={calories} />}
+          <Typography gutterBottom variant="caption">
+            Values estimated based on person weighing 70 kg. Personalize your experience and explore additional calculators <Link to="/tools">Sports Calculator</Link>.
+          </Typography>
+        </Grid>
+      </Grid>
+
+      {/* <Grid container spacing={3}>
         <Grid
           item
           xs={12}
@@ -607,9 +726,9 @@ const RecipeDetails = () => {
         >
           <RecipePreparationButton />
         </Grid>
-      </Grid>
+      </Grid> */}
       {/* Questions */}
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         <Grid
           item
           xs={12}
@@ -620,11 +739,14 @@ const RecipeDetails = () => {
             margin: "40px 0",
           }}
         >
-          <Typography variant="h6">Rate the Recipe</Typography>
+          <Typography gutterBottom variant="h6">
+            Rate the Recipe
+          </Typography>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       <Grid container spacing={3}>
+        {/* <RatingForm /> */}
         <QuestionRating recipeId={id} />
       </Grid>
       {/* RecipeReviewForm */}
@@ -654,21 +776,33 @@ const RecipeDetails = () => {
             margin: "20px 0",
           }}
         >
-          <Typography
-            variant="h6"
-            sx={{
-              margin: "0 0 20px 0",
-            }}
-          >
+          <Typography gutterBottom variant="h6">
             Reviews
           </Typography>
           <ReviewComponent key={reviews._id} reviewData={reviews} />
           {/* <ReviewComponent /> */}
         </Grid>
       </Grid>
+
       {/* You May Also Like */}
-      <Typography variant="h6">You May Also Like</Typography>
-      <SimilarRecipes />
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            margin: "20px 0",
+          }}
+        >
+          <Typography gutterBottom variant="h6">
+            You May Also Like
+          </Typography>
+          <SimilarRecipes />
+        </Grid>
+      </Grid>
+
       {/* Reviews */}
       {/* <Grid container spacing={3}>
         <Grid

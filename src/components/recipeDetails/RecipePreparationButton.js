@@ -43,17 +43,6 @@ const RecipePreparationButton = () => {
           </Button>
         </Box>
 
-        {/* <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
-        <Typography variant="h6" sx={{ textAlign: "center" }} gutterBottom>
-          Have you successfully prepared this delicious recipe?
-        </Typography>
-  
-        <div style={{ marginTop: "10px" }}>
-          <Button variant="contained" color="primary" onClick={handleButtonClick} disabled={buttonDisabled}>
-            Yes
-          </Button>
-        </div> */}
-
         <div style={{ position: "relative" }}>{showConfetti && <Confetti width={window.innerWidth} height={window.innerHeight} numberOfPieces={200} recycle={false} style={{ position: "fixed", top: 0, left: 0 }} />}</div>
       </div>
     </>
@@ -61,3 +50,14 @@ const RecipePreparationButton = () => {
 };
 
 export default RecipePreparationButton;
+
+// {/* <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginTop: "20px" }}>
+//       <Typography variant="h6" sx={{ textAlign: "center" }} gutterBottom>
+//         Have you successfully prepared this delicious recipe?
+//       </Typography>
+
+//       <div style={{ marginTop: "10px" }}>
+//         <Button variant="contained" color="primary" onClick={handleButtonClick} disabled={buttonDisabled}>
+//           Yes
+//         </Button>
+//       </div> */}

@@ -8,7 +8,7 @@ import Carousel from "react-material-ui-carousel";
 
 const TipsCarousel = ({ tips }) => {
   return (
-    <Carousel navButtonsAlwaysInvisible={true} stopAutoPlayOnHover={true} indicators={true}>
+    <Carousel autoPlay={false} navButtonsAlwaysInvisible={true} stopAutoPlayOnHover={true} indicators={true}>
       {tips.map((tip, index) => (
         <Card key={index} style={{ backgroundColor: "#f2f2f2" }}>
           <CardContent>

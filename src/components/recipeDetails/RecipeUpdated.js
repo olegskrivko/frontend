@@ -9,9 +9,9 @@ const RecipeUpdated = ({ timestamp }) => {
   return (
     <Typography
       variant="subtitle2"
-      sx={{
-        margin: "1rem 0 0 0",
-      }}
+      // sx={{
+      //   margin: "1rem 0 0 0",
+      // }}
     >
       Updated on {date.toLocaleDateString("en-US", options)}
     </Typography>
