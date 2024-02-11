@@ -19,7 +19,7 @@ export default function RecipeCard({ recipe }) {
   return (
     <Grid
       item
-      xs={6}
+      xs={12}
       sm={6}
       md={4}
       lg={4}
@@ -73,7 +73,7 @@ export default function RecipeCard({ recipe }) {
               alignItems: "center",
             }}
           >
-            <AccessTimeIcon color="action" sx={{ mr: 1 }} />
+            {/* <AccessTimeIcon color="action" sx={{ mr: 1 }} /> */}
             <Typography color="gray" sx={{ marginRight: "1rem" }}>
               {recipe.totalTime} mins
             </Typography>

@@ -374,7 +374,7 @@ const QuestionRating = ({ recipeId }) => {
   const [originality, setOriginality] = useState(9);
   const [accuracy, setAccuracy] = useState(9);
   const [availability, setAvailability] = useState(9);
-  const [difficulty, setDifficulty] = useState(9);
+  const [preparation, setPreparation] = useState(9);
 
   const [showConfetti, setShowConfetti] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -425,7 +425,7 @@ const QuestionRating = ({ recipeId }) => {
         originality,
         accuracy,
         availability,
-        difficulty,
+        preparation,
         wouldMakeAgain,
       };
 
@@ -463,7 +463,7 @@ const QuestionRating = ({ recipeId }) => {
         }}
       >
         <Grid container spacing={3}>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Grid item xs={12} sm={12} md={12} lg={12} sx={{ backgroundColor: "rgba(0, 0, 0, 0.0)" }}>
             <Typography variant="h6" textAlign="center">
               Have you successfully prepared this delicious recipe?
             </Typography>
@@ -654,11 +654,11 @@ const QuestionRating = ({ recipeId }) => {
         </Box>
 
         <Box mb={0}>
-          <Typography>Difficulty:</Typography>
+          <Typography>Ease of Preparation:</Typography>
           <Slider
-            value={difficulty}
+            value={preparation}
             disabled={!preparedRecipe}
-            onChange={(_, newValue) => setDifficulty(newValue)}
+            onChange={(_, newValue) => setPreparation(newValue)}
             valueLabelDisplay="auto"
             step={1} // Set the step to 1
             marks={[

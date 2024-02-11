@@ -1,7 +1,9 @@
 import React from "react";
 import { Avatar, Card, CardContent, Typography, Chip, Rating } from "@mui/material";
+import { formatDistanceToNow } from "date-fns";
 import { green } from "@mui/material/colors";
-
+import { purple } from "@mui/material/colors";
+import FormatQuoteSharpIcon from "@mui/icons-material/FormatQuoteSharp";
 const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rating, ratings }) => {
   // console.log("useruseruser", user);
   const cardStyle = {
@@ -15,12 +17,17 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
     marginBottom: "8px",
     backgroundColor: "#424242", // Dark color
     color: "#ffffff", // White text
+    fontSize: "0.7rem",
+    // width: "100%",
   };
   const chipStyle = {
-    marginLeft: "8px",
+    // marginLeft: "8px",
     //backgroundColor: "#424242", // Dark color
     color: "#ffffff", // White text
-    backgroundColor: green[500],
+    // backgroundColor: green[500],
+    backgroundColor: purple[800],
+    letterSpacing: "2px",
+    fontSize: "11px",
   };
 
   const avatarStyle = {
@@ -48,7 +55,7 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
     paddingTop: "1rem",
     borderRadius: "8px",
     color: "#ffffff", // White text
-    marginTop: "8px", // Adjust the spacing from the message
+    // marginTop: "8px", // Adjust the spacing from the message
   };
 
   const fakeRatings = {
@@ -58,6 +65,7 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
     originality: 3.8,
     visualAppeal: 4,
     ingredients: 4.2,
+    preparation: 4.8,
   };
 
   return (
@@ -66,35 +74,94 @@ const ChatCard = ({ avatarUrl, senderName, user, createdAt, text, timestamp, rat
         <div
           style={{
             display: "flex",
-            alignItems: "center",
-            marginBottom: "8px",
+            alignItems: "start",
+            justifyContent: "start",
           }}
         >
           <Avatar alt={user.username} src={user.username} style={avatarStyle} />
-          <Typography variant="subtitle1" style={{ display: "flex" }}>
-            {user.username}
-          </Typography>
-          {/* <Chip secondary label="Recipe Wizard" style={chipStyle} color="primary" /> */}
-          <Chip secondary="true" label="Recipe Wizard" style={chipStyle} color="primary" />
-        </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "start",
+              justifyContent: "start",
 
+              // marginBottom: "8px",
+              flexDirection: "column", // Changed to column
+            }}
+          >
+            <Chip size="small" secondary="true" label="Recipe Wizard" style={chipStyle} color="primary" />
+            <Typography variant="subtitle1" style={{ display: "flex" }}>
+              {user.username}
+            </Typography>
+          </div>
+        </div>
+        {/* <FormatQuoteSharpIcon>
+          <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
+            {text}
+          </Typography>
+        </FormatQuoteSharpIcon> */}
+        {/* Quote Icon */}
+
+        {/* Review Text */}
+        {/* <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
+          <FormatQuoteSharpIcon style={{ fontSize: 20, marginRight: 4 }} />
+          {text} <FormatQuoteSharpIcon style={{ fontSize: 20, marginLeft: 4 }} />
+        </Typography> */}
         <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
-          {text}
+          <i>{text}</i>
         </Typography>
+        {/* Quote Icon */}
+
         <Typography variant="caption" color="textSecondary">
-          {createdAt}
+          {formatDistanceToNow(new Date(createdAt), { addSuffix: true })}
         </Typography>
         {fakeRatings && (
           <div style={ratingsContainerStyle}>
             <Chip size="small" label={`Taste: ${fakeRatings.taste}`} style={chipStyleRating} />
-            <Chip size="small" label={`Accuracy: ${fakeRatings.accuracy}`} style={chipStyleRating} />
             <Chip size="small" label={`Originality: ${fakeRatings.originality}`} style={chipStyleRating} />
             <Chip size="small" label={`Visual Appeal: ${fakeRatings.visualAppeal}`} style={chipStyleRating} />
+            <Chip size="small" label={`Accuracy of Instructions: ${fakeRatings.accuracy}`} style={chipStyleRating} />
+
             <Chip size="small" label={`Ingredients: ${fakeRatings.ingredients}`} style={chipStyleRating} />
+            <Chip size="small" label={`Ease of Preparation: ${fakeRatings.preparation}`} style={chipStyleRating} />
           </div>
         )}
       </CardContent>
     </Card>
+    // <Card style={cardStyle}>
+    //   <CardContent style={contentStyle}>
+    //     <div
+    //       style={{
+    //         display: "flex",
+    //         alignItems: "center",
+    //         marginBottom: "8px",
+    //       }}
+    //     >
+    //       <Avatar alt={user.username} src={user.username} style={avatarStyle} />
+    //       <Typography variant="subtitle1" style={{ display: "flex" }}>
+    //         {user.username}
+    //       </Typography>
+    //       {/* <Chip secondary label="Recipe Wizard" style={chipStyle} color="primary" /> */}
+    //       <Chip secondary="true" label="Recipe Wizard" style={chipStyle} color="primary" />
+    //     </div>
+
+    //     <Typography variant="body1" color="textSecondary" style={{ marginBottom: "8px" }}>
+    //       {text}
+    //     </Typography>
+    //     <Typography variant="caption" color="textSecondary">
+    //       {createdAt}
+    //     </Typography>
+    //     {fakeRatings && (
+    //       <div style={ratingsContainerStyle}>
+    //         <Chip size="small" label={`Taste: ${fakeRatings.taste}`} style={chipStyleRating} />
+    //         <Chip size="small" label={`Accuracy: ${fakeRatings.accuracy}`} style={chipStyleRating} />
+    //         <Chip size="small" label={`Originality: ${fakeRatings.originality}`} style={chipStyleRating} />
+    //         <Chip size="small" label={`Visual Appeal: ${fakeRatings.visualAppeal}`} style={chipStyleRating} />
+    //         <Chip size="small" label={`Ingredients: ${fakeRatings.ingredients}`} style={chipStyleRating} />
+    //       </div>
+    //     )}
+    //   </CardContent>
+    // </Card>
   );
 };
 

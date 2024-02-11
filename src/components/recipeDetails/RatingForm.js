@@ -17,7 +17,7 @@ const RatingForm = ({ recipeId }) => {
     originality: 5,
     accuracy: 5,
     availability: 5,
-    difficulty: 5,
+    preparation: 5,
   });
 
   const [showConfetti, setShowConfetti] = useState(false);

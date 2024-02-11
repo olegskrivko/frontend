@@ -481,7 +481,7 @@ const RecipeDetails = () => {
                 </Grid>
 
                 {/* Price Per Serving */}
-                <Grid
+                {/* <Grid
                   container
                   spacing={2}
                   alignItems="center"
@@ -493,6 +493,22 @@ const RecipeDetails = () => {
                     <MonetizationOnIcon />
                   </Grid>
                   <Grid item>{recipe && recipe.totalTime && recipe.totalTime && <Typography> 2.67 $ per serving</Typography>}</Grid>
+                </Grid> */}
+                <Grid
+                  container
+                  spacing={2}
+                  alignItems="center"
+                  style={{
+                    marginBottom: "5px",
+                  }}
+                >
+                  <Grid item>
+                    <SpaIcon />
+                  </Grid>
+                  <Grid item>
+                    {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Spicy" fallbackLabel="Not Spicy" />}
+                    {/* <Typography>{recipe.isVegetarian ? "Vegetarian" : "Non Vegetarian"}</Typography> */}
+                  </Grid>
                 </Grid>
                 {/* Vegetarian */}
                 <Grid

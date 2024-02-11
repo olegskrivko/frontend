@@ -82,16 +82,16 @@ const SimilarRecipes = () => {
                   objectFit: "cover", // Maintain aspect ratio and cover entire area
                 }}
               />
-              <CardContent sx={{ margin: "0", padding: "4px 0 !important" }}>
+              <CardContent sx={{ margin: "0", padding: "4px 6px !important", textAlign: "center" }}>
                 <Typography
-                  variant="body1"
+                  variant="body2"
+                  fontSize={"0.8rem"}
                   sx={{
                     // fontSize: "0.9rem",
                     textOverflow: "ellipsis",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     fontWeight: "500",
-                    fontSize: "0.9rem",
                   }}
                 >
                   <Link to={`/recipes/${recipe._id}`} style={{ textDecoration: "none", color: "inherit" }}>
@@ -108,3 +108,110 @@ const SimilarRecipes = () => {
 };
 
 export default SimilarRecipes;
+// import React, { useState, useEffect } from "react";
+// import { Link } from "react-router-dom";
+
+// // React MUI components
+// import Grid from "@mui/material/Grid";
+// import Card from "@mui/material/Card";
+// import Typography from "@mui/material/Typography";
+// import CardMedia from "@mui/material/CardMedia";
+// import CardContent from "@mui/material/CardContent";
+// import Container from "@mui/material/Container";
+// import { useAuth } from "../middleware/AuthContext";
+
+// // BASE_URL
+// import { BASE_URL } from "../middleware/config";
+
+// const SimilarRecipes = () => {
+//   const [recipes, setRecipes] = useState([]);
+//   const [loading, setLoading] = useState(true);
+//   const [error, setError] = useState(null);
+
+//   const { obtainAccessToken, user } = useAuth();
+
+//   useEffect(() => {
+//     const fetchRecipes = async () => {
+//       try {
+//         const accessToken = await obtainAccessToken();
+//         const response = await fetch(`${BASE_URL}/recipes`, {
+//           headers: {
+//             Authorization: `Bearer ${accessToken}`,
+//           },
+//         });
+//         if (response.ok) {
+//           const data = await response.json();
+//           setRecipes(data);
+//         } else {
+//           throw new Error("Failed to fetch recipes");
+//         }
+//       } catch (error) {
+//         setError(error.message);
+//       } finally {
+//         setLoading(false);
+//       }
+//     };
+
+//     fetchRecipes();
+//   }, []);
+
+//   return (
+//     <Container maxWidth="lg" style={{ textAlign: "center", padding: "0" }}>
+//       {/* Static image or any other layout you desire */}
+
+//       <div>
+//         <Grid container spacing={3} justifyContent="flex-start" style={{ marginTop: "4px" }}>
+//           {recipes.map((recipe, index) => (
+//             <Grid
+//               key={recipe._id}
+//               item
+//               xs={6}
+//               sm={4}
+//               md={4}
+//               lg={2}
+//               sx={{
+//                 display: "inline-block",
+//                 // justifyContent: "center",
+//                 alignItems: "center",
+//                 height: "100%",
+//                 margin: "0 8px", // Adjust margin as needed
+//               }}
+//             >
+//               <Card sx={{ maxWidth: 345, backgroundColor: "rgba(0, 0, 0, 0)", border: "none", position: "relative" }}>
+//                 <CardMedia
+//                   component="img"
+//                   image={recipe.coverImage}
+//                   alt={recipe.title}
+//                   sx={{
+//                     width: "100%", // Take up full width
+//                     height: "auto", // Automatically adjust height to maintain aspect ratio
+//                     display: "block", // Center the image within the container
+//                     objectFit: "cover", // Maintain aspect ratio and cover entire area
+//                   }}
+//                 />
+//                 <CardContent sx={{ margin: "0", padding: "4px 0 !important" }}>
+//                   <Typography
+//                     variant="body1"
+//                     sx={{
+//                       textOverflow: "ellipsis",
+//                       whiteSpace: "nowrap",
+//                       overflow: "hidden",
+//                       fontWeight: "500",
+//                       fontSize: "0.9rem",
+//                     }}
+//                   >
+//                     <Link to={`/recipes/${recipe._id}`} style={{ textDecoration: "none", color: "inherit" }}>
+//                       {recipe.title}
+//                     </Link>
+//                   </Typography>
+//                 </CardContent>
+//               </Card>
+//             </Grid>
+//           ))}
+//         </Grid>
+//       </div>
+//     </Container>
+//   );
+// };
+
+// export default SimilarRecipes;

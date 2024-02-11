@@ -1,5 +1,5 @@
 // DrawerAppBar.js
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // React MUI
@@ -18,7 +18,9 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
+import TuneIcon from "@mui/icons-material/Tune";
 
+import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
 
@@ -36,12 +38,36 @@ const navItems = {
 
 function DrawerAppBar(props) {
   const [mobileOpen, setMobileOpen] = React.useState(false);
+  const [filtersOpen, setFiltersOpen] = React.useState(false);
+  const [meals, setMeals] = React.useState([]);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
   };
+
+  const handleFiltersToggle = () => {
+    setFiltersOpen((prevState) => !prevState);
+  };
+
+  useEffect(() => {
+    const fetchMeals = async () => {
+      try {
+        const response = await fetch(`${BASE_URL}/meals`);
+        if (response.ok) {
+          const data = await response.json();
+          setMeals(data);
+        } else {
+          throw new Error("Failed to fetch meals");
+        }
+      } catch (error) {
+        console.error("Error fetching meals:", error.message);
+      }
+    };
+
+    fetchMeals();
+  }, []);
 
   const handleLogout = () => {
     console.log("Logging out...");
@@ -79,6 +105,55 @@ function DrawerAppBar(props) {
     </Box>
   );
 
+  // Assuming 'meals' is an array of meal objects fetched from the server
+
+  const filtersDrawer = (
+    <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+      <Typography variant="h6" sx={{ my: 2 }}>
+        Meals
+      </Typography>
+      <Divider />
+      <List>
+        {meals.map((meal) => (
+          <ListItem key={meal.id} disablePadding>
+            <ListItemButton sx={{ textAlign: "center" }}>
+              <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+                <ListItemText primary={meal.name} />
+              </Link>
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+    </Box>
+  );
+
+  // const filtersDrawer = (
+  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+  //     <Typography variant="h6" sx={{ my: 2 }}>
+  //       Filters
+  //     </Typography>
+  //     <Divider />
+  //     {/* Placeholder for filters - Replace with actual filter options */}
+  //     <List>
+  //       <ListItem disablePadding>
+  //         <ListItemButton sx={{ textAlign: "center" }}>
+  //           <ListItemText primary="Category 1" />
+  //         </ListItemButton>
+  //       </ListItem>
+  //       <ListItem disablePadding>
+  //         <ListItemButton sx={{ textAlign: "center" }}>
+  //           <ListItemText primary="Category 2" />
+  //         </ListItemButton>
+  //       </ListItem>
+  //       <ListItem disablePadding>
+  //         <ListItemButton sx={{ textAlign: "center" }}>
+  //           <ListItemText primary="Category 3" />
+  //         </ListItemButton>
+  //       </ListItem>
+  //     </List>
+  //   </Box>
+  // );
+
   return (
     <Box sx={{ display: "flex", p: 3 }}>
       <CssBaseline />
@@ -112,6 +187,10 @@ function DrawerAppBar(props) {
                 </Link>
               )}
             </Box>
+            {/* Add the following button for opening the filters drawer */}
+            <IconButton color="inherit" aria-label="open filters" onClick={handleFiltersToggle} sx={{ display: { xs: "block", sm: "none" } }}>
+              <TuneIcon />
+            </IconButton>
           </Toolbar>
         </Container>
       </AppBar>
@@ -133,6 +212,24 @@ function DrawerAppBar(props) {
           }}
         >
           {drawer}
+        </Drawer>
+        {/* Add the second Drawer for filters */}
+        <Drawer
+          variant="temporary"
+          open={filtersOpen}
+          onClose={handleFiltersToggle}
+          ModalProps={{
+            keepMounted: true,
+          }}
+          sx={{
+            display: { xs: "block", sm: "none" },
+            "& .MuiDrawer-paper": {
+              boxSizing: "border-box",
+              width: drawerWidth,
+            },
+          }}
+        >
+          {filtersDrawer}
         </Drawer>
       </nav>
     </Box>

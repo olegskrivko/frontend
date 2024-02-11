@@ -19,7 +19,7 @@ import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 
 import IngredientTable from "./IngredientTable";
-
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 const TotalNutritionDonutChart = ({ ingredients, servings, perServing = true }) => {
   const calculateTotalNutrition = (data, servings) => {
     const factor = perServing ? 1 : 100 / servings;
@@ -172,7 +172,8 @@ function IconLabelTabs({ recipe }) {
       <Tabs value={value} variant="fullWidth" indicatorColor="primary" centered onChange={handleChange} aria-label="icon label tabs example">
         <Tab icon={<RestaurantIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="INGREDIENTS" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
         <Tab icon={<BlenderIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="TOOLS" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
-        <Tab icon={<ShoppingCartIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="PRICE" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
+
+        <Tab disabled icon={<ShoppingCartIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="PRICE" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
         <Tab icon={<DonutSmallIcon sx={{ fontSize: "1.5rem", mb: 0 }} />} label="NUTRITION" sx={{ fontSize: "0.7rem", minWidth: "70px" }} />
         {/* <Tab icon={<RestaurantIcon />} label="INGREDIENTS" sx={{ fontSize: "0.7rem" }} />
           <Tab icon={<BlenderIcon />} label="TOOLS" sx={{ fontSize: "0.7rem" }} />
