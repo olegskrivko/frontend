@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import { BASE_URL } from "../middleware/config";
 // import { useAuth } from "../middleware/AuthContext";
 import Grid from "@mui/material/Grid";
-import { List, ListItem, ListItemText } from "@mui/material";
+import { List, ListItem, ListItemText, Box } from "@mui/material";
 import SkeletonRecipeCard from "../components/SkeletonRecipeCard";
 import CustomAlert from "../components/CustomAlert";
 import RecipeCard from "../components/RecipeCard";
@@ -103,12 +103,12 @@ const RecipesPage = () => {
   //   return <Navigate to="/auth" state={{ from: "/recipes" }} />;
   // }
 
-  const RecipesPageTitle = "All Recipes";
+  const RecipesPageTitle = "Explore Our Recipe Collection";
 
   if (loading) {
     return (
       <React.Fragment>
-        <Typography variant="h4" style={{ margin: "2rem", textAlign: "center" }}>
+        <Typography variant="h4" style={{ margin: "2rem", textAlign: "center", fontSize: "2rem" }}>
           {RecipesPageTitle}
         </Typography>
         <Grid container spacing={3} style={{ marginTop: "20px" }}>
@@ -143,44 +143,48 @@ const RecipesPage = () => {
         </Grid> */}
 
         {/* Main content */}
-        <Grid item xs={12} sm={12} md={12} lg={12}>
-          <div style={{ position: "relative" }}>
+
+        <Grid item xs={8} sm={8} md={8} lg={8}>
+          <div
+          // style={{
+          //   position: "absolute",
+          //   top: "50%",
+          //   right: "0%",
+          //   transform: "translate(0%, -50%)",
+          //   textAlign: "right",
+          //   fontWeight: "700",
+          //   color: "#000",
+          // }}
+          >
+            <Typography variant="h2" style={{ textAlign: "left", fontSize: "2rem", marginBottom: "0.5rem", fontWeight: "700", textShadow: "-2px -2px 3px  #fff" }}>
+              Unleash Your Inner Chef
+            </Typography>
+            {/* <Typography variant="h2" style={{ fontSize: "3rem", marginBottom: "0.5rem", fontWeight: "700", textShadow: "-1px -1px 3px #000" }}>
+                Unleash Your Inner Chef
+              </Typography> */}
+            {/* <div sx={{ filter: "invert(0.6)" }}> */}
+            <Typography variant="subtitle1" style={{ fontSize: "1rem", fontWeight: "500", textShadow: "-1px -1px 3px  #fff" }}>
+              Master the art of cooking with our diverse and inspiring recipe collection.
+            </Typography>
+            {/* </div> */}
+          </div>
+        </Grid>
+        <Grid item xs={4} sm={4} md={4} lg={4}>
+          <Box style={{ position: "relative", left: -90, top: -40 }}>
             <img
-              src={Drinks11}
+              src={Drinks10}
               alt="Image Description"
               style={{
                 width: "auto",
-                maxHeight: "300px",
+                maxHeight: "220px",
                 // objectFit: "cover",
                 borderRadius: "3rem",
               }}
             />
-
-            <div
-              style={{
-                position: "absolute",
-                top: "50%",
-                right: "0%",
-                transform: "translate(0%, -50%)",
-                textAlign: "right",
-                fontWeight: "700",
-                color: "#000",
-              }}
-            >
-              <Typography variant="h2" style={{ fontSize: "3rem", marginBottom: "0.5rem", fontWeight: "700", textShadow: "-2px -2px 3px  #fff" }}>
-                Unleash Your Inner Chef
-              </Typography>
-              {/* <Typography variant="h2" style={{ fontSize: "3rem", marginBottom: "0.5rem", fontWeight: "700", textShadow: "-1px -1px 3px #000" }}>
-                Unleash Your Inner Chef
-              </Typography> */}
-              <div sx={{ filter: "invert(0.6)" }}>
-                <Typography variant="subtitle1" style={{ fontSize: "1.5rem", fontWeight: "500", textShadow: "-1px -1px 3px  #fff" }}>
-                  Master the art of cooking with our diverse and inspiring recipe collection.
-                </Typography>
-              </div>
-            </div>
-          </div>
-          <Typography variant="h4" style={{ margin: "1rem", textAlign: "center" }}>
+          </Box>
+        </Grid>
+        <Grid item xs={12} sm={12} md={12} lg={12} sx={{ paddingTop: "0 !important" }}>
+          <Typography variant="h6" style={{ margin: "0 1rem 1rem 1rem", textAlign: "center" }}>
             {RecipesPageTitle}
           </Typography>
           <Grid container spacing={3}>

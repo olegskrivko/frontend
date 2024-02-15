@@ -13,6 +13,7 @@ import Contact from "./pages/Contact";
 import Dashboard from "./pages/Dashboard";
 import AuthPage from "./pages/AuthPage";
 import NotFound from "./pages/NotFound";
+import Meals from "./pages/Meals";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
               <Route path="contact" element={<Contact />} />
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="tools" element={<Tools />} />
+              <Route path="meals/:id" element={<Meals />} />
               <Route path="prices" element={<Prices />} />
               <Route path="auth" element={<AuthPage />} />
               <Route path="*" element={<NotFound />} />

@@ -19,7 +19,11 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import TuneIcon from "@mui/icons-material/Tune";
-
+import MenuBookIcon from "@mui/icons-material/MenuBook";
+import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
+import SearchIcon from "@mui/icons-material/Search";
+import ListSubheader from "@mui/material/ListSubheader";
+import Collapse from "@mui/material/Collapse";
 import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
@@ -42,6 +46,7 @@ function DrawerAppBar(props) {
   const [meals, setMeals] = React.useState([]);
   const { isAuthenticated, logout } = useAuth();
   const navigate = useNavigate();
+  const [mealsOpen, setMealsOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -49,6 +54,10 @@ function DrawerAppBar(props) {
 
   const handleFiltersToggle = () => {
     setFiltersOpen((prevState) => !prevState);
+  };
+
+  const handleMealsToggle = () => {
+    setMealsOpen((prevState) => !prevState);
   };
 
   useEffect(() => {
@@ -104,28 +113,108 @@ function DrawerAppBar(props) {
       </List>
     </Box>
   );
+  // const FiltersList = () => (
+  //   <>
+  //     <ListSubheader onClick={handleFiltersToggle} sx={{ cursor: "pointer", textAlign: "center" }}>
+  //       Filters
+  //     </ListSubheader>
+  //     <Collapse in={filtersOpen} timeout="auto" unmountOnExit>
+  //       <List>
+  //         {meals.map((meal) => (
+  //           <ListItem key={meal.id} disablePadding>
+  //             <ListItemButton sx={{ textAlign: "center" }}>
+  //               <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+  //                 <ListItemText primary={meal.name} />
+  //               </Link>
+  //             </ListItemButton>
+  //           </ListItem>
+  //         ))}
+  //       </List>
+  //     </Collapse>
+  //   </>
+  // );
 
-  // Assuming 'meals' is an array of meal objects fetched from the server
+  // const filtersDrawer = (
+  //   <Box sx={{ textAlign: "center" }}>
+  //     <Typography variant="h6" sx={{ my: 2 }}>
+  //       Filters
+  //     </Typography>
+  //     <Divider />
+  //     <FiltersList />
+  //   </Box>
+  // );
 
   const filtersDrawer = (
-    <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+    <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Meals
+        Cookify
       </Typography>
       <Divider />
       <List>
-        {meals.map((meal) => (
-          <ListItem key={meal.id} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
-                <ListItemText primary={meal.name} />
-              </Link>
-            </ListItemButton>
-          </ListItem>
-        ))}
+        {/* ... (existing code for other items) */}
+        <ListSubheader onClick={handleMealsToggle} sx={{ cursor: "pointer", textAlign: "left" }}>
+          Meals
+        </ListSubheader>
+        <Collapse in={mealsOpen} timeout="auto" unmountOnExit>
+          <List>
+            {meals.map((meal) => (
+              <ListItem key={meal.id} disablePadding>
+                <ListItemButton sx={{ textAlign: "left" }}>
+                  <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+                    <ListItemText primary={meal.name} />
+                  </Link>
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+        </Collapse>
+        {/* ... (existing code for other items) */}
       </List>
     </Box>
   );
+
+  // Assuming 'meals' is an array of meal objects fetched from the server
+  // const filtersDrawer = (
+  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+  //     <Typography variant="h6" sx={{ my: 2 }}>
+  //       Filters
+  //     </Typography>
+  //     <Divider />
+  //     <List>
+  //       <ListSubheader onClick={handleFiltersToggle} sx={{ cursor: "pointer", textAlign: "center" }}>
+  //         Categories
+  //       </ListSubheader>
+  //       {meals.map((meal) => (
+  //         <ListItem key={meal.id} disablePadding>
+  //           <ListItemButton sx={{ textAlign: "center" }}>
+  //             <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+  //               <ListItemText primary={meal.name} />
+  //             </Link>
+  //           </ListItemButton>
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Box>
+  // );
+  // const filtersDrawer = (
+  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+  //     <Typography variant="h6" sx={{ my: 2 }}>
+  //       Meals
+  //     </Typography>
+  //     <Divider />
+  //     <List>
+  //       {meals.map((meal) => (
+  //         <ListItem key={meal.id} disablePadding>
+  //           <ListItemButton sx={{ textAlign: "center" }}>
+  //             <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+  //               <ListItemText primary={meal.name} />
+  //             </Link>
+  //           </ListItemButton>
+  //         </ListItem>
+  //       ))}
+  //     </List>
+  //   </Box>
+  // );
 
   // const filtersDrawer = (
   //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
@@ -189,7 +278,7 @@ function DrawerAppBar(props) {
             </Box>
             {/* Add the following button for opening the filters drawer */}
             <IconButton color="inherit" aria-label="open filters" onClick={handleFiltersToggle} sx={{ display: { xs: "block", sm: "none" } }}>
-              <TuneIcon />
+              <SearchIcon />
             </IconButton>
           </Toolbar>
         </Container>
@@ -212,6 +301,7 @@ function DrawerAppBar(props) {
           }}
         >
           {drawer}
+          {/* {filtersDrawer} */}
         </Drawer>
         {/* Add the second Drawer for filters */}
         <Drawer
