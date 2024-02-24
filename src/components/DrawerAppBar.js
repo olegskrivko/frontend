@@ -24,6 +24,8 @@ import RestaurantMenuIcon from "@mui/icons-material/RestaurantMenu";
 import SearchIcon from "@mui/icons-material/Search";
 import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
+import ExpandLess from "@mui/icons-material/ExpandLess";
+import ExpandMore from "@mui/icons-material/ExpandMore";
 import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
@@ -36,7 +38,7 @@ const navItems = {
   "/tools": "Tools",
   "/prices": "Prices",
   "/contact": "Contact",
-  "/dashboard": "Dashboard",
+  "/admin/dashboard": "Dashboard",
   "/auth": "Users",
 };
 
@@ -149,21 +151,33 @@ function DrawerAppBar(props) {
       <Typography variant="h6" sx={{ my: 2 }}>
         Cookify
       </Typography>
-      <Divider />
+      {/* <Divider /> */}
       <List>
         {/* ... (existing code for other items) */}
-        <ListSubheader onClick={handleMealsToggle} sx={{ cursor: "pointer", textAlign: "left" }}>
-          Meals
-        </ListSubheader>
+        {/* <ListSubheader onClick={handleMealsToggle} sx={{ cursor: "pointer", fontWeight: "500", textAlign: "left", fontSize: "1rem" }}> */}
+        <ListItemButton onClick={handleMealsToggle} sx={{ cursor: "pointer", color: "black", textAlign: "left", fontSize: "1rem" }}>
+          <ListItemText
+            primary={
+              <Typography variant="body1" fontWeight="bold">
+                Meals
+              </Typography>
+            }
+          />
+        </ListItemButton>
+        {/* </ListSubheader> */}
         <Collapse in={mealsOpen} timeout="auto" unmountOnExit>
           <List>
             {meals.map((meal) => (
-              <ListItem key={meal.id} disablePadding>
-                <ListItemButton sx={{ textAlign: "left" }}>
-                  <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
-                    <ListItemText primary={meal.name} />
+              <ListItem key={meal._id} disablePadding>
+                <ListItemButton sx={{ textAlign: "left", color: "black" }}>
+                  <Link to={`meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+                    <ListItemText primary={meal.name} sx={{ color: "black", paddingLeft: "1rem", marginTop: "0", marginBottom: "0" }} />
+                    {/* <ListItemText primary={meal.name} sx={{ color: "black", paddingLeft: "1rem", margin: "0" }} /> */}
                   </Link>
                 </ListItemButton>
+                {/* <ListItemButton component={Link} to={`${BASE_URL}/meals`} sx={{ textAlign: "left" }}>
+                  <ListItemText primary="Meals" />
+                </ListItemButton> */}
               </ListItem>
             ))}
           </List>
@@ -172,77 +186,42 @@ function DrawerAppBar(props) {
       </List>
     </Box>
   );
-
-  // Assuming 'meals' is an array of meal objects fetched from the server
-  // const filtersDrawer = (
-  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
+  // const filtersDrawer = ({ meals, handleDrawerToggle, handleMealsToggle, mealsOpen }) => (
+  //   <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
   //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       Filters
+  //       Cookify
   //     </Typography>
   //     <Divider />
   //     <List>
-  //       <ListSubheader onClick={handleFiltersToggle} sx={{ cursor: "pointer", textAlign: "center" }}>
-  //         Categories
+  //       <ListSubheader
+  //         onClick={handleMealsToggle}
+  //         sx={{
+  //           cursor: "pointer",
+  //           textAlign: "left",
+  //           backgroundColor: (theme) => theme.palette.grey[200], // Use theme for background color
+  //           padding: "8px 16px",
+  //           fontWeight: "bold",
+  //         }}
+  //       >
+  //         Meals
   //       </ListSubheader>
-  //       {meals.map((meal) => (
-  //         <ListItem key={meal.id} disablePadding>
-  //           <ListItemButton sx={{ textAlign: "center" }}>
-  //             <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
-  //               <ListItemText primary={meal.name} />
-  //             </Link>
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
+  //       <Collapse in={mealsOpen} timeout="auto" unmountOnExit>
+  //         <List>
+  //           {meals.map((meal) => (
+  //             <ListItem key={meal._id} disablePadding>
+  //               <ListItemButton sx={{ textAlign: "left" }}>
+  //                 <Link to={`meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
+  //                   <ListItemText primary={meal.name} />
+  //                 </Link>
+  //               </ListItemButton>
+  //             </ListItem>
+  //           ))}
+  //         </List>
+  //       </Collapse>
+  //       {/* ... (existing code for other items) */}
   //     </List>
   //   </Box>
   // );
-  // const filtersDrawer = (
-  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
-  //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       Meals
-  //     </Typography>
-  //     <Divider />
-  //     <List>
-  //       {meals.map((meal) => (
-  //         <ListItem key={meal.id} disablePadding>
-  //           <ListItemButton sx={{ textAlign: "center" }}>
-  //             <Link to={`${BASE_URL}/meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
-  //               <ListItemText primary={meal.name} />
-  //             </Link>
-  //           </ListItemButton>
-  //         </ListItem>
-  //       ))}
-  //     </List>
-  //   </Box>
-  // );
-
-  // const filtersDrawer = (
-  //   <Box onClick={handleFiltersToggle} sx={{ textAlign: "center" }}>
-  //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       Filters
-  //     </Typography>
-  //     <Divider />
-  //     {/* Placeholder for filters - Replace with actual filter options */}
-  //     <List>
-  //       <ListItem disablePadding>
-  //         <ListItemButton sx={{ textAlign: "center" }}>
-  //           <ListItemText primary="Category 1" />
-  //         </ListItemButton>
-  //       </ListItem>
-  //       <ListItem disablePadding>
-  //         <ListItemButton sx={{ textAlign: "center" }}>
-  //           <ListItemText primary="Category 2" />
-  //         </ListItemButton>
-  //       </ListItem>
-  //       <ListItem disablePadding>
-  //         <ListItemButton sx={{ textAlign: "center" }}>
-  //           <ListItemText primary="Category 3" />
-  //         </ListItemButton>
-  //       </ListItem>
-  //     </List>
-  //   </Box>
-  // );
-
   return (
     <Box sx={{ display: "flex", p: 3 }}>
       <CssBaseline />
@@ -253,7 +232,7 @@ function DrawerAppBar(props) {
         }}
       >
         <Container disableGutters>
-          <Toolbar>
+          <Toolbar sx={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
             <IconButton color="inherit" aria-label="open drawer" edge="start" onClick={handleDrawerToggle} sx={{ mr: 2, display: { sm: "none" } }}>
               <MenuIcon />
             </IconButton>
@@ -277,7 +256,7 @@ function DrawerAppBar(props) {
               )}
             </Box>
             {/* Add the following button for opening the filters drawer */}
-            <IconButton color="inherit" aria-label="open filters" onClick={handleFiltersToggle} sx={{ display: { xs: "block", sm: "none" } }}>
+            <IconButton color="inherit" aria-label="open filters" onClick={handleFiltersToggle} sx={{ display: { sm: "none" } }}>
               <SearchIcon />
             </IconButton>
           </Toolbar>

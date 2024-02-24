@@ -102,7 +102,7 @@ import ScaleIcon from "@mui/icons-material/Scale";
 import SchemaIcon from "@mui/icons-material/Schema";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
 
-const Dashboard = () => {
+const AdminDashboard = () => {
   const [selectedPage, setSelectedPage] = useState("recipes");
 
   const handlePageChange = (page) => {
@@ -330,4 +330,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default AdminDashboard;

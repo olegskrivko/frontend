@@ -163,14 +163,23 @@ const formatTime = (time) => {
   const minutes = Math.floor(time % 60);
 
   const formattedTime = [];
+  // if (days > 0) {
+  //   formattedTime.push(`${days} day${days > 1 ? "s" : ""}`);
+  // }
+  // if (hours > 0) {
+  //   formattedTime.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+  // }
+  // if (minutes > 0 || (days === 0 && hours === 0)) {
+  //   formattedTime.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
+  // }
   if (days > 0) {
-    formattedTime.push(`${days} day${days > 1 ? "s" : ""}`);
+    formattedTime.push(`${days} d`);
   }
   if (hours > 0) {
-    formattedTime.push(`${hours} hour${hours > 1 ? "s" : ""}`);
+    formattedTime.push(`${hours} h`);
   }
   if (minutes > 0 || (days === 0 && hours === 0)) {
-    formattedTime.push(`${minutes} minute${minutes > 1 ? "s" : ""}`);
+    formattedTime.push(`${minutes} min`);
   }
 
   return formattedTime.join(" ");

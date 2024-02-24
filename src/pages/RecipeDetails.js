@@ -110,6 +110,7 @@ const RecipeDetails = () => {
 
   const API_URL = `${BASE_URL}/recipes/${id}`;
   const REVIEWS_URL = `${BASE_URL}/recipes/${id}/reviews`;
+
   const [reviews, setReviews] = useState([]);
 
   const [recipe, setRecipe] = useState(null);
@@ -793,7 +794,7 @@ const RecipeDetails = () => {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Reviews
+            Reviews ({recipe && reviews && reviews.length})
           </Typography>
           <ReviewComponent key={reviews._id} reviewData={reviews} />
           {/* <ReviewComponent /> */}

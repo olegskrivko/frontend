@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Container, TextField, Typography, MenuItem } from "@mui/material";
 
-const Tools = () => {
+const ToolsPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [fromUnit, setFromUnit] = useState("cup");
   const [toUnit, setToUnit] = useState("milliliter");
@@ -63,4 +63,4 @@ const Tools = () => {
   );
 };
 
-export default Tools;
+export default ToolsPage;

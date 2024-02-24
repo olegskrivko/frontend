@@ -17,7 +17,7 @@ const Footer = () => {
       }}
     >
       <Typography variant="body2" color="#fff">
-        &copy; 2023 Cooking App. All rights reserved.
+        &copy; 2024 Cooking App. All rights reserved.
       </Typography>
     </Box>
   );

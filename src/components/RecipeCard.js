@@ -19,10 +19,10 @@ export default function RecipeCard({ recipe }) {
   return (
     <Grid
       item
-      xs={12}
+      xs={6}
       sm={6}
       md={4}
-      lg={4}
+      lg={3}
       sx={{
         display: "flex",
         justifyContent: "center",
@@ -59,13 +59,13 @@ export default function RecipeCard({ recipe }) {
           }}
         />
 
-        <CardActions disableSpacing>
+        <CardActions disableSpacing sx={{ padding: "0.3rem 0" }}>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          {/* <IconButton aria-label="share">
             <ShareIcon />
-          </IconButton>
+          </IconButton> */}
           <Box
             style={{
               marginLeft: "auto",
