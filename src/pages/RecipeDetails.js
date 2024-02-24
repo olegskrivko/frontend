@@ -33,6 +33,7 @@ import SpaIcon from "@mui/icons-material/Spa";
 import StepIcon from "@mui/material/StepIcon";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
 
+import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 // import { createTheme } from "@mui/material/styles";
 
@@ -63,6 +64,39 @@ import ActivitiesInfo from "../components/recipeDetails/ActivitiesInfo";
 // BASE_URL
 import { BASE_URL } from "../middleware/config";
 import RatingForm from "../components/recipeDetails/RatingForm";
+// Custom Components
+import { useAuth } from "../middleware/AuthContext";
+{
+  /* <Typography gutterBottom variant="h6"></Typography> */
+}
+const LoginToReview = ({ recipe }) => {
+  return (
+    // <Grid container spacing={3}>
+    <Grid item xs={12} sm={12} md={12} lg={12}>
+      {/* <div style={{ textAlign: "center", marginTop: "2rem" }}> */}
+      <Typography variant="h6" gutterBottom sx={{ fontWeight: "bold", textAlign: "center" }}>
+        Ready to share your thoughts on the {recipe.title} recipe?
+      </Typography>
+      <Typography variant="body1" gutterBottom sx={{ textAlign: "center" }}>
+        Login to review and rate your experience!
+      </Typography>
+      <Box sx={{ textAlign: "center" }}>
+        <Button
+          component={Link}
+          to="/auth" // Update this to your login page path
+          variant="contained"
+          color="primary"
+          size="medium"
+          sx={{ fontWeight: "bold", textDecoration: "none", color: "#fff" }}
+        >
+          Login Now
+        </Button>
+      </Box>
+      {/* </div> */}
+    </Grid>
+    // </Grid>
+  );
+};
 
 function CircularIndeterminate() {
   return (
@@ -118,7 +152,7 @@ const RecipeDetails = () => {
   const [error, setError] = useState(null);
 
   const [calories, setCalories] = useState(0); // State for total calories
-
+  const { isAuthenticated } = useAuth();
   // const { obtainAccessToken, user } = useAuth();
 
   const handleShare = async ({ enqueueSnackbar }) => {
@@ -504,7 +538,7 @@ const RecipeDetails = () => {
                   }}
                 >
                   <Grid item>
-                    <SpaIcon />
+                    <SoupKitchenIcon />
                   </Grid>
                   <Grid item>
                     {recipe && recipe.diets && <DietLabel recipeDiets={recipe.diets} dietName="Spicy" fallbackLabel="Not Spicy" />}
@@ -764,7 +798,8 @@ const RecipeDetails = () => {
 
       <Grid container spacing={3}>
         {/* <RatingForm /> */}
-        <QuestionRating recipeId={id} />
+
+        {isAuthenticated() ? <QuestionRating recipeId={id} /> : <LoginToReview recipe={recipe} />}
       </Grid>
       {/* RecipeReviewForm */}
       <Grid container spacing={3}>
@@ -778,7 +813,7 @@ const RecipeDetails = () => {
             margin: "20px 0",
           }}
         >
-          <RecipeReviewForm recipeId={id} />
+          {isAuthenticated() && <RecipeReviewForm recipeId={id} />}
         </Grid>
       </Grid>
       {/* ReviewComponent */}
