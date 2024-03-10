@@ -20,9 +20,9 @@ export default function RecipeCard({ recipe }) {
   return (
     // <Grid
     //   item
-    //   xs={6}
-    //   sm={6}
-    //   md={6}
+    //   xs={12}
+    //   sm={12}
+    //   md={12}
     //   lg={12}
     //   sx={{
     //     display: "flex",
@@ -33,6 +33,7 @@ export default function RecipeCard({ recipe }) {
     // >
     <Card
       sx={{
+        maxWidth: 630,
         overflow: "hidden", // Ensure that the overflow is hidden to prevent zooming out of borders
         "&:hover img": {
           transform: "scale(1.05)", // Adjust the scale value for your desired zoom level

@@ -59,6 +59,7 @@ import RecipeCuisines from "../components/recipeDetails/RecipeCuisines";
 import RecipeUpdated from "../components/recipeDetails/RecipeUpdated";
 import ParentComponent from "../components/recipeDetails/ParentComponent";
 import ActivitiesInfo from "../components/recipeDetails/ActivitiesInfo";
+import StartCookButton from "../components/recipeDetails/StartCookButton";
 // import { useAuth } from "../middleware/AuthContext";
 
 // BASE_URL
@@ -137,6 +138,10 @@ const TotalCalories = ({ ingredients, servings }) => {
 };
 
 const RecipeDetails = () => {
+  const handleStartCooking = () => {
+    // Handle the start cooking action
+    console.log("Start cooking clicked!");
+  };
   // const theme = createTheme();
   // const hoverBackgroundColor = theme.palette.action.hover;
   // console.log(hoverBackgroundColor);
@@ -852,6 +857,25 @@ const RecipeDetails = () => {
             You May Also Like
           </Typography>
           <SimilarRecipes />
+        </Grid>
+      </Grid>
+
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            margin: "20px 0",
+            position: "relative",
+          }}
+        >
+          {/* Start to Cook Button */}
+          <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 99 }}>
+            <StartCookButton onClick={handleStartCooking} />
+          </div>
         </Grid>
       </Grid>
 

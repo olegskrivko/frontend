@@ -40,9 +40,9 @@ function App() {
               <Route index element={<Home />} />
               <Route path="recipes" element={<RecipesPage />} />
               <Route path="recipes/:id" element={<RecipeDetails />} />
-              <Route path="meals/:id" element={<MealsPage />} />
+              <Route path="meals/:id/recipes" element={<MealsPage />} />
               <Route path="collections" element={<CollectionsPage />} />
-              <Route path="collections/:collection" element={<CollectionRecipes />} />
+              <Route path="collections/:id" element={<CollectionRecipes />} />
               <Route path="tags" element={<TagsPage />} />
               <Route path="tags/:tag" element={<TagRecipes />} />
               <Route path="search" element={<SearchPage />} />

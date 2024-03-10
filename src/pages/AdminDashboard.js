@@ -85,6 +85,12 @@ import IngredientCategoryList from "../components/dashboard/IngredientCategoryLi
 import TimeForm from "../components/dashboard/TimeForm";
 import TimeList from "../components/dashboard/TimeList";
 
+import CollectionForm from "../components/dashboard/CollectionForm";
+import CollectionList from "../components/dashboard/CollectionList";
+
+import TasteForm from "../components/dashboard/TasteForm";
+import TasteList from "../components/dashboard/TasteList";
+
 import RecipeForm from "../components/dashboard/RecipeForm";
 
 // MUI Icons
@@ -101,6 +107,8 @@ import KitchenIcon from "@mui/icons-material/Kitchen";
 import ScaleIcon from "@mui/icons-material/Scale";
 import SchemaIcon from "@mui/icons-material/Schema";
 import AccessTimeSharpIcon from "@mui/icons-material/AccessTimeSharp";
+import AppsIcon from "@mui/icons-material/Apps";
+import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 
 const AdminDashboard = () => {
   const [selectedPage, setSelectedPage] = useState("recipes");
@@ -201,6 +209,20 @@ const AdminDashboard = () => {
                 <AccessTimeSharpIcon />
               </ListItemIcon>
               <ListItemText primary="Times" />
+            </ListItem>
+
+            <ListItem button selected={selectedPage === "collections"} onClick={() => handlePageChange("collections")}>
+              <ListItemIcon>
+                <AppsIcon />
+              </ListItemIcon>
+              <ListItemText primary="Collections" />
+            </ListItem>
+
+            <ListItem button selected={selectedPage === "tastes"} onClick={() => handlePageChange("tastes")}>
+              <ListItemIcon>
+                <SoupKitchenIcon />
+              </ListItemIcon>
+              <ListItemText primary="Tastes" />
             </ListItem>
 
             <ListItem button selected={selectedPage === "userProfile"} onClick={() => handlePageChange("userProfile")}>
@@ -313,6 +335,24 @@ const AdminDashboard = () => {
               <h2>Times</h2>
               <TimeForm />
               <TimeList />
+              {/* Add components for managing occasions */}
+            </section>
+          )}
+
+          {selectedPage === "collections" && (
+            <section>
+              <h2>Collections</h2>
+              <CollectionForm />
+              <CollectionList />
+              {/* Add components for managing occasions */}
+            </section>
+          )}
+
+          {selectedPage === "tastes" && (
+            <section>
+              <h2>Tastes</h2>
+              <TasteForm />
+              <TasteList />
               {/* Add components for managing occasions */}
             </section>
           )}

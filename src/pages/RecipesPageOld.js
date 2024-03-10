@@ -71,12 +71,8 @@ const Recipes = () => {
       <Typography variant="h4" style={{ margin: "2rem", textAlign: "center" }}>
         All Recipes
       </Typography>
-      <RecipeList
-        recipes={recipes}
-        loading={loading}
-        initialCardCount={initialCardCount}
-        error={error}
-      />
+
+      <RecipeList recipes={recipes} loading={loading} initialCardCount={initialCardCount} error={error} />
     </>
   );
 };
