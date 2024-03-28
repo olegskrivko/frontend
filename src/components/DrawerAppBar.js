@@ -26,6 +26,8 @@ import ListSubheader from "@mui/material/ListSubheader";
 import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+
 import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
@@ -33,7 +35,7 @@ import { useAuth } from "../middleware/AuthContext";
 const drawerWidth = 240;
 
 const navItems = {
-  "/": "Home",
+  // "/": "Home",
   "/recipes": "Recipes",
   "/collections": "Collections",
   "/tools": "Tools",
@@ -91,7 +93,7 @@ function DrawerAppBar(props) {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Cookify
+        <Link to="/">Cookify</Link>
       </Typography>
       <Divider />
       <List>
@@ -150,7 +152,7 @@ function DrawerAppBar(props) {
   const filtersDrawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        Cookify
+        <Link to="/">Cookify</Link>
       </Typography>
       {/* <Divider /> */}
       <List>
@@ -239,7 +241,9 @@ function DrawerAppBar(props) {
             </IconButton>
 
             <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
-              Cookify
+              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
+                Cookify
+              </Link>
             </Typography>
 
             <Box sx={{ display: { xs: "none", sm: "block" } }}>

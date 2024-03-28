@@ -55,7 +55,7 @@ const SimilarRecipes = () => {
       {/* Static image or any other layout you desire */}
 
       <Grid container spacing={3} justifyContent="center" style={{ marginTop: "4px" }}>
-        {recipes.slice(0, 6).map((recipe, index) => (
+        {/* {recipes.slice(0, 6).map((recipe, index) => (
           <Grid
             key={recipe._id}
             item
@@ -101,7 +101,7 @@ const SimilarRecipes = () => {
               </CardContent>
             </Card>
           </Grid>
-        ))}
+        ))} */}
       </Grid>
     </Container>
   );

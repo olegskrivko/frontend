@@ -333,6 +333,7 @@ import RecipeCardMeals from "../components/RecipeCardMeals";
 // import Desserts from "../images/Desserts.jpg";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
+
 import BasicPagination from "../components/BasicPagination";
 import SideBar from "./SideBar";
 

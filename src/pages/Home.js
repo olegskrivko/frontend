@@ -20,11 +20,13 @@ import Drinks11 from "../images/img-11.png";
 const Home = () => {
   // const { isAuthenticated } = useAuth();
   const API_URL = `${BASE_URL}/recipes`;
+  const API_URL_COLLECTION_ONE = `${BASE_URL}/collections/quick-and-easy-recipes`;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [categories, setCategories] = useState([]);
+  const [collectionOne, setCollectionOne] = useState([]);
   // useEffect(() => {
   //   const fetchRecipes = async () => {
   //     try {
@@ -97,6 +99,34 @@ const Home = () => {
     fetchRecipes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [API_URL]);
+
+  useEffect(() => {
+    const fetchCollectionOne = async () => {
+      try {
+        // Fetch collectionOne
+        const recipesResponse = await fetch(API_URL_COLLECTION_ONE);
+        if (!recipesResponse.ok) {
+          throw new Error("Failed to fetch recipes");
+        }
+        const recipesData = await recipesResponse.json();
+        setCollectionOne(recipesData);
+
+        // Fetch categories
+        // const categoriesResponse = await fetch(`${BASE_URL}/meals`);
+        // if (categoriesResponse.ok) {
+        //   const categoriesData = await categoriesResponse.json();
+        //   setCategories(categoriesData);
+        // } else {
+        //   console.error("Failed to fetch categories");
+        // }
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCollectionOne();
+  }, []);
 
   // if (redirectToLogin || !isAuthenticated()) {
   //   // If redirectToLogin is true or user is not authenticated, redirect to the login page
@@ -188,9 +218,65 @@ const Home = () => {
             {RecipesPageTitle}
           </Typography>
           <Grid container spacing={3}>
-            {recipes.map((recipe) => (
+            {/* {recipes.map((recipe) => (
               <RecipeCardHome key={recipe._id} recipe={recipe} />
-            ))}
+            ))} */}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Typography variant="h6" gutterBottom sx={{ textAlign: "left" }}>
+            Popular recipe collections...
+          </Typography>
+          <Grid container spacing={3}>
+            {/* {recipes.map((recipe) => (
+              <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Typography variant="h6" gutterBottom sx={{ textAlign: "left" }}>
+            Browse by category
+            {collectionOne.name}
+          </Typography>
+          <Grid container spacing={3}>
+            {/* {recipes.map((recipe) => (
+              <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Typography variant="h6" gutterBottom sx={{ textAlign: "left" }}>
+            Seasonal inspiration
+          </Typography>
+
+          <Grid container spacing={3}>
+            {/* {recipes.map((recipe) => (
+              <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
+          </Grid>
+        </Grid>
+        <Grid item xs={12} sm={12} md={6} lg={6}>
+          <Typography variant="h6" gutterBottom sx={{ textAlign: "left" }}>
+            Trending guides
+          </Typography>
+          <Grid container spacing={3}>
+            {/* {recipes.map((recipe) => (
+              <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
+          </Grid>
+        </Grid>
+
+        <Grid item xs={12} sm={12} md={12} lg={12}>
+          <Typography variant="h6" gutterBottom sx={{ textAlign: "left" }}>
+            Latest added recipes...
+          </Typography>
+          <Grid container spacing={3}>
+            {/* {recipes.map((recipe) => (
+              <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
           </Grid>
         </Grid>
       </Grid>

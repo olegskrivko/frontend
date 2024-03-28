@@ -51,7 +51,7 @@
 
 // export default Dashboard;
 import React, { useState } from "react";
-import { Grid, CssBaseline, AppBar, Toolbar, Typography, Container, List, ListItem, ListItemIcon, ListItemText, IconButton, Divider } from "@mui/material";
+import { Grid, CssBaseline, Box, AppBar, Toolbar, Typography, Container, List, ListItem, ListItemIcon, ListItemText, IconButton, Divider } from "@mui/material";
 import MealForm from "../components/dashboard/MealForm";
 import MealList from "../components/dashboard/MealList";
 
@@ -132,8 +132,16 @@ const AdminDashboard = () => {
         </Toolbar>
         </AppBar>
       </Grid> */}
-      <Grid item xs={4}>
-        <Container>
+
+      {/* <Grid container spacing={3}>
+      <Grid item xs={12} sm={12} md={3} lg={3}>
+        <SideBar applyFilters={applyFilters} resetFilters={resetFilters} />
+      </Grid>
+
+      <Grid item xs={12} sm={12} md={9} lg={9}> */}
+
+      <Grid item xs={12} sm={12} md={3} lg={3}>
+        <Box>
           {/* Sidebar with Icons */}
           <List>
             <ListItem button selected={selectedPage === "recipes"} onClick={() => handlePageChange("recipes")}>
@@ -233,10 +241,10 @@ const AdminDashboard = () => {
             </ListItem>
             {/* Add more sidebar items with icons for other pages */}
           </List>
-        </Container>
+        </Box>
       </Grid>
-      <Grid item xs={8}>
-        <Container>
+      <Grid item xs={12} sm={12} md={9} lg={9}>
+        <Box>
           {/* Main Content */}
           {selectedPage === "recipes" && (
             <section>
@@ -364,7 +372,7 @@ const AdminDashboard = () => {
             </section>
           )}
           {/* Add more sections for other pages */}
-        </Container>
+        </Box>
       </Grid>
     </Grid>
   );

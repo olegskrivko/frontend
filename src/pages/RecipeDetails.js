@@ -236,7 +236,12 @@ const RecipeDetails = () => {
   }, [API_URL, REVIEWS_URL]);
 
   if (loading) {
-    return <Typography variant="h4">Loading Recipe Details...</Typography>;
+    return (
+      <>
+        <Typography variant="h4">Loading Recipe Details...</Typography>
+        <CircularIndeterminate />
+      </>
+    );
   }
 
   if (error) {
