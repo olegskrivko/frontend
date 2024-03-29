@@ -29,43 +29,46 @@ import ConversionPage from "./pages/ConversionPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
-
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+const theme = createTheme();
 function App() {
   return (
     <AuthProvider>
-      <SnackbarProvider maxSnack={3}>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route index element={<Home />} />
-              <Route path="recipes" element={<RecipesPage />} />
-              <Route path="recipes/:id" element={<RecipeDetails />} />
-              <Route path="meals/:id/recipes" element={<MealsPage />} />
-              <Route path="collections" element={<CollectionsPage />} />
-              <Route path="collections/:id" element={<CollectionRecipes />} />
-              <Route path="tags" element={<TagsPage />} />
-              <Route path="tags/:tag" element={<TagRecipes />} />
-              <Route path="search" element={<SearchPage />} />
-              <Route path="prices" element={<Prices />} />
-              <Route path="auth" element={<AuthPage />} />
-              <Route path="profile" element={<ProfilePage />} />
-              <Route path="settings" element={<SettingsPage />} />
-              <Route path="favorites" element={<FavoritesPage />} />
-              <Route path="my-recipes" element={<MyRecipesPage />} />
-              <Route path="create-recipe" element={<CreateRecipePage />} />
-              <Route path="edit-recipe/:id" element={<EditRecipePage />} />
-              <Route path="admin/dashboard" element={<AdminDashboard />} />
-              <Route path="admin/manage-recipes" element={<ManageRecipesPage />} />
-              <Route path="admin/manage-users" element={<ManageUsersPage />} />
-              <Route path="tools" element={<ToolsPage />} />
-              <Route path="conversion" element={<ConversionPage />} />
-              <Route path="about" element={<AboutPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="*" element={<NotFoundPage />} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </SnackbarProvider>
+      <ThemeProvider theme={theme}>
+        <SnackbarProvider maxSnack={3}>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="recipes" element={<RecipesPage />} />
+                <Route path="recipes/:id" element={<RecipeDetails />} />
+                <Route path="meals/:id/recipes" element={<MealsPage />} />
+                <Route path="collections" element={<CollectionsPage />} />
+                <Route path="collections/:id" element={<CollectionRecipes />} />
+                <Route path="tags" element={<TagsPage />} />
+                <Route path="tags/:tag" element={<TagRecipes />} />
+                <Route path="search" element={<SearchPage />} />
+                <Route path="prices" element={<Prices />} />
+                <Route path="auth" element={<AuthPage />} />
+                <Route path="profile" element={<ProfilePage />} />
+                <Route path="settings" element={<SettingsPage />} />
+                <Route path="favorites" element={<FavoritesPage />} />
+                <Route path="my-recipes" element={<MyRecipesPage />} />
+                <Route path="create-recipe" element={<CreateRecipePage />} />
+                <Route path="edit-recipe/:id" element={<EditRecipePage />} />
+                <Route path="admin/dashboard" element={<AdminDashboard />} />
+                <Route path="admin/manage-recipes" element={<ManageRecipesPage />} />
+                <Route path="admin/manage-users" element={<ManageUsersPage />} />
+                <Route path="tools" element={<ToolsPage />} />
+                <Route path="conversion" element={<ConversionPage />} />
+                <Route path="about" element={<AboutPage />} />
+                <Route path="contact" element={<ContactPage />} />
+                <Route path="*" element={<NotFoundPage />} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </SnackbarProvider>
+      </ThemeProvider>
     </AuthProvider>
   );
 }
