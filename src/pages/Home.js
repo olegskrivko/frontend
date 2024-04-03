@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import { BASE_URL } from "../middleware/config";
 // import { useAuth } from "../middleware/AuthContext";
 import Grid from "@mui/material/Grid";
-import { List, Button, ListItem, ListItemText, Box, Slide } from "@mui/material";
+import { List, Button, ListItem, ListItemText, CircularProgress, Box, Slide } from "@mui/material";
 import SkeletonRecipeCard from "../components/SkeletonRecipeCard";
 import CustomAlert from "../components/CustomAlert";
 import RecipeCardHome from "../components/RecipeCardHome";
@@ -193,7 +193,7 @@ const Home = () => {
   const theme = useTheme();
   // variant={isSmallScreen ? "h4" : "h1"}
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  // const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   // const { isAuthenticated } = useAuth();
   const API_URL = `${BASE_URL}/recipes`;
   const API_URL_COLLECTION_ONE = `${BASE_URL}/collections/quick-and-easy-recipes`;
@@ -420,7 +420,17 @@ const Home = () => {
   if (loading) {
     return (
       <React.Fragment>
-        <Typography variant="h4" style={{ margin: "2rem", textAlign: "center", fontSize: "2rem" }}>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "100vh", // Make the spinner cover the entire viewport vertically
+          }}
+        >
+          <CircularProgress size={80} style={{ color: "#ff6600" }} /> {/* Adjust the size of the spinner as needed */}
+        </div>
+        {/* <Typography variant="h4" style={{ margin: "2rem", textAlign: "center", fontSize: "2rem" }}>
           {RecipesPageTitle}
         </Typography>
         <Grid container spacing={3} style={{ marginTop: "20px" }}>
@@ -429,7 +439,26 @@ const Home = () => {
               <SkeletonRecipeCard />
             </Grid>
           ))}
-        </Grid>
+        </Grid> */}
+        {/* <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            backgroundColor: "rgba(255, 102, 0, 0.8)", // Orange background color with opacity
+            zIndex: 9999, // Ensure the spinner is on top of other content
+          }}
+        >
+          <CircularProgress
+            size={80} // Adjust the size of the spinner as needed
+            style={{ color: "white" }} // Set the color of the spinner to white
+          />
+        </div> */}
       </React.Fragment>
     );
   }
@@ -445,7 +474,7 @@ const Home = () => {
       </Typography> */}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <Typography variant="h3" gutterBottom style={{ color: "#000", fontWeight: "700", textAlign: "center" }}>
+          <Typography variant="h3" gutterBottom style={{ color: "#252C35", fontWeight: "700", textAlign: "center" }}>
             COOKING IS <span style={{ color: "#ff6600" }}>EASY</span>
           </Typography>
           <Box position="relative">
@@ -471,12 +500,16 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Box style={{ display: "flex", justifyContent: "center" }}>
-            <Button variant="contained" color="primary" style={{ marginRight: "20px" }}>
-              Find Your Recipe
-            </Button>
-            <Button variant="outlined" color="primary">
-              Share Your Recipe
-            </Button>
+            <Link to="/recipes">
+              <Button variant="contained" style={{ marginRight: "20px", backgroundColor: "#ff6600" }}>
+                Find Your Recipe
+              </Button>
+            </Link>
+            <Link to="/create-recipe">
+              <Button variant="outlined" style={{ color: "#ff6600", borderColor: "#ff6600" }}>
+                Share Your Recipe
+              </Button>
+            </Link>
           </Box>
         </Grid>
         {/* <Grid item xs={4} sm={2} md={2} lg={0}>
@@ -545,12 +578,12 @@ const Home = () => {
         </Grid> */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="left" in={true}>
-            <Typography variant="h4" gutterBottom sx={{ textAlign: "left" }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left" }}>
               {seasonalTitle}
             </Typography>
           </Slide>
           <Slide direction="left" in={true}>
-            <Typography variant="body1" gutterBottom sx={{ textAlign: "left" }}>
+            <Typography variant="body1" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left" }}>
               {seasonalSubtitle}
             </Typography>
           </Slide>
@@ -599,12 +632,12 @@ const Home = () => {
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="right" in={true}>
-            <Typography variant="h4" gutterBottom sx={{ textAlign: "right" }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "right" }}>
               Trending recipes
             </Typography>
           </Slide>
           <Slide direction="right" in={true}>
-            <Typography variant="body1" gutterBottom sx={{ textAlign: "right" }}>
+            <Typography variant="body1" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "right" }}>
               Discover what's hot in the culinary world right now!
             </Typography>
           </Slide>
@@ -633,12 +666,12 @@ const Home = () => {
 
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="left" in={true}>
-            <Typography variant="h4" gutterBottom sx={{ textAlign: "left" }}>
+            <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left" }}>
               Popular recipe collections
             </Typography>
           </Slide>
           <Slide direction="left" in={true}>
-            <Typography variant="body1" gutterBottom sx={{ textAlign: "left" }}>
+            <Typography variant="body1" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left" }}>
               Discover our most beloved recipe collections!
             </Typography>
           </Slide>

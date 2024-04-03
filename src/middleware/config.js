@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === "production") {
   BASE_URL = "https://cookbook.cyclic.app/api";
 } else {
   // Set localhost API URL for development and test environments
-  BASE_URL = "http://localhost:3000/api";
+  BASE_URL = "http://localhost:5000/api";
 }
 
 export { BASE_URL };

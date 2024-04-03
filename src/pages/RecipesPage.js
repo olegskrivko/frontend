@@ -29,6 +29,12 @@ const RecipesPage = () => {
   const [appliedFilters, setAppliedFilters] = useState({
     recipeTitle: queryParams.get("recipeTitle") || "",
     recipeAuthor: queryParams.get("recipeAuthor") || "",
+    hasReviews: queryParams.get("hasReviews") || "",
+    difficulty: queryParams.get("difficulty") || "",
+    totalTime: queryParams.getAll("totalTime") || [],
+    tastes: queryParams.getAll("tastes") || [],
+    meals: queryParams.getAll("meals") || [],
+
     // Add other filter keys and their default values here
   });
 
@@ -93,7 +99,11 @@ const RecipesPage = () => {
       const emptyFilters = {
         recipeTitle: "",
         recipeAuthor: "",
+        hasReviews: "",
+        difficulty: "",
+        totalTime: [],
         cookingMethods: [],
+        tastes: [],
         // Add other filter keys and their default values here
         // Add other filter keys and their default values here
       };

@@ -12,12 +12,12 @@ import BasicPagination from "../components/BasicPagination";
 import SideBar from "./SideBar";
 
 const CollectionRecipes = () => {
-  const { id } = useParams();
+  const { slug } = useParams();
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
-  const [meals, setMeals] = useState([]);
-  const [currentMeal, setCurrentMeal] = useState("");
+  const [collections, setCollections] = useState([]);
+  const [currentCollection, setCurrentCollection] = useState("");
   const [loading, setLoading] = useState(true);
 
   const [appliedFilters, setAppliedFilters] = useState({
@@ -26,30 +26,24 @@ const CollectionRecipes = () => {
     // Add other filter keys and their default values here
   });
 
-  // State variable to track applied filters
-  // const [appliedFilters, setAppliedFilters] = useState({
-  //   recipeTitle: "",
-  //   recipeAuthor: "",
-  //   // Add other filter keys and their default values here
-  // });
-
   useEffect(() => {
     const fetchCurrentMeal = async () => {
       try {
-        const response = await fetch(`${BASE_URL}/meals/${id}`);
+        const response = await fetch(`${BASE_URL}/collections/${slug}`);
         const data = await response.json();
 
-        setCurrentMeal(data);
+        setCurrentCollection(data.collection);
+        console.log("data", data);
       } catch (error) {
-        console.error("Error fetching meals:", error);
+        console.error("Error fetching collections:", error);
       }
     };
 
     fetchCurrentMeal();
-  }, [id]); // Include id in the dependency array
+  }, [slug]); // Include id in the dependency array
 
   useEffect(() => {
-    const fetchMeals = async () => {
+    const fetchCollections = async () => {
       try {
         setLoading(true);
 
@@ -57,123 +51,25 @@ const CollectionRecipes = () => {
         const queryParams = new URLSearchParams(location.search);
 
         // Use the `navigate` function to update the URL with the new query parameters
-        navigate(`/meals/${id}/recipes?${queryParams.toString()}`);
+        navigate(`/collections/${slug}?${queryParams.toString()}`);
 
-        const response = await fetch(`${BASE_URL}/meals/${id}/recipes?${queryParams.toString()}`);
+        const response = await fetch(`${BASE_URL}/collections/${slug}?${queryParams.toString()}`);
         const data = await response.json();
-
-        if (Array.isArray(data)) {
-          setMeals(data);
+        console.log("datadata", data);
+        if (Array.isArray(data.recipes)) {
+          setCollections(data.recipes);
         } else {
-          console.error("Error: Expected an array of meals, but received:", data);
+          console.error("Error: Expected an array of collections, but received:", data);
         }
       } catch (error) {
-        console.error("Error fetching filtered meals:", error);
+        console.error("Error fetching filtered collections:", error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchMeals();
-  }, [id, location.search, navigate]);
-
-  // useEffect(() => {
-  //   const fetchMeals = async () => {
-  //     try {
-  //       const response = await fetch(`${BASE_URL}/meals/${id}/recipes`);
-  //       const data = await response.json();
-
-  //       // Check if data is an array before setting the state
-  //       if (Array.isArray(data)) {
-  //         setMeals(data);
-  //       } else {
-  //         console.error("Error: Expected an array of meals, but received:", data);
-  //       }
-  //     } catch (error) {
-  //       console.error("Error fetching meals:", error);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-
-  //   fetchMeals();
-  // }, [id, appliedFilters, queryParams]); // Include id in the dependency array
-
-  // useEffect(() => {
-  //   const fetchCurrentMeal = async () => {
-  //     try {
-  //       const response = await fetch(`${BASE_URL}/meals/${id}`);
-  //       const data = await response.json();
-
-  //       setCurrentMeal(data);
-  //     } catch (error) {
-  //       console.error("Error fetching meals:", error);
-  //     }
-  //   };
-
-  //   fetchCurrentMeal();
-  // }, [id]); // Include id in the dependency array
-
-  // const applyFilters = async (filters) => {
-  //   // Implement your logic to fetch and display filtered recipes
-  //   console.log("Applied Filters:", filters);
-
-  //   try {
-  //     setLoading(true);
-
-  //     // Constructing query parameters
-  //     const queryParams = new URLSearchParams();
-  //     if (filters.recipeTitle) {
-  //       queryParams.append("recipeTitle", filters.recipeTitle);
-  //     }
-
-  //     if (filters.recipeAuthor) {
-  //       queryParams.append("recipeAuthor", filters.recipeAuthor);
-  //     }
-
-  //     // Replace this with your actual API endpoint for recipes with query parameters
-  //     const response = await fetch(`${BASE_URL}/meals/${id}/recipes?${queryParams}`);
-  //     const data = await response.json();
-
-  //     // Check if data is an array before setting the state
-  //     if (Array.isArray(data)) {
-  //       setMeals(data);
-  //       // Update the state to reflect applied filters
-  //       setAppliedFilters(filters);
-  //     } else {
-  //       console.error("Error: Expected an array of meals, but received:", data);
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching filtered meals:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const resetFilters = async () => {
-  //   try {
-  //     setLoading(true);
-
-  //     // Clear any applied filters
-  //     const emptyFilters = {
-  //       recipeTitle: "",
-  //       recipeAuthor: "",
-  //       // Add other filter keys and their default values here
-  //     };
-
-  //     // Call applyFilters with the empty filters to fetch all recipes
-  //     await applyFilters(emptyFilters);
-
-  //     // Update the state to reflect cleared filters
-  //     setAppliedFilters(emptyFilters);
-
-  //     console.log("Filters Reset");
-  //   } catch (error) {
-  //     console.error("Error resetting filters:", error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
+    fetchCollections();
+  }, [slug, location.search, navigate]);
 
   const applyFilters = async (filters) => {
     try {
@@ -183,18 +79,18 @@ const CollectionRecipes = () => {
       setAppliedFilters(newFilters);
 
       // Use the `navigate` function to update the URL with the new query parameters
-      navigate(`/meals/${id}/recipes?${new URLSearchParams(newFilters).toString()}`);
+      navigate(`/collections/${slug}?${new URLSearchParams(newFilters).toString()}`);
 
-      const response = await fetch(`${BASE_URL}/meals/${id}/recipes?${new URLSearchParams(newFilters).toString()}`);
+      const response = await fetch(`${BASE_URL}/collections/${slug}?${new URLSearchParams(newFilters).toString()}`);
       const data = await response.json();
 
-      if (Array.isArray(data)) {
-        setMeals(data);
+      if (Array.isArray(data.recipes)) {
+        setCollections(data.recipes);
       } else {
-        console.error("Error: Expected an array of meals, but received:", data);
+        console.error("Error: Expected an array of collections, but received:", data);
       }
     } catch (error) {
-      console.error("Error fetching filtered meals:", error);
+      console.error("Error fetching filtered collections:", error);
     } finally {
       setLoading(false);
     }
@@ -216,15 +112,15 @@ const CollectionRecipes = () => {
       setAppliedFilters(emptyFilters);
 
       // Use the `navigate` function to update the URL with the cleared query parameters
-      navigate(`/meals/${id}/recipes`);
+      navigate(`/collections/${slug}`);
 
-      const response = await fetch(`${BASE_URL}/meals/${id}/recipes`);
+      const response = await fetch(`${BASE_URL}/collections/${slug}`);
       const data = await response.json();
 
-      if (Array.isArray(data)) {
-        setMeals(data);
+      if (Array.isArray(data.recipes)) {
+        setCollections(data.recipes);
       } else {
-        console.error("Error: Expected an array of meals, but received:", data);
+        console.error("Error: Expected an array of collections, but received:", data);
       }
 
       console.log("Filters Reset");
@@ -245,8 +141,8 @@ const CollectionRecipes = () => {
         <Box>
           <div>
             <img
-              src={`${process.env.PUBLIC_URL}/logos/${currentMeal.name}.jpg`}
-              alt={currentMeal.name}
+              src={`${process.env.PUBLIC_URL}/logos/${currentCollection.name}.jpg`}
+              alt={currentCollection.name}
               style={{
                 width: "100%",
                 maxHeight: "300px",
@@ -258,22 +154,22 @@ const CollectionRecipes = () => {
 
           {/* Display recipes */}
           <Typography variant="h4" gutterBottom>
-            Recipes for {currentMeal && currentMeal.name}
+            Recipes for {currentCollection && currentCollection.name}
           </Typography>
           <Typography variant="body1" gutterBottom>
-            {currentMeal && currentMeal.description}
+            {currentCollection && currentCollection.description}
           </Typography>
           {loading ? (
             <CircularProgress />
-          ) : meals.length > 0 ? (
+          ) : collections.length > 0 ? (
             <Grid container spacing={2}>
-              {meals.map((meal) => (
+              {collections.map((collection) => (
                 // <Grid item key={recipe._id} xs={6} sm={6} md={4} lg={3}>
-                <RecipeCardMeals key={meal._id} recipe={meal} />
+                <RecipeCardMeals key={collection._id} recipe={collection} />
               ))}
             </Grid>
           ) : (
-            <Typography variant="body1">No recipes available for this meal.</Typography>
+            <Typography variant="body1">No recipes available for this collection.</Typography>
           )}
         </Box>
       </Grid>

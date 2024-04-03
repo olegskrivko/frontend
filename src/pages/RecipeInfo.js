@@ -63,6 +63,28 @@ import ReviewComponent from "../components/ReviewComponent";
 
 import Confetti from "react-confetti";
 
+const RecipeDifficulty = ({ difficulty }) => {
+  // Function to map numeric difficulty values to descriptive words
+  const mapDifficultyToWord = (difficulty) => {
+    switch (difficulty) {
+      case 1:
+        return "Easy";
+      case 2:
+        return "Medium";
+      case 3:
+        return "Difficult";
+      default:
+        return "Unknown";
+    }
+  };
+
+  return (
+    <Grid item>
+      <Typography>{difficulty && mapDifficultyToWord(difficulty)}</Typography>
+    </Grid>
+  );
+};
+
 const RecipePreparationButton = () => {
   const [showConfetti, setShowConfetti] = useState(false);
   const [buttonDisabled, setButtonDisabled] = useState(false);
@@ -372,7 +394,8 @@ const RecipeInfo = () => {
                 <Grid item>
                   <SignalCellularAltIcon />
                 </Grid>
-                <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid>
+                <RecipeDifficulty difficulty={recipe.difficulty} />
+                {/* <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid> */}
               </Grid>
               {/* Preparation */}
               <Grid

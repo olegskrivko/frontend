@@ -1,6 +1,24 @@
 import React, { useState } from "react";
 import { Container, TextField, Typography, MenuItem } from "@mui/material";
 
+import { Grid, Paper } from "@mui/material";
+
+const CalculatorGrid = () => {
+  return (
+    <Grid container spacing={2}>
+      {[...Array(16)].map((_, index) => (
+        <Grid item key={index} xs={6} sm={3} md={3} lg={3}>
+          <Paper variant="outlined" sx={{ p: 2 }}>
+            <Typography variant="h6" align="center">
+              Calculator {index + 1}
+            </Typography>
+          </Paper>
+        </Grid>
+      ))}
+    </Grid>
+  );
+};
+
 const ToolsPage = () => {
   const [inputValue, setInputValue] = useState("");
   const [fromUnit, setFromUnit] = useState("cup");
@@ -59,6 +77,7 @@ const ToolsPage = () => {
         Food - naturally, the most essential (as well as controversial) part of our life. In this section, you can find calculators for food lovers, party organizers or calorie counting addicts, what perfectly reflects the complexity of feelings we have for the subject. Does the last bite of your favorite pizza make you think you’ve ordered it a tad too small? Check our pizza party or pizza comparison calculator never to make this mistake again. Are you dreaming about eating a real French crepe? Take a look at the
         pancake recipe calculator. And if you’re a coffee freak, stop by the coffee kick calculator to be sure you’ve made the most of your morning cup. If you’re celebrating Saint Patrick’s Day, identify the moment you should better stop. And if you plan the Thanksgiving Dinner, estimate the amount of food you need for a start and the level of activity you require at the end to burn all those calories.
       </Typography>
+      <CalculatorGrid />
     </Container>
   );
 };

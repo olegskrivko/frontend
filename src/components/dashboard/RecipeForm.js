@@ -74,9 +74,11 @@ import { BASE_URL } from "../../middleware/config";
 const RecipeForm = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [difficulty, setDifficulty] = useState(""); // Add state for difficulty
+  const [difficulty, setDifficulty] = useState(1); // Add state for difficulty
   const [meals, setMeals] = useState([]); // Add state for meals
   const [selectedMeals, setSelectedMeals] = useState([]); // Updated state for multiple selections
+  const [collections, setCollections] = useState([]); // Add state for meals
+  const [selectedCollections, setSelectedCollections] = useState([]); // Updated state for multiple selections
   const [occasions, setOccasions] = useState([]);
   const [cuisines, setCuisines] = useState([]);
   const [tools, setTools] = useState([]);
@@ -108,6 +110,7 @@ const RecipeForm = () => {
   const [descriptionError, setDescriptionError] = useState(null);
   const [difficultyError, setDifficultyError] = useState(null); // Add state for difficulty error
   const [mealError, setMealError] = useState(""); // Add state for meal error
+  const [collectionError, setCollectionError] = useState("");
   const [occasionError, setOccasionError] = useState("");
   const [cuisineError, setCuisineError] = useState("");
   const [toolError, setToolError] = useState("");
@@ -190,6 +193,21 @@ const RecipeForm = () => {
     };
 
     fetchMeals();
+  }, []); // Empty dependency array ensures this effect runs once on mount
+
+  useEffect(() => {
+    // Fetch collections from the backend when the component mounts
+    const fetchCollections = async () => {
+      try {
+        const response = await axios.get(`${BASE_URL}/collections`);
+        setCollections(response.data);
+        console.log(collections);
+      } catch (error) {
+        console.error("Error fetching collections:", error.message);
+      }
+    };
+
+    fetchCollections();
   }, []); // Empty dependency array ensures this effect runs once on mount
 
   // Fetch occasions from the backend when the component mounts
@@ -362,6 +380,16 @@ const RecipeForm = () => {
     setSelectedMeals(selectedValues);
     setMealError(null);
   };
+
+  // Collection
+  const handleCollectionChange = (event) => {
+    // If event.target.value is not an array, wrap it in an array
+    const selectedValues = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
+
+    setSelectedCollections(selectedValues);
+    setCollectionError(null);
+  };
+
   // Occasion
   const handleOccasionChange = (event) => {
     const selectedValues = Array.isArray(event.target.value) ? event.target.value : [event.target.value];
@@ -509,6 +537,7 @@ const RecipeForm = () => {
         description,
         difficulty,
         meals: selectedMeals, // Include the selected meal in the request payload
+        collections: selectedCollections,
         occasions: selectedOccasions, // Include the selected occasions in the request payload
         cuisines: selectedCuisines,
         tools: selectedTools,
@@ -527,8 +556,9 @@ const RecipeForm = () => {
       setSuccessMessage("Recipe created successfully!");
       setTitle("");
       setDescription(""); // Clear description field after submission
-      setDifficulty("");
+      setDifficulty(1);
       setSelectedMeals([]); // Clear selected meal
+      setSelectedCollections([]);
       setSelectedOccasions([]);
       setSelectedCuisines([]);
       setSelectedTools([]);
@@ -539,6 +569,7 @@ const RecipeForm = () => {
       setDescriptionError(null);
       setDifficultyError(null);
       setMealError(null);
+      setCollectionError(null);
       setOccasionError(null);
       setCuisineError(null);
       setToolError(null);
@@ -557,6 +588,8 @@ const RecipeForm = () => {
             setDifficultyError(err.msg);
           } else if (err.path === "meals") {
             setMealError(err.msg);
+          } else if (err.path === "collections") {
+            setCollectionError(err.msg);
           } else if (err.path === "occasions") {
             setOccasionError(err.msg);
           } else if (err.path === "cuisines") {
@@ -601,10 +634,10 @@ const RecipeForm = () => {
               id: "difficulty-select",
             }}
           >
-            <option aria-label="None" value="" />
-            <option value="Easy">Easy</option>
-            <option value="Intermediate">Intermediate</option>
-            <option value="Advanced">Advanced</option>
+            {/* <option aria-label="None" value="" /> */}
+            <option value="1">Easy</option>
+            <option value="2">Intermediate</option>
+            <option value="3">Advanced</option>
           </Select>
           {difficultyError && <FormHelperText>{difficultyError}</FormHelperText>}
         </FormControl>
@@ -629,6 +662,28 @@ const RecipeForm = () => {
           </Select>
           {mealError && <FormHelperText>{mealError}</FormHelperText>}
         </FormControl>
+
+        <FormControl fullWidth variant="outlined" margin="normal" error={Boolean(collectionError)}>
+          <InputLabel htmlFor="collection-select">Collection</InputLabel>
+          <Select
+            multiple
+            value={selectedCollections} // This should always be an array
+            onChange={handleCollectionChange}
+            label="Collections"
+            inputProps={{
+              id: "collection-select",
+            }}
+            MenuComponent="div"
+          >
+            {collections.map((type) => (
+              <MenuItem key={type._id} value={type._id}>
+                {type.name}
+              </MenuItem>
+            ))}
+          </Select>
+          {collectionError && <FormHelperText>{collectionError}</FormHelperText>}
+        </FormControl>
+
         <FormControl fullWidth variant="outlined" margin="normal" error={Boolean(occasionError)}>
           <InputLabel htmlFor="occasion-select">Occasions</InputLabel>
           <Select

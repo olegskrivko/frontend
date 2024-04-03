@@ -70,6 +70,29 @@ import { useAuth } from "../middleware/AuthContext";
 {
   /* <Typography gutterBottom variant="h6"></Typography> */
 }
+
+const RecipeDifficulty = ({ difficulty }) => {
+  // Function to map numeric difficulty values to descriptive words
+  const mapDifficultyToWord = (difficulty) => {
+    switch (difficulty) {
+      case 1:
+        return "Easy";
+      case 2:
+        return "Medium";
+      case 3:
+        return "Difficult";
+      default:
+        return "Unknown";
+    }
+  };
+
+  return (
+    <Grid item>
+      <Typography>{difficulty && mapDifficultyToWord(difficulty)}</Typography>
+    </Grid>
+  );
+};
+
 const LoginToReview = ({ recipe }) => {
   return (
     // <Grid container spacing={3}>
@@ -464,7 +487,8 @@ const RecipeDetails = () => {
                   <Grid item>
                     <SignalCellularAltIcon />
                   </Grid>
-                  <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid>
+                  <RecipeDifficulty difficulty={recipe.difficulty} />
+                  {/* <Grid item>{recipe && recipe.difficulty && <Typography>{recipe.difficulty}</Typography>}</Grid> */}
                 </Grid>
                 {/* Preparation */}
                 <Grid

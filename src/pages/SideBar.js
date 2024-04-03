@@ -1,359 +1,3 @@
-// // export default SideBar;
-// import React, { useState } from "react";
-// import { Drawer, Chip, Box, List, Input, OutlinedInput, Grid, FormControl, InputLabel, TextField, ListItem, ListItemText, Select, MenuItem, Button, Slider, Checkbox, FormControlLabel, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-// import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-
-// const SideBar = () => {
-//   const [author, setAuthor] = useState("");
-//   const [recipeTitle, setRecipeTitle] = useState("");
-//   const [difficulty, setDifficulty] = useState(1);
-//   const [minimumScore, setMinimumScore] = useState(0);
-//   const [cookTime, setCookTime] = useState([0, 60]); // Initial cook time range
-
-//   const cuisines = [
-//     { _id: "1", name: "Italian" },
-//     { _id: "2", name: "Mexican" },
-//     { _id: "3", name: "Asian" },
-//   ];
-
-//   const diets = [
-//     { _id: "4", name: "Vegetarian" },
-//     { _id: "5", name: "Vegan" },
-//     { _id: "6", name: "Gluten-Free" },
-//   ];
-//   const cuisineOptions = [
-//     "African",
-//     "American",
-//     "Argentine",
-//     "Asian",
-//     "Australian",
-//     "Austrian",
-//     "Belgian",
-//     "Brazilian",
-//     "British",
-//     "Cajun",
-//     "Caribbean",
-//     "Chinese",
-//     "Creole",
-//     "Czech",
-//     "Danish",
-//     "Dutch",
-//     "Eastern European",
-//     "Ethiopian",
-//     "Finnish",
-//     "French",
-//     "German",
-//     "Greek",
-//     "Hawaiian",
-//     "Hungarian",
-//     "Indian",
-//     "Indonesian",
-//     "Irish",
-//     "Italian",
-//     "Jamaican",
-//     "Japanese",
-//     "Jewish",
-//     "Korean",
-//     "Latin American",
-//     "Mediterranean",
-//     "Mexican",
-//     "Middle Eastern",
-//     "Moroccan",
-//     "Nordic",
-//     "Peruvian",
-//     "Polish",
-//     "Portuguese",
-//     "Russian",
-//     "Scandinavian",
-//     "Scottish",
-//     "Singaporean",
-//     "Slovakian",
-//     "Slovenian",
-//     "Soul Food",
-//     "Spanish",
-//     "Swedish",
-//     "Swiss",
-//     "Thai",
-//     "Tibetan",
-//     "Turkish",
-//     "Ukrainian",
-//     "Vietnamese",
-//     "Welsh",
-//     "West African",
-//     "Yemeni",
-//   ];
-//   const cookingMethodOptions = ["Grilling", "Roasting", "Baking", "Frying", "Steaming", "Boiling", "Stir-Frying", "Braising", "Poaching", "Slow Cooking", "Smoking", "Blanching", "Simmering", "Pressure Cooking", "Microwaving", "Canning", "Pickling", "Caramelizing", "Freezing", "Glazing", "Curing"];
-//   const occasionOptions = ["Thanksgiving", "Christmas", "New Years Eve", "Independence Day", "Birthday", "Easter", "Valentines Day", "Halloween", "Mothers Day", "Fathers Day", "Graduation", "Anniversary", "Labor Day", "Memorial Day", "Hanukkah", "Diwali", "Cinco de Mayo", "Thanksgiving Day - Canada", "Independence Day - Latvia", "Midsummer Day - Jani", "Ligo Day", "Restoration of Independence Day", "National Flag Day", "Latvian Song and Dance Festival", "Lacplesis Day"];
-
-//   const tasteOptions = ["Spicy", "Sweet", "Sour", "Bitter", "Salty", "Umami"];
-//   const dietOptions = ["Vegetarian", "Vegan", "Gluten-Free", "Dairy-Free", "Nut-Free", "Low Sugar", "Low Fat", "Low Carb", "Paleo", "Mediterranean", "Pescatarian", "Flexitarian", "Ketogenic"];
-//   // const tasteOptions = ["Spicy", "Sweet", "Sour", "Bitter", "Salty", "Umami", "Astringent", "Savory", "Cooling", "Peppery", "Citrusy", "Herbaceous", "Earthy", "Smoky", "Buttery", "Caramelized", "Nutty", "Floral", "Spiced", "Tart", "Mild", "Fruity", "Grassy", "Briny", "Zesty", "Tangy"];
-//   // const dietOptions = [
-//   //   "Vegetarian",
-//   //   "Vegan",
-//   //   "Gluten-Free",
-//   //   "Dairy-Free",
-//   //   "Nut-Free",
-//   //   "Low Sugar",
-//   //   "Low Fat",
-//   //   "Low Carb",
-//   //   "Paleo",
-//   //   "Mediterranean",
-//   //   "Pescatarian",
-//   //   "Flexitarian",
-//   //   "Ketogenic (Keto)",
-//   //   "Whole30",
-//   //   "Raw Food",
-//   //   "Macrobiotic",
-//   //   "FODMAP",
-//   //   "DASH (Dietary Approaches to Stop Hypertension)",
-//   //   "Ornish Diet",
-//   //   "Atkins",
-//   //   "South Beach",
-//   //   "Zone Diet",
-//   //   "Specific Carbohydrate Diet (SCD)",
-//   //   "Anti-Inflammatory Diet",
-//   //   "Low FODMAP",
-//   //   "Alkaline Diet",
-//   //   "Blood Type Diet",
-//   //   "Engine 2 Diet",
-//   //   "GAPS (Gut and Psychology Syndrome)",
-//   //   "Mindful Eating",
-//   // ];
-
-//   const getDifficultyLabel = (difficulty) => {
-//     switch (difficulty) {
-//       case 1:
-//         return "Easy";
-//       case 2:
-//         return "Medium";
-//       case 3:
-//         return "Hard";
-//       default:
-//         return "";
-//     }
-//   };
-//   const handleCookTimeChange = (event, newValue) => {
-//     setCookTime(newValue);
-//   };
-//   const handleDifficultyChange = (event, newValue) => {
-//     // Update the difficulty state when the slider value changes
-//     setDifficulty(newValue);
-//   };
-
-//   const handleMinimumScoreChange = (event, newValue) => {
-//     // Update the difficulty state when the slider value changes
-//     setMinimumScore(newValue);
-//   };
-
-//   const applyFilters = (filters) => {
-//     // Replace this with your logic to handle applied filters
-//     console.log("Applied Filters:", filters);
-//   };
-
-//   const handleApplyFilters = () => {
-//     const selectedDifficulty = 1;
-//     const selectedCuisine = "1";
-//     const selectedDiet = "4";
-//     const servingsRange = [2, 6];
-//     const isSustainable = true;
-//     const isHealthy = true;
-//     const hasReviews = false;
-
-//     applyFilters({
-//       difficulty: selectedDifficulty,
-//       cuisine: selectedCuisine,
-//       diet: selectedDiet,
-//       servingsRange,
-//       isSustainable,
-//       isHealthy,
-//       hasReviews,
-//       author,
-//       recipeTitle,
-//     });
-//   };
-
-//   return (
-//     <Box>
-//       <List>
-//         <ListItem sx={{ padding: "0 !important" }}>
-//           {/* <ListItemText primary="Filter Recipes By:" /> */}
-//           <Typography variant="h6">Filter Recipes By:</Typography>
-//         </ListItem>
-//         {/* Search by Recipe Title */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <TextField size="small" label="Recipe Title" variant="outlined" fullWidth />
-//         </ListItem>
-
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <TextField size="small" label="Author" variant="outlined" fullWidth value={author} onChange={(e) => setAuthor(e.target.value)} />
-//         </ListItem>
-
-//         {/* Cook Time Options */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           {/* <Typography gutterBottom>Filter by Cook Time</Typography> */}
-//           <Box>
-//             <InputLabel>Tootal Time</InputLabel>
-//             <Chip sx={{ marginRight: "5px" }} size="small" label="All" onClick={() => setCookTime([0, 120])} color={cookTime[0] === 0 && cookTime[1] === 120 ? "primary" : "default"} />
-//             <Chip sx={{ marginRight: "5px" }} size="small" label="15 min" onClick={() => setCookTime([0, 15])} color={cookTime[0] === 0 && cookTime[1] === 15 ? "primary" : "default"} />
-//             <Chip sx={{ marginRight: "5px" }} size="small" label="30 min" onClick={() => setCookTime([16, 30])} color={cookTime[0] === 16 && cookTime[1] === 30 ? "primary" : "default"} />
-//             <Chip sx={{ marginRight: "5px" }} size="small" label="45 min" onClick={() => setCookTime([31, 45])} color={cookTime[0] === 31 && cookTime[1] === 45 ? "primary" : "default"} />
-//             <Chip sx={{ marginRight: "5px" }} size="small" label="1h+" onClick={() => setCookTime([46, 120])} color={cookTime[0] === 46 && cookTime[1] === 120 ? "primary" : "default"} />
-//           </Box>
-//         </ListItem>
-
-//         {/* Filter by Minimal Score */}
-//         <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <InputLabel>Minimum Score {minimumScore}</InputLabel>
-//           <Slider
-//             value={minimumScore}
-//             onChange={handleMinimumScoreChange}
-//             // valueLabelDisplay="auto"
-//             step={1}
-//             // marks={[{ value: 0, label: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5, label: 5 }]}
-//             min={0}
-//             max={5}
-//           />
-//         </Box>
-
-//         {/* Filter by Difficulty */}
-//         <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <InputLabel>Difficulty {getDifficultyLabel(difficulty)}</InputLabel>
-//           <Slider
-//             value={difficulty}
-//             onChange={handleDifficultyChange}
-//             // valueLabelDisplay="auto"
-//             step={1}
-//             // marks={[
-//             //   { value: 1, label: "Easy" },
-//             //   { value: 2, label: "Medium" },
-//             //   { value: 3, label: "Hard" },
-//             // ]}
-//             min={1}
-//             max={3}
-//           />
-//         </Box>
-
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <TextField size="small" label="Exclude up to 5 ingredients" variant="outlined" fullWidth />
-//         </ListItem>
-
-//         {/* Filter by Ingredients */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <TextField size="small" label="Include up to 5 ingredients" variant="outlined" fullWidth />
-//         </ListItem>
-
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Accordion sx={{ width: "100%" }}>
-//             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="taste-filter-content" id="taste-filter-header">
-//               <Typography>Taste</Typography>
-//             </AccordionSummary>
-//             <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto" }}>
-//               <List>
-//                 {tasteOptions.map((taste) => (
-//                   <ListItem key={taste} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-//                     <FormControlLabel control={<Checkbox size="small" />} label={taste} />
-//                   </ListItem>
-//                 ))}
-//               </List>
-//             </AccordionDetails>
-//           </Accordion>
-//         </ListItem>
-
-//         {/* Diet Filter (Accordion) */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Accordion sx={{ width: "100%" }}>
-//             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="diet-filter-content" id="diet-filter-header">
-//               <Typography>Diet</Typography>
-//             </AccordionSummary>
-//             <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto" }}>
-//               <List>
-//                 {dietOptions.map((diet) => (
-//                   <ListItem key={diet} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-//                     <FormControlLabel control={<Checkbox size="small" />} label={diet} />
-//                   </ListItem>
-//                 ))}
-//               </List>
-//             </AccordionDetails>
-//           </Accordion>
-//         </ListItem>
-
-//         {/* Cuisine Filter (Accordion) */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Accordion sx={{ width: "100%" }}>
-//             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cuisine-filter-content" id="cuisine-filter-header">
-//               <Typography>Cuisine</Typography>
-//             </AccordionSummary>
-//             <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto" }}>
-//               <List>
-//                 {cuisineOptions.map((cuisine) => (
-//                   <ListItem key={cuisine} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-//                     <FormControlLabel control={<Checkbox size="small" />} label={cuisine} />
-//                   </ListItem>
-//                 ))}
-//               </List>
-//             </AccordionDetails>
-//           </Accordion>
-//         </ListItem>
-
-//         {/* CookingMethods Filter (Accordion) */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Accordion sx={{ width: "100%" }}>
-//             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cookingMethod-filter-content" id="cookingMethod-filter-header">
-//               <Typography>Cooking Method</Typography>
-//             </AccordionSummary>
-//             <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto" }}>
-//               <List>
-//                 {cookingMethodOptions.map((cookingMethod) => (
-//                   <ListItem key={cookingMethod} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-//                     <FormControlLabel control={<Checkbox size="small" />} label={cookingMethod} />
-//                   </ListItem>
-//                 ))}
-//               </List>
-//             </AccordionDetails>
-//           </Accordion>
-//         </ListItem>
-
-//         {/* Occasions Filter (Accordion) */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Accordion sx={{ width: "100%" }}>
-//             <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="occasion-filter-content" id="occasion-filter-header">
-//               <Typography>Occasion</Typography>
-//             </AccordionSummary>
-//             <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto" }}>
-//               <List>
-//                 {occasionOptions.map((occasion) => (
-//                   <ListItem key={occasion} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-//                     <FormControlLabel control={<Checkbox size="small" />} label={occasion} />
-//                   </ListItem>
-//                 ))}
-//               </List>
-//             </AccordionDetails>
-//           </Accordion>
-//         </ListItem>
-
-//         {/* Has reviews Checkbox */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <FormControlLabel control={<Checkbox size="small" checked={true} disabled />} label="Has Reviews" />
-//         </ListItem>
-
-//         {/* Apply Filters Button */}
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Button variant="contained" sx={{ width: "100%" }} color="primary" onClick={handleApplyFilters}>
-//             Apply Filters
-//           </Button>
-//         </ListItem>
-//         <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-//           <Button variant="outlined" sx={{ width: "100%" }} color="primary" onClick={handleApplyFilters}>
-//             Reset Filters
-//           </Button>
-//         </ListItem>
-//       </List>
-//     </Box>
-//   );
-// };
-
-// export default SideBar;
 // export default SideBar;
 import React, { useState, useEffect } from "react";
 import { Drawer, Chip, Box, List, Input, Badge, OutlinedInput, Grid, FormControl, InputLabel, TextField, ListItem, ListItemText, Select, MenuItem, Button, Slider, Checkbox, FormControlLabel, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
@@ -361,22 +5,26 @@ import { Drawer, Chip, Box, List, Input, Badge, OutlinedInput, Grid, FormControl
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../middleware/config";
-//const cookingMethodOptions = ["Grilling", "Roasting", "Baking", "Frying", "Steaming", "Boiling", "Stir-Frying", "Braising", "Poaching", "Slow Cooking", "Smoking", "Blanching", "Simmering", "Pressure Cooking", "Microwaving", "Canning", "Pickling", "Caramelizing", "Freezing", "Glazing", "Curing"];
 
 const SideBar = ({ applyFilters, resetFilters }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
   const queryParams = new URLSearchParams(location.search);
+
   const initialRecipeAuthor = queryParams.get("recipeAuthor") || "";
   const initialRecipeTitle = queryParams.get("recipeTitle") || "";
-  const initialCookingMethods = queryParams.getAll("cookingMethods") || [];
+  const initialCookingMethods = (queryParams.getAll("cookingMethods") || []).flatMap((cookingMethod) => cookingMethod.split(","));
   const initialCuisines = queryParams.getAll("cuisines") || [];
-  const initialMeals = queryParams.getAll("meals") || [];
-  const initialDiets = queryParams.getAll("diets") || [];
+  const initialMeals = (queryParams.getAll("meals") || []).flatMap((meal) => meal.split(","));
+  const initialDiets = (queryParams.getAll("diets") || []).flatMap((diet) => diet.split(","));
   const initialOccasions = queryParams.getAll("occasions") || [];
-  const initialTastes = queryParams.getAll("tastes") || [];
+  const initialTastes = (queryParams.getAll("tastes") || []).flatMap((taste) => taste.split(","));
+  const initialHasReviews = queryParams.get("hasReviews") || "";
+  const initialDifficulty = queryParams.get("difficulty") || "";
+  const initialTotalTime = queryParams.getAll("totalTime") || [];
 
+  // Use state to manage selected values
   const [recipeAuthor, setRecipeAuthor] = useState(initialRecipeAuthor);
   const [recipeTitle, setRecipeTitle] = useState(initialRecipeTitle);
   const [cookingMethods, setCookingMethods] = useState([]);
@@ -386,31 +34,17 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   const [occasions, setOccasions] = useState([]);
   const [tastes, setTastes] = useState([]);
 
+  // Use selected state to manage UI updates
   const [selectedCookingMethods, setSelectedCookingMethods] = useState(initialCookingMethods);
   const [selectedCuisines, setSelectedCuisines] = useState(initialCuisines);
   const [selectedMeals, setSelectedMeals] = useState(initialMeals);
   const [selectedDiets, setSelectedDiets] = useState(initialDiets);
   const [selectedOccasions, setSelectedOccasions] = useState(initialOccasions);
-  const [selectedTastes, setSelectedTastes] = useState(initialTastes);
-
-  const [difficulty, setDifficulty] = useState(1);
   const [minimumScore, setMinimumScore] = useState(0);
-
-  const [hasReviews, setHasReviews] = useState(false);
-  const [cookTime, setCookTime] = useState([0, 60]); // Initial cook time range
-
-  const getDifficultyLabel = (difficulty) => {
-    switch (difficulty) {
-      case 1:
-        return "Easy";
-      case 2:
-        return "Medium";
-      case 3:
-        return "Hard";
-      default:
-        return "";
-    }
-  };
+  const [hasReviews, setHasReviews] = useState(initialHasReviews);
+  const [difficulty, setDifficulty] = useState(initialDifficulty);
+  const [totalTime, setTotalTime] = useState(initialTotalTime); // Initial cook time range
+  const [selectedTastes, setSelectedTastes] = useState(initialTastes);
 
   const handleMinimumScoreChange = (event, newValue) => {
     // Update the difficulty state when the slider value changes
@@ -517,6 +151,8 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     // Update the state when the query parameters change
     setRecipeAuthor(queryParams.get("recipeAuthor") || "");
     setRecipeTitle(queryParams.get("recipeTitle") || "");
+    setHasReviews(queryParams.get("hasReviews") || "");
+    setDifficulty(queryParams.get("difficulty") || "");
     setCookingMethods(queryParams.getAll("cookingMethods") || []);
     setCuisines(queryParams.getAll("cuisines") || []);
     setMeals(queryParams.getAll("meals") || []);
@@ -540,12 +176,30 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       newQueryParams.append("recipeTitle", recipeTitle);
     }
 
-    // Check if cookingMethods is not empty before adding to query parameters
-    if (selectedCookingMethods.length > 0) {
-      selectedCookingMethods.forEach((method) => {
-        newQueryParams.append("cookingMethods", method);
-      });
+    if (hasReviews) {
+      newQueryParams.append("hasReviews", hasReviews);
     }
+
+    if (difficulty) {
+      newQueryParams.append("difficulty", difficulty);
+    }
+
+    // Check if cookingMethods is not empty before adding to query parameters
+    // if (selectedCookingMethods.length > 0) {
+    //   selectedCookingMethods.forEach((method) => {
+    //     newQueryParams.append("cookingMethods", method);
+    //   });
+    // }
+
+    selectedCookingMethods.forEach((cookingMethod) => {
+      // Split each taste by comma
+      const individualCookingMethods = cookingMethod.split(",");
+
+      // Append each individual taste after trimming any leading or trailing whitespace
+      individualCookingMethods.forEach((individualCookingMethod) => {
+        newQueryParams.append("cookingMethods", individualCookingMethod.trim());
+      });
+    });
 
     if (selectedCuisines.length > 0) {
       selectedCuisines.forEach((cuisine) => {
@@ -553,11 +207,11 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       });
     }
 
-    if (selectedMeals.length > 0) {
-      selectedMeals.forEach((meal) => {
-        newQueryParams.append("meals", meal);
-      });
-    }
+    // if (selectedMeals.length > 0) {
+    //   selectedMeals.forEach((meal) => {
+    //     newQueryParams.append("meals", meal);
+    //   });
+    // }
 
     if (selectedDiets.length > 0) {
       selectedDiets.forEach((diet) => {
@@ -571,11 +225,37 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       });
     }
 
-    if (selectedTastes.length > 0) {
-      selectedTastes.forEach((taste) => {
-        newQueryParams.append("tastes", taste);
+    meals.forEach((meal) => {
+      // Split each taste by comma
+      const individualMeals = meal.split(",");
+
+      // Append each individual taste after trimming any leading or trailing whitespace
+      individualMeals.forEach((individualMeal) => {
+        newQueryParams.append("meals", individualMeal.trim());
       });
-    }
+    });
+
+    // Append selected taste to query parameters
+    // if (selectedTaste) {
+    //   newQueryParams.append("tastes", selectedTaste);
+    // }
+
+    // Append selected tastes to query parameters
+
+    selectedTastes.forEach((taste) => {
+      // Split each taste by comma
+      const individualTastes = taste.split(",");
+
+      // Append each individual taste after trimming any leading or trailing whitespace
+      individualTastes.forEach((individualTaste) => {
+        newQueryParams.append("tastes", individualTaste.trim());
+      });
+    });
+    // if (selectedTastes.length > 0) {
+    //   selectedTastes.forEach((taste) => {
+    //     newQueryParams.append("tastes", taste);
+    //   });
+    // }
 
     // Check if selectedCookingMethods is not empty before adding to query parameters
     // const selectedCookingMethods = [];  // Replace this with your actual array of selected cooking methods
@@ -594,29 +274,30 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     applyFilters({
       recipeAuthor,
       recipeTitle,
+      hasReviews,
+      difficulty,
+      totalTime,
       cookingMethods: selectedCookingMethods,
       cuisines: selectedCuisines,
       meals: selectedMeals,
       diets: selectedDiets,
       occasions: selectedOccasions,
       tastes: selectedTastes,
+      // tastes: selectedTastes,
     });
-  };
-  const handleDifficultyChange = (event, newValue) => {
-    // Update the difficulty state when the slider value changes
-    setDifficulty(newValue);
   };
 
   const handleResetFilters = (e) => {
     e.preventDefault();
     resetFilters();
+    setSelectedTastes([]);
     // Reset the state for cooking methods
     setSelectedCookingMethods([]);
     setSelectedCuisines([]);
     setSelectedMeals([]);
     setSelectedDiets([]);
     setSelectedOccasions([]);
-    setSelectedTastes([]);
+    // setSelectedTastes("");
     // Reset the URL to remove query parameters
     // const newUrl = window.location.pathname;
     // window.history.pushState(null, "", newUrl);
@@ -625,28 +306,35 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     navigate(location.pathname);
   };
 
-  const handleCookingMethodChange = (method) => {
-    const updatedCookingMethods = selectedCookingMethods.includes(method) ? selectedCookingMethods.filter((m) => m !== method) : [...selectedCookingMethods, method];
-
-    setSelectedCookingMethods(updatedCookingMethods);
-  };
-
   const handleCuisineChange = (cuisine) => {
     const updatedCuisines = selectedCuisines.includes(cuisine) ? selectedCuisines.filter((c) => c !== cuisine) : [...selectedCuisines, cuisine];
 
     setSelectedCuisines(updatedCuisines);
   };
 
-  const handleMealChange = (meal) => {
-    const updatedMeals = selectedMeals.includes(meal) ? selectedMeals.filter((m) => m !== meal) : [...selectedMeals, meal];
+  // const handleMealChange = (meal) => {
+  //   const updatedMeals = selectedMeals.includes(meal) ? selectedMeals.filter((m) => m !== meal) : [...selectedMeals, meal];
 
-    setSelectedMeals(updatedMeals);
-  };
+  //   setSelectedMeals(updatedMeals);
+  // };
+
+  // const handleDietChange = (diet) => {
+  //   const updatedDiets = selectedDiets.includes(diet) ? selectedDiets.filter((d) => d !== diet) : [...selectedDiets, diet];
+
+  //   setSelectedDiets(updatedDiets);
+  // };
 
   const handleDietChange = (diet) => {
-    const updatedDiets = selectedDiets.includes(diet) ? selectedDiets.filter((d) => d !== diet) : [...selectedDiets, diet];
+    const isSelected = selectedDiets.includes(diet);
 
-    setSelectedDiets(updatedDiets);
+    if (isSelected) {
+      // If the taste is already selected, remove it from the selection
+      setSelectedDiets((prevDiets) => prevDiets.filter((selectedDiet) => selectedDiet !== diet));
+    } else {
+      // If the taste is not selected, split it by comma and add individual tastes to the selection
+      const individualDiets = diet.split(",");
+      setSelectedDiets((prevDiets) => [...prevDiets, ...individualDiets.map((d) => d.trim())]);
+    }
   };
 
   const handleOccasionChange = (occasion) => {
@@ -655,50 +343,93 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     setSelectedOccasions(updatedOccasions);
   };
 
+  // const handleTasteChange = (taste) => {
+  //   setSelectedTastes(taste);
+  // };
+
+  // const handleCookingMethodChange = (method) => {
+  //   const updatedCookingMethods = selectedCookingMethods.includes(method) ? selectedCookingMethods.filter((m) => m !== method) : [...selectedCookingMethods, method];
+
+  //   setSelectedCookingMethods(updatedCookingMethods);
+  // };
+
+  const handleCookingMethodChange = (cookingMethod) => {
+    const isSelected = selectedCookingMethods.includes(cookingMethod);
+
+    if (isSelected) {
+      // If the cooking method is already selected, remove it from the selection
+      setSelectedCookingMethods((prevCookingMethods) => prevCookingMethods.filter((selectedCookingMethod) => selectedCookingMethod !== cookingMethod));
+    } else {
+      // If the cooking method is not selected, split it by comma and add individual tastes to the selection
+      const individualCookingMethods = cookingMethod.split(",");
+      setSelectedCookingMethods((prevCookingMethods) => [...prevCookingMethods, ...individualCookingMethods.map((c) => c.trim())]);
+    }
+  };
+
+  const handleMealChange = (meal) => {
+    const isSelected = selectedMeals.includes(meal);
+
+    if (isSelected) {
+      // If the meal is already selected, remove it from the selection
+      setSelectedMeals((prevMeals) => prevMeals.filter((selectedMeal) => selectedMeal !== meal));
+    } else {
+      // If the meal is not selected, split it by comma and add individual tastes to the selection
+      const individualMeals = meal.split(",");
+      setSelectedMeals((prevMeals) => [...prevMeals, ...individualMeals.map((m) => m.trim())]);
+    }
+  };
+
   const handleTasteChange = (taste) => {
-    const updatedTastes = selectedTastes.includes(taste) ? selectedTastes.filter((t) => t !== taste) : [...selectedTastes, taste];
+    const isSelected = selectedTastes.includes(taste);
 
-    setSelectedTastes(updatedTastes);
+    if (isSelected) {
+      // If the taste is already selected, remove it from the selection
+      setSelectedTastes((prevTastes) => prevTastes.filter((selectedTaste) => selectedTaste !== taste));
+    } else {
+      // If the taste is not selected, split it by comma and add individual tastes to the selection
+      const individualTastes = taste.split(",");
+      setSelectedTastes((prevTastes) => [...prevTastes, ...individualTastes.map((t) => t.trim())]);
+    }
   };
 
+  // const handleReviewsChange = () => {
+  //   // Update the difficulty state when the slider value changes
+  //   setHasReviews(!hasReviews);
+  // };
+  // const handleReviewsChange = () => {
+  //   // Update the hasReviews state based on the checkbox status
+  //   setHasReviews(hasReviews === "" ? !hasReviews : "");
+  // };
   const handleReviewsChange = () => {
-    // Update the difficulty state when the slider value changes
-    setHasReviews(!hasReviews);
+    // Update the hasReviews state based on the checkbox status
+    setHasReviews(hasReviews === "" ? "true" : "");
   };
 
-  // const [recipeAuthor, setRecipeAuthor] = useState("");
-  // const [recipeTitle, setRecipeTitle] = useState("");
-
-  // const handleApplyFilters = (e) => {
-  //   e.preventDefault(); // Prevent the default form submission behavior
-  //   applyFilters({
-  //     recipeAuthor,
-  //     recipeTitle,
-  //   });
-
-  //   // Constructing query parameters
-  //   const queryParams = queryString.stringify({
-  //     recipeAuthor: recipeAuthor || undefined,
-  //     recipeTitle: recipeTitle || undefined,
-  //   });
-
-  //   // Update the URL with the new query parameters
-  //   const newUrl = `${window.location.pathname}?${queryParams}`;
-  //   window.history.pushState(null, "", newUrl);
-  // };
-
-  // const handleResetFilters = (e) => {
-  //   e.preventDefault(); // Prevent the default form submission behavior
-  //   resetFilters();
-
-  //   // Reset the URL to remove query parameters
-  //   const newUrl = window.location.pathname;
-  //   window.history.pushState(null, "", newUrl);
-  // };
+  const handleDifficultyChange = (selectedDifficulty) => {
+    // Update the difficulty state when a chip is clicked
+    setDifficulty(selectedDifficulty);
+  };
 
   return (
     <Box>
       <form onSubmit={handleApplyFilters}>
+        {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          <Box>
+            <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
+            {Array.isArray(tastes) &&
+              tastes.map((taste) => (
+                <Chip
+                  key={taste._id}
+                  sx={{ marginRight: "5px", marginBottom: "5px" }}
+                  size="small"
+                  label={taste.name}
+                  onClick={() => handleTasteChange(taste.name)}
+                  color={selectedTastes.includes(taste.name) ? "warning" : "default"} // Adjusted condition here
+                />
+              ))}
+          </Box>
+        </ListItem> */}
+
         <List>
           <ListItem sx={{ padding: "0 !important" }}>
             <Typography variant="h6">Filters</Typography>
@@ -718,52 +449,37 @@ const SideBar = ({ applyFilters, resetFilters }) => {
             {/* <Typography gutterBottom>Filter by Cook Time</Typography> */}
             <Box>
               <InputLabel>Total Time</InputLabel>
-              <Chip sx={{ marginRight: "5px" }} size="small" label="All" onClick={() => setCookTime([0, 120])} color={cookTime[0] === 0 && cookTime[1] === 120 ? "primary" : "default"} />
-              <Chip sx={{ marginRight: "5px" }} size="small" label="15 min" onClick={() => setCookTime([0, 15])} color={cookTime[0] === 0 && cookTime[1] === 15 ? "primary" : "default"} />
-              <Chip sx={{ marginRight: "5px" }} size="small" label="30 min" onClick={() => setCookTime([16, 30])} color={cookTime[0] === 16 && cookTime[1] === 30 ? "primary" : "default"} />
-              <Chip sx={{ marginRight: "5px" }} size="small" label="45 min" onClick={() => setCookTime([31, 45])} color={cookTime[0] === 31 && cookTime[1] === 45 ? "primary" : "default"} />
-              <Chip sx={{ marginRight: "5px" }} size="small" label="1h+" onClick={() => setCookTime([46, 120])} color={cookTime[0] === 46 && cookTime[1] === 120 ? "primary" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="All" onClick={() => setTotalTime([])} color={JSON.stringify(totalTime) === JSON.stringify([]) ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="15 min" onClick={() => setTotalTime([0, 15])} color={JSON.stringify(totalTime) === JSON.stringify([0, 15]) ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="30 min" onClick={() => setTotalTime([16, 30])} color={totalTime[0] === 16 && totalTime[1] === 30 ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="45 min" onClick={() => setTotalTime([31, 45])} color={totalTime[0] === 31 && totalTime[1] === 45 ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="1 h" onClick={() => setTotalTime([46, 60])} color={totalTime[0] === 46 && totalTime[1] === 120 ? "warning" : "default"} />
             </Box>
           </ListItem>
 
-          {/* CookingMethods Filter (Accordion) */}
-          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Accordion sx={{ width: "100%" }}>
-              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cookingMethod-filter-content" id="cookingMethod-filter-header">
-                <Typography>Cooking Method</Typography>
-              </AccordionSummary>
-              <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto", "&::-webkit-scrollbar": { width: "5px" } }}>
-                <List>
-                  {cookingMethods.map((cookingMethod) => (
-                    <ListItem key={cookingMethod._id} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-                      <FormControlLabel control={<Checkbox size="small" checked={selectedCookingMethods.includes(cookingMethod.name)} onChange={() => handleCookingMethodChange(cookingMethod.name)} />} label={cookingMethod.name} />
-                    </ListItem>
-                  ))}
-                </List>
-              </AccordionDetails>
-            </Accordion>
-          </ListItem> */}
           {/* Has reviews Checkbox */}
-          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <FormControlLabel control={<Checkbox size="small" checked={hasReviews} onChange={handleReviewsChange} />} label="Has Reviews" />
+          </ListItem> */}
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Box>
+              <InputLabel>Has Reviews</InputLabel>
+              {/* <Chip sx={{ marginRight: "5px" }} size="small" label="All" onClick={() => handleDifficultyChange("")} color={difficulty === "" ? "warning" : "default"} /> */}
+              <Chip sx={{ marginRight: "5px" }} size="small" label="Yes" onClick={handleReviewsChange} color={hasReviews === "true" ? "warning" : "default"} />
+            </Box>
           </ListItem>
+
           {/* Filter by Difficulty */}
-          <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <InputLabel>Difficulty {getDifficultyLabel(difficulty)}</InputLabel>
-            <Slider
-              value={difficulty}
-              onChange={handleDifficultyChange}
-              // valueLabelDisplay="auto"
-              step={1}
-              // marks={[
-              //   { value: 1, label: "Easy" },
-              //   { value: 2, label: "Medium" },
-              //   { value: 3, label: "Hard" },
-              // ]}
-              min={1}
-              max={3}
-            />
-          </Box>
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            {/* <Typography gutterBottom>Filter by Cook Time</Typography> */}
+            <Box>
+              <InputLabel>Difficulty</InputLabel>
+              <Chip sx={{ marginRight: "5px" }} size="small" label="All" onClick={() => handleDifficultyChange("")} color={difficulty === "" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px" }} size="small" label="Easy" onClick={() => handleDifficultyChange("1")} color={difficulty === "1" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px" }} size="small" label="Medium" onClick={() => handleDifficultyChange("2")} color={difficulty === "2" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px" }} size="small" label="Hard" onClick={() => handleDifficultyChange("3")} color={difficulty === "3" ? "warning" : "default"} />
+            </Box>
+          </ListItem>
 
           {/* Filter by Minimal Score */}
           <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
@@ -788,7 +504,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <TextField size="small" label="Include up to 5 ingredients" variant="outlined" fullWidth />
           </ListItem>
-
+          {/* 
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cookingMethod-filter-content" id="cookingMethod-filter-header">
@@ -811,7 +527,8 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                 </List>
               </AccordionDetails>
             </Accordion>
-          </ListItem>
+          </ListItem> */}
+
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cuisine-filter-content" id="cuisine-filter-header">
@@ -836,7 +553,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
             </Accordion>
           </ListItem>
           {/* need to modify to meals */}
-          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="meal-filter-content" id="meal-filter-header">
                 <Typography>Meals</Typography>
@@ -858,9 +575,27 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                 </List>
               </AccordionDetails>
             </Accordion>
-          </ListItem>
+          </ListItem> */}
 
-          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          {/* CookingMethods Filter (Accordion) */}
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Accordion sx={{ width: "100%" }}>
+              <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="cookingMethod-filter-content" id="cookingMethod-filter-header">
+                <Typography>Cooking Method</Typography>
+              </AccordionSummary>
+              <AccordionDetails sx={{ maxHeight: "200px", overflowY: "auto", "&::-webkit-scrollbar": { width: "5px" } }}>
+                <List>
+                  {cookingMethods.map((cookingMethod) => (
+                    <ListItem key={cookingMethod._id} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
+                      <FormControlLabel control={<Checkbox size="small" checked={selectedCookingMethods.includes(cookingMethod.name)} onChange={() => handleCookingMethodChange(cookingMethod.name)} />} label={cookingMethod.name} />
+                    </ListItem>
+                  ))}
+                </List>
+              </AccordionDetails>
+            </Accordion>
+          </ListItem> */}
+
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="diet-filter-content" id="diet-filter-header">
                 <Typography>Diets</Typography>
@@ -882,7 +617,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                 </List>
               </AccordionDetails>
             </Accordion>
-          </ListItem>
+          </ListItem> */}
 
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
@@ -908,7 +643,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
             </Accordion>
           </ListItem>
 
-          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Accordion sx={{ width: "100%" }}>
               <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="taste-filter-content" id="taste-filter-header">
                 <Typography>Tastes</Typography>
@@ -930,14 +665,79 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                 </List>
               </AccordionDetails>
             </Accordion>
+          </ListItem> */}
+
+          {/* Filter by Diet */}
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Box>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Diet</InputLabel>
+              {Array.isArray(diets) &&
+                diets.map((diet) => (
+                  <Chip
+                    key={diet._id}
+                    sx={{ marginRight: "5px", marginBottom: "5px" }}
+                    size="small"
+                    label={diet.name}
+                    onClick={() => handleDietChange(diet.name)}
+                    color={selectedDiets.includes(diet.name) ? "warning" : "default"} // Adjusted condition here
+                  />
+                ))}
+            </Box>
           </ListItem>
 
-          {/* {Array.isArray(cookingMethods) &&
-            cookingMethods.map((cookingMethod) => (
-              <ListItem key={cookingMethod._id} sx={{ paddingTop: "0", paddingBottom: "0", paddingLeft: "0" }}>
-                <FormControlLabel control={<Checkbox size="small" checked={selectedCookingMethods.includes(cookingMethod.name)} onChange={() => handleCookingMethodChange(cookingMethod.name)} />} label={cookingMethod.name} />
-              </ListItem>
-            ))} */}
+          {/* Filter by CookingMethod */}
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Box>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Cooking Methods</InputLabel>
+              {Array.isArray(cookingMethods) &&
+                cookingMethods.map((cookingMethod) => (
+                  <Chip
+                    key={cookingMethod._id}
+                    sx={{ marginRight: "5px", marginBottom: "5px" }}
+                    size="small"
+                    label={cookingMethod.name}
+                    onClick={() => handleCookingMethodChange(cookingMethod.name)}
+                    color={selectedCookingMethods.includes(cookingMethod.name) ? "warning" : "default"} // Adjusted condition here
+                  />
+                ))}
+            </Box>
+          </ListItem>
+
+          {/* Filter by Meal */}
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Box>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Meal</InputLabel>
+              {Array.isArray(meals) &&
+                meals.map((meal) => (
+                  <Chip
+                    key={meal._id}
+                    sx={{ marginRight: "5px", marginBottom: "5px" }}
+                    size="small"
+                    label={meal.name}
+                    onClick={() => handleMealChange(meal.name)}
+                    color={selectedMeals.includes(meal.name) ? "warning" : "default"} // Adjusted condition here
+                  />
+                ))}
+            </Box>
+          </ListItem>
+
+          {/* Filter by Taste */}
+          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+            <Box>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
+              {Array.isArray(tastes) &&
+                tastes.map((taste) => (
+                  <Chip
+                    key={taste._id}
+                    sx={{ marginRight: "5px", marginBottom: "5px" }}
+                    size="small"
+                    label={taste.name}
+                    onClick={() => handleTasteChange(taste.name)}
+                    color={selectedTastes.includes(taste.name) ? "warning" : "default"} // Adjusted condition here
+                  />
+                ))}
+            </Box>
+          </ListItem>
 
           {/* Apply Filters Button */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
@@ -957,3 +757,64 @@ const SideBar = ({ applyFilters, resetFilters }) => {
 };
 
 export default SideBar;
+
+{
+  /* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+<Box>
+  <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
+
+  {Array.isArray(tastes) && tastes.map((taste) => <Chip key={taste._id} sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label={taste.name} onClick={() => handleTasteChange(taste.name)} color={selectedTastes === taste.name ? "warning" : "default"} />)}
+
+  
+   <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="All" onClick={() => handleTasteChange("")} color={selectedTaste === "" ? "warning" : "default"} /> 
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Spicy" onClick={() => handleTasteChange("Spicy")} color={selectedTaste === "Spicy" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sweet" onClick={() => handleTasteChange("Sweet")} color={selectedTaste === "Sweet" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sour" onClick={() => handleTasteChange("Sour")} color={selectedTaste === "Sour" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Bitter" onClick={() => handleTasteChange("Bitter")} color={selectedTaste === "Bitter" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Salty" onClick={() => handleTasteChange("Salty")} color={selectedTaste === "Salty" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Umami" onClick={() => handleTasteChange("Umami")} color={selectedTaste === "Umami" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Astrigent" onClick={() => handleTasteChange("Astrigent")} color={selectedTaste === "Astrigent" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Cooling" onClick={() => handleTasteChange("Cooling")} color={selectedTaste === "Cooling" ? "warning" : "default"} />
+  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Smoky" onClick={() => handleTasteChange("Smoky")} color={selectedTaste === "Smoky" ? "warning" : "default"} /> 
+</Box>
+</ListItem> */
+}
+
+{
+  /* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+<Box>
+  <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
+
+  {Array.isArray(tastes) &&
+    tastes.map((taste) => (
+      <Chip
+        key={taste._id}
+        sx={{ marginRight: "5px", marginBottom: "5px" }}
+        size="small"
+        label={taste.name}
+        onClick={() => handleTasteChange(taste.name)}
+        color={selectedTastes.includes(taste.name) ? "warning" : "default"}
+        variant={selectedTastes.includes(taste.name) ? "filled" : "outlined"} // Added variant prop
+      />
+    ))}
+</Box>
+</ListItem> */
+}
+
+{
+  /* {Array.isArray(tastes) && tastes.map((taste) => <Chip key={taste._id} sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label={taste.name} onClick={() => handleTasteChange(taste.name)} color={selectedTastes === taste.name ? "warning" : "default"} />)} */
+}
+
+{
+  /*
+               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="All" onClick={() => handleTasteChange("")} color={selectedTaste === "" ? "warning" : "default"} /> 
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Spicy" onClick={() => handleTasteChange("Spicy")} color={selectedTaste === "Spicy" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sweet" onClick={() => handleTasteChange("Sweet")} color={selectedTaste === "Sweet" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sour" onClick={() => handleTasteChange("Sour")} color={selectedTaste === "Sour" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Bitter" onClick={() => handleTasteChange("Bitter")} color={selectedTaste === "Bitter" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Salty" onClick={() => handleTasteChange("Salty")} color={selectedTaste === "Salty" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Umami" onClick={() => handleTasteChange("Umami")} color={selectedTaste === "Umami" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Astrigent" onClick={() => handleTasteChange("Astrigent")} color={selectedTaste === "Astrigent" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Cooling" onClick={() => handleTasteChange("Cooling")} color={selectedTaste === "Cooling" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Smoky" onClick={() => handleTasteChange("Smoky")} color={selectedTaste === "Smoky" ? "warning" : "default"} /> */
+}

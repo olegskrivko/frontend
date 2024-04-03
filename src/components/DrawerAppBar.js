@@ -39,10 +39,10 @@ const navItems = {
   "/recipes": "Recipes",
   "/collections": "Collections",
   "/tools": "Tools",
-  "/prices": "Prices",
+  // "/create-recipe": "create",
   "/contact": "Contact",
   "/admin/dashboard": "Dashboard",
-  "/auth": "Users",
+  // "/auth": "Users",
 };
 
 function DrawerAppBar(props) {
@@ -225,13 +225,18 @@ function DrawerAppBar(props) {
   //     </List>
   //   </Box>
   // );
+
   return (
     <Box sx={{ display: "flex", p: 3 }}>
       <CssBaseline />
       <AppBar
         component="nav"
         sx={{
-          background: "#1D1D1D",
+          // background: "#1D1D1D",
+          // background: "#252C35",
+          // background: "#FC6722"
+
+          background: "#ff6600",
         }}
       >
         <Container disableGutters>
@@ -240,7 +245,8 @@ function DrawerAppBar(props) {
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}>
+            <Typography variant="h6" component="div" sx={{ display: "flex", alignItems: "center" }}>
+              <LocalFireDepartmentIcon sx={{ marginRight: 1 }} /> {/* Adjust the margin as needed */}
               <Link to="/" style={{ color: "white", textDecoration: "none" }}>
                 Cookify
               </Link>
@@ -257,6 +263,11 @@ function DrawerAppBar(props) {
                   <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
                     Logout
                   </Button>
+                </Link>
+              )}
+              {!isAuthenticated() && (
+                <Link to="/auth">
+                  <Button sx={{ color: "#fff", fontWeight: "400" }}>Login</Button>
                 </Link>
               )}
             </Box>
