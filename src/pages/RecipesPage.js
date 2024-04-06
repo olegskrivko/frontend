@@ -28,12 +28,17 @@ const RecipesPage = () => {
 
   const [appliedFilters, setAppliedFilters] = useState({
     recipeTitle: queryParams.get("recipeTitle") || "",
-    recipeAuthor: queryParams.get("recipeAuthor") || "",
+    // recipeAuthor: queryParams.get("recipeAuthor") || "",
     hasReviews: queryParams.get("hasReviews") || "",
-    difficulty: queryParams.get("difficulty") || "",
-    totalTime: queryParams.getAll("totalTime") || [],
+    // difficulty: queryParams.get("difficulty") || "",
+    difficulties: queryParams.getAll("difficulties") || [],
+
+    totalTime: queryParams.get("totalTime") || "",
+
     tastes: queryParams.getAll("tastes") || [],
     meals: queryParams.getAll("meals") || [],
+    diets: queryParams.getAll("diets") || [],
+    cookingMethods: queryParams.getAll("cookingMethods") || [],
 
     // Add other filter keys and their default values here
   });
@@ -98,12 +103,16 @@ const RecipesPage = () => {
       // Clear any applied filters
       const emptyFilters = {
         recipeTitle: "",
-        recipeAuthor: "",
+        // recipeAuthor: "",
         hasReviews: "",
-        difficulty: "",
-        totalTime: [],
+        // difficulty: "",
+        difficulties: [],
+        totalTime: "",
         cookingMethods: [],
         tastes: [],
+        diets: [],
+        meals: [],
+        cuisines: [],
         // Add other filter keys and their default values here
         // Add other filter keys and their default values here
       };
