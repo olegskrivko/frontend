@@ -80,7 +80,7 @@ const RecipeDifficulty = ({ difficulty }) => {
       case 2:
         return "Medium";
       case 3:
-        return "Difficult";
+        return "Hard";
       default:
         return "Unknown";
     }
@@ -261,8 +261,18 @@ const RecipeDetails = () => {
   if (loading) {
     return (
       <>
-        <Typography variant="h4">Loading Recipe Details...</Typography>
-        <CircularIndeterminate />
+        <React.Fragment>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              height: "100vh", // Make the spinner cover the entire viewport vertically
+            }}
+          >
+            <CircularProgress size={80} style={{ color: "#ff6600" }} /> {/* Adjust the size of the spinner as needed */}
+          </div>
+        </React.Fragment>
       </>
     );
   }
@@ -290,6 +300,7 @@ const RecipeDetails = () => {
             </Typography>
           )}
           {/* <div style={{ display: "flex", alignItems: "center" }}> */}
+
           {recipe && recipe.source && recipe.source.name && (
             <Typography
               gutterBottom
@@ -328,7 +339,7 @@ const RecipeDetails = () => {
         {/* <Grid item xs={12} sm={12} md={7} lg={7} style={{ display: "flex", alignItems: "center" }}>
           {recipe && recipe.tags && <RecipeTags tags={recipe.tags} />}
         </Grid> */}
-        <Grid item xs={12} sm={12} md={7} lg={7} sx={{ paddingTop: "1rem !important", display: "flex", alignItems: "center" }}>
+        <Grid item xs={12} sm={12} md={7} lg={7} sx={{ paddingTop: "1rem !important", display: "flex", flexWrap: "wrap" }}>
           {recipe && recipe.meals && <RecipeMeals meals={recipe.meals} />} {recipe && recipe.cuisines && <RecipeCuisines cuisines={recipe.cuisines} />}
         </Grid>
         {/* Image Section */}
@@ -394,63 +405,6 @@ const RecipeDetails = () => {
               </IconButton>
             </Card>
           )}
-          {/* <Stack direction="row" spacing={1} position="absolute" bottom={10} right={10}>
-            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
-              Save <BookmarkIcon />
-            </Button>
-            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
-              Download <DownloadIcon />
-            </Button>
-            <Button variant="contained" color="primary" size="small" sx={{ background: "#1D1D1D" }}>
-              Share <ShareIcon />
-            </Button>
-          </Stack> */}
-          {/* {recipe && recipe.coverImage && (
-            <CardMedia
-              component="img"
-              image={recipe.coverImage}
-              alt={recipe.title}
-              style={{
-                width: "100%",
-                height: "400px",
-                objectFit: "cover",
-              }}
-            />
-          )} */}
-          {/* <Stack direction="row" spacing={1}>
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{
-                background: "#1D1D1D",
-              }}
-            >
-              Save <BookmarkIcon />
-            </Button>
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{
-                background: "#1D1D1D",
-              }}
-            >
-              Download <DownloadIcon />
-            </Button>
-
-            <Button
-              variant="contained"
-              color="primary"
-              size="small"
-              sx={{
-                background: "#1D1D1D",
-              }}
-            >
-              Share <ShareIcon />
-            </Button>
-          </Stack> */}
         </Grid>
         {/* Icons Sections */}
         <Grid item xs={12} sm={12} md={5} lg={5}>

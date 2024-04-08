@@ -1,13 +1,21 @@
 // export default SideBar;
 import React, { useState, useEffect } from "react";
-import { Drawer, Chip, Box, List, Input, Badge, OutlinedInput, Grid, FormControl, InputLabel, TextField, ListItem, ListItemText, Select, MenuItem, Button, Slider, Checkbox, FormControlLabel, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
-// import queryString from "query-string";
+import { Drawer, Popover, Fade, IconButton, Paper, Popper, Chip, Box, List, Input, Badge, OutlinedInput, Grid, FormControl, InputLabel, TextField, ListItem, ListItemText, Select, MenuItem, Button, Slider, Checkbox, FormControlLabel, Typography, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
+
+import AccordionActions from "@mui/material/AccordionActions";
+import TuneIcon from "@mui/icons-material/Tune";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { useLocation, useNavigate } from "react-router-dom";
 import { BASE_URL } from "../middleware/config";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import Autocomplete from "@mui/material/Autocomplete";
+import InfoIcon from "@mui/icons-material/Info";
 
 const SideBar = ({ applyFilters, resetFilters }) => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
   const location = useLocation();
   const navigate = useNavigate();
   const queryParams = new URLSearchParams(location.search);
@@ -37,12 +45,10 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   const initialDiets = (queryParams.getAll("diets") || []).flatMap((diet) => diet.split(","));
   const initialCookingMethods = (queryParams.getAll("cookingMethods") || []).flatMap((cookingMethod) => cookingMethod.split(","));
   const initialOccasions = queryParams.getAll("occasions") || [];
-  const initialHasReviews = queryParams.get("hasReviews") || "";
-  // const initialDifficulties = (queryParams.getAll("difficulties") || []).flatMap((dif) => dif.split(","));
+  // const initialHasReviews = queryParams.get("hasReviews") || "";
   const initialDifficulties = (queryParams.getAll("difficulties") || []).flatMap((dif) => dif.split(",").map((d) => d.trim())).filter((d) => d !== ""); // Remove empty strings after splitting
-
   const initialTotalTime = queryParams.get("totalTime") || "";
-  console.log("sidebar initialDifficulties", initialDifficulties);
+
   // Use state to manage selected values
   // const [recipeAuthor, setRecipeAuthor] = useState(initialRecipeAuthor);
   // const [recipeTitle, setRecipeTitle] = useState(initialRecipeTitle);
@@ -54,19 +60,17 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   const [cookingMethods, setCookingMethods] = useState([]);
   const [tastes, setTastes] = useState([]);
   const [difficulties, setDifficulties] = useState(["1", "2", "3"]);
-  console.log("sidebar difficulties", difficulties);
+
   // Use selected state to manage UI updates
   const [selectedTastes, setSelectedTastes] = useState(initialTastes);
   const [selectedCookingMethods, setSelectedCookingMethods] = useState(initialCookingMethods);
   const [selectedMeals, setSelectedMeals] = useState(initialMeals);
   const [selectedDiets, setSelectedDiets] = useState(initialDiets);
   const [selectedDifficulties, setSelectedDifficulties] = useState(initialDifficulties);
-  console.log("sidebar selectedDifficulties", selectedDifficulties);
   const [selectedOccasions, setSelectedOccasions] = useState(initialOccasions);
   const [minimumScore, setMinimumScore] = useState(0);
   const [selectedCuisines, setSelectedCuisines] = useState(initialCuisines);
-  const [hasReviews, setHasReviews] = useState(initialHasReviews);
-  // const [difficulty, setDifficulty] = useState(initialDifficulty);
+  // const [hasReviews, setHasReviews] = useState(initialHasReviews);
 
   const handleMinimumScoreChange = (event, newValue) => {
     // Update the difficulty state when the slider value changes
@@ -103,14 +107,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     fetchIngredients();
   }, []);
 
-  // const handleIngredientChange = (event, newValue) => {
-  //   setSelectedIngredients(newValue);
-  // };
-
-  // // Function to handle change in excluded ingredients
-  // const handleExcludedIngredientChange = (event, newValue) => {
-  //   setExcludedIngredients(newValue);
-  // };
   const handleIncludedIngredientChange = (event, newValue) => {
     setIncludedIngredients(newValue || []); // Ensure newValue is not null
   };
@@ -118,17 +114,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   const handleExcludedIngredientChange = (event, newValue) => {
     setExcludedIngredients(newValue || []); // Ensure newValue is not null
   };
-
-  // const handleApplyFilters = (e) => {
-  //   e.preventDefault();
-  //   // Code to handle applying filters...
-  // };
-
-  // const handleResetFilters = (e) => {
-  //   e.preventDefault();
-  //   resetFilters();
-  //   // Code to handle resetting filters...
-  // };
 
   useEffect(() => {
     // Fetch cooking methods when the component mounts
@@ -232,7 +217,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     // setRecipeAuthor(queryParams.get("recipeAuthor") || "");
     setTotalTime(queryParams.get("totalTime") || "");
     setRecipeTitle(queryParams.get("recipeTitle") || "");
-    setHasReviews(queryParams.get("hasReviews") || "");
+    // setHasReviews(queryParams.get("hasReviews") || "");
     setDifficulties(queryParams.getAll("difficulties") || []);
     setCuisines(queryParams.getAll("cuisines") || []);
     setOccasions(queryParams.getAll("occasions") || []);
@@ -257,9 +242,9 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       newQueryParams.append("recipeTitle", recipeTitle);
     }
 
-    if (hasReviews) {
-      newQueryParams.append("hasReviews", hasReviews);
-    }
+    // if (hasReviews) {
+    //   newQueryParams.append("hasReviews", hasReviews);
+    // }
 
     if (selectedDifficulties.length > 0) {
       selectedDifficulties.forEach((difficulty) => {
@@ -267,11 +252,11 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       });
     }
 
-    if (selectedCuisines.length > 0) {
-      selectedCuisines.forEach((cuisine) => {
-        newQueryParams.append("cuisines", cuisine);
-      });
-    }
+    // if (selectedCuisines.length > 0) {
+    //   selectedCuisines.forEach((cuisine) => {
+    //     newQueryParams.append("cuisines", cuisine);
+    //   });
+    // }
 
     selectedCookingMethods.forEach((cookingMethod) => {
       // Split each taste by comma
@@ -318,15 +303,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         newQueryParams.append("cuisines", individualCuisine.trim());
       });
     });
-    // Add included ingredients
-    // selectedIngredients.forEach((ingredient) => {
-    //   newQueryParams.append("includedIngredients", ingredient);
-    // });
 
-    // // Add excluded ingredients
-    // excludedIngredients.forEach((ingredient) => {
-    //   newQueryParams.append("excludedIngredients", ingredient);
-    // });
     // Add included ingredients
     includedIngredients.forEach((ingredient) => {
       newQueryParams.append("includedIngredients", ingredient._id); // Assuming ingredient objects have an 'id' property
@@ -337,13 +314,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       newQueryParams.append("excludedIngredients", ingredient._id); // Assuming ingredient objects have an 'id' property
     });
 
-    // Append selected taste to query parameters
-    // if (selectedTaste) {
-    //   newQueryParams.append("tastes", selectedTaste);
-    // }
-
     // Append selected tastes to query parameters
-
     selectedTastes.forEach((taste) => {
       // Split each taste by comma
       const individualTastes = taste.split(",");
@@ -353,11 +324,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         newQueryParams.append("tastes", individualTaste.trim());
       });
     });
-    // if (selectedTastes.length > 0) {
-    //   selectedTastes.forEach((taste) => {
-    //     newQueryParams.append("tastes", taste);
-    //   });
-    // }
 
     // Update the URL with the new query parameters
     navigate(`${location.pathname}?${newQueryParams}`);
@@ -366,8 +332,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     applyFilters({
       // recipeAuthor,
       recipeTitle,
-      hasReviews,
-      // difficulty,
+      // hasReviews,
       difficulties: selectedDifficulties,
       totalTime,
       cookingMethods: selectedCookingMethods,
@@ -378,7 +343,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
       tastes: selectedTastes,
       includedIngredients: includedIngredients.map((ingredient) => ingredient._id),
       excludedIngredients: excludedIngredients.map((ingredient) => ingredient._id),
-      // tastes: selectedTastes,
     });
   };
 
@@ -396,12 +360,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     // Reset the URL to remove query parameters
     navigate(location.pathname);
   };
-
-  // const handleCuisineChange = (cuisine) => {
-  //   const updatedCuisines = selectedCuisines.includes(cuisine) ? selectedCuisines.filter((c) => c !== cuisine) : [...selectedCuisines, cuisine];
-
-  //   setSelectedCuisines(updatedCuisines);
-  // };
 
   const handleDietChange = (diet) => {
     const isSelected = selectedDiets.includes(diet);
@@ -449,7 +407,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   };
 
   const handleCuisineChange = (cuisine) => {
-    const isSelected = selectedMeals.includes(cuisine);
+    const isSelected = selectedCuisines.includes(cuisine);
 
     if (isSelected) {
       // If the cuisine is already selected, remove it from the selection
@@ -474,10 +432,6 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     }
   };
 
-  // const handleTotalTimeChange = (time) => {
-  //   setTotalTime(time);
-  // };
-
   const handleTotalTimeChange = (time) => {
     // If the clicked time is already selected, deselect it
     if (totalTime === time) {
@@ -489,17 +443,10 @@ const SideBar = ({ applyFilters, resetFilters }) => {
   };
 
   // const handleReviewsChange = () => {
-  //   // Update the difficulty state when the slider value changes
-  //   setHasReviews(!hasReviews);
-  // };
-  // const handleReviewsChange = () => {
   //   // Update the hasReviews state based on the checkbox status
-  //   setHasReviews(hasReviews === "" ? !hasReviews : "");
+  //   setHasReviews(hasReviews === "" ? "true" : "");
   // };
-  const handleReviewsChange = () => {
-    // Update the hasReviews state based on the checkbox status
-    setHasReviews(hasReviews === "" ? "true" : "");
-  };
+
   const handleDifficultyChange = (difficulty) => {
     // Check if the difficulty is already selected
     const isSelected = selectedDifficulties.includes(difficulty);
@@ -513,18 +460,18 @@ const SideBar = ({ applyFilters, resetFilters }) => {
     }
   };
 
-  // const handleDifficultyChange = (difficulty) => {
-  //   const isSelected = selectedDifficulties.includes(difficulty);
-  //   if (isSelected) {
-  //     // If the difficulty is already selected, remove it from the selection
-  //     setSelectedDifficulties((prevDifficulties) => prevDifficulties.filter((selectedDifficulty) => selectedDifficulty !== difficulty));
-  //   } else {
-  //     // If the difficulty is not selected, add it to the selection
-  //     setSelectedDifficulties((prevDifficulties) => [...prevDifficulties, difficulty]);
-  //   }
+  // const [expanded, setExpanded] = React.useState(isSmallScreen);
+
+  // const handleChange = (isLargeScreen) => (event, newExpanded) => {
+  //   setExpanded(newExpanded ? isLargeScreen : false);
   // };
 
   return (
+    // <Accordion expanded={expanded === isSmallScreen} onChange={handleChange(isSmallScreen)} sx={{ boxShadow: "none" }}>
+    //   <AccordionSummary sx={{ marginTop: "0 !important", paddingLeft: "0 !important", paddingBottom: "0 !important" }} expandIcon={<TuneIcon />} aria-controls="panel1-content" id="panel1-header">
+    //     <Typography variant="h6">Filters</Typography>
+    //   </AccordionSummary>
+    //   <AccordionDetails sx={{ padding: "0", margin: "0" }}>
     <Box>
       <form onSubmit={handleApplyFilters}>
         <List>
@@ -533,55 +480,42 @@ const SideBar = ({ applyFilters, resetFilters }) => {
           </ListItem>
           {/* Include up to 5 ingredients */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Autocomplete limitTags={3} multiple id="include-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={includedIngredients} onChange={handleIncludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="Include up to 3 ingredients" variant="outlined" />} />
+            <Box sx={{ width: "100%" }}>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Include up to 3 ingredients</InputLabel>
+              <Autocomplete limitTags={3} multiple id="include-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={includedIngredients} onChange={handleIncludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="bacon..." variant="outlined" />} />
+            </Box>
           </ListItem>
           {/* Exclude up to 5 ingredients */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Autocomplete limitTags={3} multiple id="exclude-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={excludedIngredients} onChange={handleExcludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="Exclude up to 3 ingredients" variant="outlined" />} />
+            <Box sx={{ width: "100%" }}>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Exclude up to 3 ingredients</InputLabel>
+              <Autocomplete limitTags={3} multiple id="exclude-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={excludedIngredients} onChange={handleExcludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="garlic..." variant="outlined" />} />
+            </Box>
           </ListItem>
-          {/* Search by Recipe Title */}
-          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <TextField size="small" label="Recipe Title" variant="outlined" fullWidth value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
-          </ListItem> */}
-          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <TextField label="Search by Recipe Title" variant="outlined" fullWidth value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
-            <Autocomplete options={recipeTitleSuggestions} renderInput={(params) => <TextField {...params} label="Search Recipe Titles" variant="outlined" fullWidth />} />
-          </ListItem> */}
-          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Grid container spacing={2} alignItems="center">
-              <Grid item xs={12} sm={6}>
-                <TextField label="Search by Recipe Title" variant="outlined" fullWidth value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <Autocomplete options={recipeTitleSuggestions} renderInput={(params) => <TextField {...params} label="Search Recipe Titles" variant="outlined" fullWidth />} />
-              </Grid>
-            </Grid>
-          </ListItem> */}
-          {/* <Autocomplete multiple id="include-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={selectedIngredients} onChange={handleIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="Include up to 5 ingredients" variant="outlined" />} /> */}
-          {/* <Box>
-            <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-              <Autocomplete options={recipeTitleSuggestions} fullWidth renderInput={(params) => <TextField {...params} label="Search by Recipe Title" variant="outlined" fullWidth value={recipeTitle} onChange={(e) => setRecipeTitle(e.target.value)} />} />
-            </ListItem>
-          </Box> */}
+
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Autocomplete
-              options={recipeTitleSuggestions}
-              fullWidth
-              value={recipeTitle}
-              onChange={handleAutocompleteChange} // Handle change event of Autocomplete
-              filterOptions={filterOptions} // Limit the number of suggestions
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search by recipe title"
-                  variant="outlined"
-                  size="small"
-                  fullWidth
-                  value={recipeTitle}
-                  onChange={(e) => setRecipeTitle(e.target.value)} // Handle change event of TextField
-                />
-              )}
-            />
+            <Box sx={{ width: "100%" }}>
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Search by recipe title</InputLabel>
+              <Autocomplete
+                options={recipeTitleSuggestions}
+                fullWidth
+                value={recipeTitle}
+                onChange={handleAutocompleteChange} // Handle change event of Autocomplete
+                filterOptions={filterOptions} // Limit the number of suggestions
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label=""
+                    variant="outlined"
+                    size="small"
+                    fullWidth
+                    placeholder="Caesar salad..."
+                    value={recipeTitle}
+                    onChange={(e) => setRecipeTitle(e.target.value)} // Handle change event of TextField
+                  />
+                )}
+              />
+            </Box>
           </ListItem>
           {/* Search by Recipe Author */}
           {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
@@ -590,31 +524,32 @@ const SideBar = ({ applyFilters, resetFilters }) => {
           {/* Cook Time Options */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box>
-              <InputLabel>Total Time</InputLabel>
+              {/* <InputLabel>Total Time</InputLabel> */}
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Total Time</InputLabel>
               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 15 min" onClick={() => handleTotalTimeChange("0,15")} color={totalTime === "0,15" ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 30 min" onClick={() => handleTotalTimeChange("0,30")} color={totalTime === "0,30" ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 45 min" onClick={() => handleTotalTimeChange("0,45")} color={totalTime === "0,45" ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 1h" onClick={() => handleTotalTimeChange("0,60")} color={totalTime === "0,60" ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 2h" onClick={() => handleTotalTimeChange("0,120")} color={totalTime === "0,120" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="More than 2h" onClick={() => handleTotalTimeChange("121,Infinity")} color={totalTime === "121,Infinity" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="< 4h" onClick={() => handleTotalTimeChange("0,240")} color={totalTime === "0,240" ? "warning" : "default"} />
+              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="More than 4h" onClick={() => handleTotalTimeChange("241,Infinity")} color={totalTime === "241,Infinity" ? "warning" : "default"} />
             </Box>
           </ListItem>
           {/* Has reviews Checkbox */}
           {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <FormControlLabel control={<Checkbox size="small" checked={hasReviews} onChange={handleReviewsChange} />} label="Has Reviews" />
           </ListItem> */}
-          <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          {/* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box>
-              <InputLabel>Has Reviews</InputLabel>
-              {/* <Chip sx={{ marginRight: "5px" }} size="small" label="All" onClick={() => handleDifficultyChange("")} color={difficulty === "" ? "warning" : "default"} /> */}
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Has Reviews</InputLabel>
               <Chip sx={{ marginRight: "5px" }} size="small" label="Yes" onClick={handleReviewsChange} color={hasReviews === "true" ? "warning" : "default"} />
             </Box>
-          </ListItem>
+          </ListItem> */}
           {/* Filter by Difficulty */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            {/* <Typography gutterBottom>Filter by Cook Time</Typography> */}
             <Box>
-              <InputLabel>Difficulty</InputLabel>
+              {/* <InputLabel>Difficulty</InputLabel> */}
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Difficulty</InputLabel>
               <Chip sx={{ marginRight: "5px" }} size="small" label="Easy" onClick={() => handleDifficultyChange("1")} color={selectedDifficulties.includes("1") ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px" }} size="small" label="Medium" onClick={() => handleDifficultyChange("2")} color={selectedDifficulties.includes("2") ? "warning" : "default"} />
               <Chip sx={{ marginRight: "5px" }} size="small" label="Hard" onClick={() => handleDifficultyChange("3")} color={selectedDifficulties.includes("3") ? "warning" : "default"} />
@@ -623,7 +558,8 @@ const SideBar = ({ applyFilters, resetFilters }) => {
 
           {/* Filter by Minimal Score */}
           <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <InputLabel>Minimum Score {minimumScore}</InputLabel>
+            {/* <InputLabel>Minimum Score {minimumScore}</InputLabel> */}
+            <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Minimum Score {minimumScore}</InputLabel>
             <Slider
               sx={{ height: "8px", color: "#ff6600" }}
               value={minimumScore}
@@ -800,19 +736,19 @@ const SideBar = ({ applyFilters, resetFilters }) => {
               </AccordionDetails>
             </Accordion>
           </ListItem> */}
-          {/* Filter by Cuisine */}
+          {/* Filter by Meal */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box>
-              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Cuisine</InputLabel>
-              {Array.isArray(diets) &&
-                cuisines.map((cuisine) => (
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Meal</InputLabel>
+              {Array.isArray(meals) &&
+                meals.map((meal) => (
                   <Chip
-                    key={cuisine._id}
+                    key={meal._id}
                     sx={{ marginRight: "5px", marginBottom: "5px" }}
                     size="small"
-                    label={cuisine.name}
-                    onClick={() => handleCuisineChange(cuisine.name)}
-                    color={selectedCuisines.includes(cuisine.name) ? "warning" : "default"} // Adjusted condition here
+                    label={meal.name}
+                    onClick={() => handleMealChange(meal.name)}
+                    color={selectedMeals.includes(meal.name) ? "warning" : "default"} // Adjusted condition here
                   />
                 ))}
             </Box>
@@ -851,23 +787,24 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                 ))}
             </Box>
           </ListItem>
-          {/* Filter by Meal */}
+          {/* Filter by Cuisine */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box>
-              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Meal</InputLabel>
-              {Array.isArray(meals) &&
-                meals.map((meal) => (
+              <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Cuisine</InputLabel>
+              {Array.isArray(diets) &&
+                cuisines.map((cuisine) => (
                   <Chip
-                    key={meal._id}
+                    key={cuisine._id}
                     sx={{ marginRight: "5px", marginBottom: "5px" }}
                     size="small"
-                    label={meal.name}
-                    onClick={() => handleMealChange(meal.name)}
-                    color={selectedMeals.includes(meal.name) ? "warning" : "default"} // Adjusted condition here
+                    label={cuisine.name}
+                    onClick={() => handleCuisineChange(cuisine.name)}
+                    color={selectedCuisines.includes(cuisine.name) ? "warning" : "default"} // Adjusted condition here
                   />
                 ))}
             </Box>
           </ListItem>
+
           {/* Filter by Taste */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box>
@@ -887,80 +824,21 @@ const SideBar = ({ applyFilters, resetFilters }) => {
           </ListItem>
           {/* Apply Filters Button */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Button type="submit" variant="contained" sx={{ width: "100%" }} color="primary">
+            <Button type="submit" variant="contained" sx={{ width: "100%" }} color="warning">
               Apply Filters
             </Button>
           </ListItem>
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-            <Button onClick={handleResetFilters} variant="outlined" sx={{ width: "100%" }} color="primary">
+            <Button onClick={handleResetFilters} variant="outlined" sx={{ width: "100%" }} color="warning">
               Reset Filters
             </Button>
           </ListItem>
         </List>
       </form>
     </Box>
+    //   </AccordionDetails>
+    // </Accordion>
   );
 };
 
 export default SideBar;
-
-{
-  /* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-<Box>
-  <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
-
-  {Array.isArray(tastes) && tastes.map((taste) => <Chip key={taste._id} sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label={taste.name} onClick={() => handleTasteChange(taste.name)} color={selectedTastes === taste.name ? "warning" : "default"} />)}
-
-  
-   <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="All" onClick={() => handleTasteChange("")} color={selectedTaste === "" ? "warning" : "default"} /> 
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Spicy" onClick={() => handleTasteChange("Spicy")} color={selectedTaste === "Spicy" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sweet" onClick={() => handleTasteChange("Sweet")} color={selectedTaste === "Sweet" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sour" onClick={() => handleTasteChange("Sour")} color={selectedTaste === "Sour" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Bitter" onClick={() => handleTasteChange("Bitter")} color={selectedTaste === "Bitter" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Salty" onClick={() => handleTasteChange("Salty")} color={selectedTaste === "Salty" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Umami" onClick={() => handleTasteChange("Umami")} color={selectedTaste === "Umami" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Astrigent" onClick={() => handleTasteChange("Astrigent")} color={selectedTaste === "Astrigent" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Cooling" onClick={() => handleTasteChange("Cooling")} color={selectedTaste === "Cooling" ? "warning" : "default"} />
-  <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Smoky" onClick={() => handleTasteChange("Smoky")} color={selectedTaste === "Smoky" ? "warning" : "default"} /> 
-</Box>
-</ListItem> */
-}
-
-{
-  /* <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
-<Box>
-  <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Taste</InputLabel>
-
-  {Array.isArray(tastes) &&
-    tastes.map((taste) => (
-      <Chip
-        key={taste._id}
-        sx={{ marginRight: "5px", marginBottom: "5px" }}
-        size="small"
-        label={taste.name}
-        onClick={() => handleTasteChange(taste.name)}
-        color={selectedTastes.includes(taste.name) ? "warning" : "default"}
-        variant={selectedTastes.includes(taste.name) ? "filled" : "outlined"} // Added variant prop
-      />
-    ))}
-</Box>
-</ListItem> */
-}
-
-{
-  /* {Array.isArray(tastes) && tastes.map((taste) => <Chip key={taste._id} sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label={taste.name} onClick={() => handleTasteChange(taste.name)} color={selectedTastes === taste.name ? "warning" : "default"} />)} */
-}
-
-{
-  /*
-               <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="All" onClick={() => handleTasteChange("")} color={selectedTaste === "" ? "warning" : "default"} /> 
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Spicy" onClick={() => handleTasteChange("Spicy")} color={selectedTaste === "Spicy" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sweet" onClick={() => handleTasteChange("Sweet")} color={selectedTaste === "Sweet" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Sour" onClick={() => handleTasteChange("Sour")} color={selectedTaste === "Sour" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Bitter" onClick={() => handleTasteChange("Bitter")} color={selectedTaste === "Bitter" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Salty" onClick={() => handleTasteChange("Salty")} color={selectedTaste === "Salty" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Umami" onClick={() => handleTasteChange("Umami")} color={selectedTaste === "Umami" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Astrigent" onClick={() => handleTasteChange("Astrigent")} color={selectedTaste === "Astrigent" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Cooling" onClick={() => handleTasteChange("Cooling")} color={selectedTaste === "Cooling" ? "warning" : "default"} />
-              <Chip sx={{ marginRight: "5px", marginBottom: "5px" }} size="small" label="Smoky" onClick={() => handleTasteChange("Smoky")} color={selectedTaste === "Smoky" ? "warning" : "default"} /> */
-}

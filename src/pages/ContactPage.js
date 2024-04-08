@@ -184,7 +184,7 @@ const ContactPage = () => {
         </Typography>
       </Grid> */}
 
-      <Grid item xs={12} md={12}>
+      <Grid item xs={12} md={12} sx={{ paddingBottom: "1rem !important" }}>
         <Typography variant="h5" sx={{ m: 3, textAlign: "center" }} gutterBottom>
           Policies & Community Guidelines
         </Typography>
@@ -201,9 +201,8 @@ const ContactPage = () => {
         </List> */}
       </Grid>
       <Grid container spacing={3}>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          {" "}
-          <List sx={{ paddingLeft: "20px" }}>
+        <Grid item xs={12} sm={12} md={6} lg={6} sx={{ paddingTop: "0 !important" }}>
+          <List sx={{ paddingBottom: "0 !important" }}>
             <ListItem>
               <ListItemIcon sx={{ marginRight: "-20px" }}>
                 <LocalFireDepartmentIcon sx={{ color: "#ff6600" }} /> {/* Your custom icon component */}
@@ -228,10 +227,10 @@ const ContactPage = () => {
                 <Typography variant="body1">Cookie Policy</Typography>
               </Link>
             </ListItem>
-          </List>
-        </Grid>
-        <Grid item xs={12} sm={12} md={6} lg={6}>
-          <List sx={{ paddingLeft: "20px" }}>
+            {/* </List> */}
+            {/* </Grid> */}
+            {/* <Grid item xs={12} sm={12} md={6} lg={6} sx={{ paddingTop: "0 !important" }}> */}
+            {/* <List sx={{ paddingLeft: "20px", paddingBottom: "0 !important" }}> */}
             <ListItem>
               <ListItemIcon sx={{ marginRight: "-20px" }}>
                 <LocalFireDepartmentIcon sx={{ color: "#ff6600" }} /> {/* Your custom icon component */}

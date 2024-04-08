@@ -145,7 +145,9 @@ const ActivityCard = ({ activity, time }) => {
             <Avatar sx={{ backgroundColor: "#556574" }}>{iconMap[activity]}</Avatar>
           </Grid>
           <Grid item>
-            <Typography variant="h6">{activity}</Typography>
+            <Typography sx={{ fontSize: "1rem" }} variant="h6">
+              {activity}
+            </Typography>
             <Typography variant="body2" color="textSecondary">
               {/* {`Time needed: ${formatTime(time)}`} */}
               {`${formatTime(time)}`}

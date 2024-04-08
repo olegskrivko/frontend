@@ -1,6 +1,6 @@
 // DrawerAppBar.js
-import React, { useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 // React MUI
 import AppBar from "@mui/material/AppBar";
@@ -27,12 +27,14 @@ import Collapse from "@mui/material/Collapse";
 import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import SideBar from "../pages/SideBar";
 
 import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
 
 const drawerWidth = 240;
+const drawerWidthFilters = "80%";
 
 const navItems = {
   // "/": "Home",
@@ -46,11 +48,145 @@ const navItems = {
 };
 
 function DrawerAppBar(props) {
+  // const { id } = useParams();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const queryParams = new URLSearchParams(location.search);
+  const [recipes, setRecipes] = useState([]);
+  const [pagination, setPagination] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+
+  const [appliedFilters, setAppliedFilters] = useState({
+    recipeTitle: queryParams.get("recipeTitle") || "",
+    // hasReviews: queryParams.get("hasReviews") || "",
+    difficulties: queryParams.getAll("difficulties") || [],
+    totalTime: queryParams.get("totalTime") || "",
+    cuisines: queryParams.getAll("cuisines") || [],
+    tastes: queryParams.getAll("tastes") || [],
+    meals: queryParams.getAll("meals") || [],
+    diets: queryParams.getAll("diets") || [],
+    cookingMethods: queryParams.getAll("cookingMethods") || [],
+    // Add other filter keys and their default values here
+  });
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      try {
+        const queryParams = new URLSearchParams(location.search);
+
+        const response = await fetch(`${BASE_URL}/recipes?${queryParams.toString()}`);
+
+        const data = await response.json();
+        // Check if the expected properties exist in the response
+        if (data && data.recipes && data.pagination) {
+          setRecipes(data.recipes);
+          setPagination(data.pagination);
+        } else {
+          console.error("Invalid response structure:", data);
+        }
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error("Error fetching recipes:", error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecipes();
+  }, [location.search, navigate]);
+
+  const applyFilters = async (filters) => {
+    try {
+      setIsLoading(true);
+
+      const newFilters = { ...appliedFilters, ...filters };
+      setAppliedFilters(newFilters);
+
+      // Use the `navigate` function to update the URL with the new query parameters
+      navigate(`/recipes?${new URLSearchParams(newFilters).toString()}`);
+
+      const response = await fetch(`${BASE_URL}/recipes?${new URLSearchParams(newFilters).toString()}`);
+
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setRecipes(data);
+      } else {
+        console.error("Error: Expected an array of recipes, but received:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching filtered recipes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const resetFilters = async () => {
+    try {
+      setIsLoading(true);
+
+      // Clear any applied filters
+      const emptyFilters = {
+        recipeTitle: "",
+        // hasReviews: "",
+        difficulties: [],
+        totalTime: "",
+        cookingMethods: [],
+        tastes: [],
+        diets: [],
+        meals: [],
+        cuisines: [],
+        // Add other filter keys and their default values here
+      };
+
+      setAppliedFilters(emptyFilters);
+
+      // Use the `navigate` function to update the URL with the cleared query parameters
+      navigate(`/recipes`);
+
+      const response = await fetch(`${BASE_URL}/recipes`);
+      const data = await response.json();
+
+      if (Array.isArray(data)) {
+        setRecipes(data);
+      } else {
+        console.error("Error: Expected an array of meals, but received:", data);
+      }
+
+      console.log("Filters Reset");
+    } catch (error) {
+      console.error("Error resetting filters:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePaginationChange = async (event, page) => {
+    try {
+      setIsLoading(true);
+
+      const response = await fetch(`${BASE_URL}/recipes?page=${page}&${new URLSearchParams(appliedFilters).toString()}`);
+      const data = await response.json();
+
+      if (data && data.recipes && data.pagination) {
+        setRecipes(data.recipes);
+        setPagination(data.pagination);
+      } else {
+        console.error("Invalid response structure:", data);
+      }
+    } catch (error) {
+      console.error("Error fetching recipes:", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  // new code up i added for filtering, also i added props to sidebar
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const [filtersOpen, setFiltersOpen] = React.useState(false);
   const [meals, setMeals] = React.useState([]);
   const { isAuthenticated, logout } = useAuth();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const [mealsOpen, setMealsOpen] = React.useState(false);
 
   const handleDrawerToggle = () => {
@@ -245,10 +381,9 @@ function DrawerAppBar(props) {
               <MenuIcon />
             </IconButton>
 
-            <Typography variant="h6" component="div" sx={{ display: "flex", alignItems: "center" }}>
-              <LocalFireDepartmentIcon sx={{ marginRight: 1 }} /> {/* Adjust the margin as needed */}
-              <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-                Cookify
+            <Typography variant="h6" component="div">
+              <Link to="/" style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center" }}>
+                <LocalFireDepartmentIcon sx={{ marginRight: 0.4 }} /> Cookify
               </Link>
             </Typography>
 
@@ -310,11 +445,13 @@ function DrawerAppBar(props) {
             display: { xs: "block", sm: "none" },
             "& .MuiDrawer-paper": {
               boxSizing: "border-box",
-              width: drawerWidth,
+              width: drawerWidthFilters,
+              padding: "1rem",
             },
           }}
         >
-          {filtersDrawer}
+          <SideBar applyFilters={applyFilters} resetFilters={resetFilters} />
+          {/* {filtersDrawer} */}
         </Drawer>
       </nav>
     </Box>
