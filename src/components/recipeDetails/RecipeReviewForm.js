@@ -285,7 +285,7 @@ const RecipeReviewForm = ({ recipeId }) => {
         Submit Your Review
       </Typography>
       <form onSubmit={handleSubmit}>
-        <TextField multiline rows={4} fullWidth label="Your Review" variant="outlined" value={reviewText} onChange={(e) => setReviewText(e.target.value)} required />
+        <TextField multiline rows={12} fullWidth label="Your Review" variant="outlined" value={reviewText} onChange={(e) => setReviewText(e.target.value)} required />
         <Button type="submit" variant="contained" color="primary" disabled={loading} style={{ marginTop: "1rem" }}>
           {loading ? "Submitting..." : "Submit Review"}
         </Button>

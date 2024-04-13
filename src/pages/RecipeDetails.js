@@ -32,7 +32,7 @@ import BlenderIcon from "@mui/icons-material/Blender";
 import SpaIcon from "@mui/icons-material/Spa";
 import StepIcon from "@mui/material/StepIcon";
 import MonetizationOnIcon from "@mui/icons-material/MonetizationOn";
-
+import ReviewsIcon from "@mui/icons-material/Reviews";
 import SoupKitchenIcon from "@mui/icons-material/SoupKitchen";
 import TimelapseIcon from "@mui/icons-material/Timelapse";
 // import { createTheme } from "@mui/material/styles";
@@ -60,8 +60,9 @@ import RecipeUpdated from "../components/recipeDetails/RecipeUpdated";
 import ParentComponent from "../components/recipeDetails/ParentComponent";
 import ActivitiesInfo from "../components/recipeDetails/ActivitiesInfo";
 import StartCookButton from "../components/recipeDetails/StartCookButton";
+import ChefBot from "../components/ChefBot";
 // import { useAuth } from "../middleware/AuthContext";
-
+import BarChart from "../components/recipeDetails/BarChart";
 // BASE_URL
 import { BASE_URL } from "../middleware/config";
 import RatingForm from "../components/recipeDetails/RatingForm";
@@ -182,6 +183,9 @@ const RecipeDetails = () => {
   const [calories, setCalories] = useState(0); // State for total calories
   const { isAuthenticated } = useAuth();
   // const { obtainAccessToken, user } = useAuth();
+  // const { enqueueSnackbar } = useSnackbar();
+
+  const [servings, setServings] = useState(1); // State for servings
 
   const handleShare = async ({ enqueueSnackbar }) => {
     try {
@@ -203,6 +207,13 @@ const RecipeDetails = () => {
     }
   };
 
+  const handleServingsChange = (increment) => {
+    const newServings = servings + increment;
+    if (newServings > 0) {
+      setServings(newServings);
+    }
+  };
+
   useEffect(() => {
     const fetchRecipeDetails = async () => {
       try {
@@ -220,6 +231,7 @@ const RecipeDetails = () => {
           const adjustedCalories = calculatedTotalNutrition.calories / data.servings;
           setCalories(adjustedCalories.toFixed());
           setRecipe(data);
+          setServings(data.servings); // Set servings state with initial servings from recipe
         } else {
           throw new Error("Failed to fetch recipe details");
         }
@@ -642,6 +654,7 @@ const RecipeDetails = () => {
                         variant="contained"
                         color="primary"
                         size="small"
+                        onClick={() => handleServingsChange(-1)}
                         sx={{
                           background: "#1D1D1D !important",
                           minWidth: "2rem",
@@ -654,9 +667,11 @@ const RecipeDetails = () => {
                           margin: "0 12px",
                         }}
                       >
-                        {recipe?.servings}
+                        {servings}
+                        {/* {recipe?.servings} */}
                       </Typography>
                       <Button
+                        onClick={() => handleServingsChange(1)}
                         variant="contained"
                         color="primary"
                         size="small"
@@ -681,7 +696,7 @@ const RecipeDetails = () => {
       {/* Horizontal Tabs - Ingredients | Equipment | Price | Notes */}
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
-          <IconLabelTabs recipe={recipe} />
+          <IconLabelTabs recipe={recipe} servings={servings} setServings={setServings} />
         </Grid>
       </Grid>
       {/* Tips */}
@@ -783,14 +798,47 @@ const RecipeDetails = () => {
           </Typography>
         </Grid>
       </Grid> */}
+      {/* backgroundColor: "#556574" */}
+      <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            marginTop: "20px",
+          }}
+        >
+          <Typography gutterBottom variant="h6">
+            Discover {recipe.title}: Overall Score and Characteristic Ratings
+          </Typography>
+        </Grid>
+      </Grid>
+      <Grid container spacing={3}>
+        <Grid item xs={12} sm={12} md={5} lg={4} sx={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+          <Card sx={{ backgroundColor: "rgba(0, 0, 0, 0.04)", padding: "2rem 4rem", marginBottom: "0 !important" }}>
+            <Typography sx={{ textAlign: "center" }} gutterBottom variant="h6">
+              Total Score
+            </Typography>
+            <Typography sx={{ fontWeight: "700", fontSize: "4rem", textAlign: "center" }} gutterBottom variant="h2">
+              {reviews.aggregateRatings.totalScore}
+            </Typography>
+            <Typography sx={{ display: "flex", alignItems: "center", justifyContent: "center" }} gutterBottom variant="body1">
+              {`${reviews.aggregateRatings.reviewCount} Users Reviewed`} <ReviewsIcon sx={{ marginLeft: "0.5rem" }} />
+            </Typography>
+          </Card>
+        </Grid>
+        <Grid item xs={12} sm={12} md={7} lg={8}>
+          <BarChart aggregateRatings={reviews.aggregateRatings} />
+        </Grid>
+      </Grid>
 
       <Grid container spacing={3}>
-        {/* <RatingForm /> */}
-
-        {isAuthenticated() ? <QuestionRating recipeId={id} /> : <LoginToReview recipe={recipe} />}
+        {isAuthenticated() ? <QuestionRating recipeId={id} aggregateRatings={reviews.aggregateRatings} /> : <LoginToReview recipe={recipe} />}
       </Grid>
       {/* RecipeReviewForm */}
-      <Grid container spacing={3}>
+      {/* <Grid container spacing={3}>
         <Grid
           item
           xs={12}
@@ -803,7 +851,7 @@ const RecipeDetails = () => {
         >
           {isAuthenticated() && <RecipeReviewForm recipeId={id} />}
         </Grid>
-      </Grid>
+      </Grid> */}
       {/* ReviewComponent */}
       <Grid container spacing={3}>
         <Grid
@@ -817,9 +865,9 @@ const RecipeDetails = () => {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Reviews ({recipe && reviews && reviews.length})
+            Reviews ({recipe && reviews && reviews.reviews.length})
           </Typography>
-          <ReviewComponent key={reviews._id} reviewData={reviews} />
+          <ReviewComponent key={reviews._id} reviewData={reviews.reviews} />
           {/* <ReviewComponent /> */}
         </Grid>
       </Grid>
@@ -856,11 +904,29 @@ const RecipeDetails = () => {
           }}
         >
           {/* Start to Cook Button */}
+          <div style={{ position: "fixed", bottom: "20px", right: "10px", transform: "translateX(-50%)", zIndex: 99 }}>
+            <ChefBot onClick={""} />
+          </div>
+        </Grid>
+      </Grid>
+
+      {/* <Grid container spacing={3}>
+        <Grid
+          item
+          xs={12}
+          sm={12}
+          md={12}
+          lg={12}
+          sx={{
+            margin: "20px 0",
+            position: "relative",
+          }}
+        >
           <div style={{ position: "fixed", bottom: "20px", left: "50%", transform: "translateX(-50%)", zIndex: 99 }}>
             <StartCookButton onClick={handleStartCooking} />
           </div>
         </Grid>
-      </Grid>
+      </Grid> */}
 
       {/* Reviews */}
       {/* <Grid container spacing={3}>
