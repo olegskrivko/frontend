@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
+
 // import html2canvas from "html2canvas";
 // React MUI components
 import Grid from "@mui/material/Grid";
@@ -162,6 +163,29 @@ const TotalCalories = ({ ingredients, servings }) => {
 };
 
 const RecipeDetails = () => {
+  const [showBot, setShowBot] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      // Adjust the threshold value as needed
+      const threshold = 1000; // Show the bot after scrolling 200px
+      if (window.scrollY > threshold) {
+        setShowBot(true);
+      }
+      // else {
+      //   setShowBot(false);
+      // }
+    };
+
+    // Add scroll event listener
+    window.addEventListener("scroll", handleScroll);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []); // Run this effect only once on component mount
+
   const handleStartCooking = () => {
     // Handle the start cooking action
     console.log("Start cooking clicked!");
@@ -811,7 +835,7 @@ const RecipeDetails = () => {
           }}
         >
           <Typography gutterBottom variant="h6">
-            Discover {recipe.title}: Overall Score and Characteristic Ratings
+            Overall Score and Ratings
           </Typography>
         </Grid>
       </Grid>
@@ -891,22 +915,23 @@ const RecipeDetails = () => {
         </Grid>
       </Grid>
 
+      {/* Your other content */}
+
       <Grid container spacing={3}>
-        <Grid
-          item
-          xs={12}
-          sm={12}
-          md={12}
-          lg={12}
-          sx={{
-            margin: "20px 0",
-            position: "relative",
-          }}
-        >
+        <Grid item xs={12} sm={12} md={12} lg={12}>
           {/* Start to Cook Button */}
-          <div style={{ position: "fixed", bottom: "20px", right: "10px", transform: "translateX(-50%)", zIndex: 99 }}>
-            <ChefBot onClick={""} />
-          </div>
+          <Box
+            sx={{
+              margin: "20px 0",
+              position: "relative",
+            }}
+          >
+            {showBot && (
+              <div style={{ position: "fixed", bottom: "80px", right: "-25px", transform: "translateX(-50px)", zIndex: 99 }}>
+                <ChefBot />
+              </div>
+            )}
+          </Box>
         </Grid>
       </Grid>
 

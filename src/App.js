@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { AuthProvider } from "./middleware/AuthContext";
-
+import "./App.css";
 import Home from "./pages/Home";
 import Layout from "./pages/Layout";
 import RecipesPage from "./pages/RecipesPage";
@@ -30,6 +30,7 @@ import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+
 const theme = createTheme();
 function App() {
   return (

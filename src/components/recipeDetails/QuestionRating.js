@@ -354,8 +354,8 @@ const QuestionRating = ({ recipeId, aggregateRatings }) => {
 
           {/* Button to submit ratings */}
           <Grid item xs={12} sm={12} md={12} lg={12} sx={{ textAlign: "center" }}>
-            <Button variant="contained" size="large" color="primary" onClick={handleSubmit}>
-              Submit Ratings
+            <Button variant="contained" size="large" color="warning" onClick={handleSubmit}>
+              Submit Review
             </Button>
           </Grid>
         </>
