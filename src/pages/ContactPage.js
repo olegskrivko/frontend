@@ -289,6 +289,14 @@ const ContactPage = () => {
               </Typography>
             </Paper>
           </Grid>
+          <Grid item xs={12} md={4}>
+            <Paper sx={{ padding: "2rem 0", backgroundColor: "#F0F4F9" }}>
+              <LocationOnIcon fontSize="large" sx={{ color: "#ff6600" }} />
+              <Typography variant="body1">
+                Location: <strong>Latvia, Riga</strong>
+              </Typography>
+            </Paper>
+          </Grid>
         </Grid>
       </Grid>
 

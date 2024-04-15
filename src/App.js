@@ -25,6 +25,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import ManageRecipesPage from "./pages/ManageRecipesPage";
 import ManageUsersPage from "./pages/ManageUsersPage";
 import ToolsPage from "./pages/ToolsPage";
+import MarketplacePage from "./pages/MarketplacePage";
+
 import ConversionPage from "./pages/ConversionPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
@@ -48,6 +50,7 @@ function App() {
                 <Route path="collections/:id" element={<CollectionRecipes />} /> */}
                 <Route path="collections" element={<CollectionsPage />} />
                 <Route path="collections/:slug" element={<CollectionRecipes />} />
+                <Route path="marketplace" element={<MarketplacePage />} />
                 <Route path="tags" element={<TagsPage />} />
                 <Route path="tags/:tag" element={<TagRecipes />} />
                 <Route path="search" element={<SearchPage />} />

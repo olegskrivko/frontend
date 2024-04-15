@@ -126,7 +126,7 @@ const ChefBot = () => {
             <Grow direction="left" in={showSecondMessage} timeout={1000}>
               <Card sx={{ marginBottom: "0.5rem", borderBottomRightRadius: "30px", borderTopRightRadius: "0" }}>
                 <CardContent sx={{ paddingBottom: "1rem !important", paddingTop: "1rem !important" }}>
-                  <Typography sx={{ maxInlineSize: "200px", minInlineSize: "100px" }} fontSize="small" variant="body1">
+                  <Typography sx={{ maxInlineSize: "180px", minInlineSize: "100px" }} fontSize="small" variant="body1">
                     How can I assist you with your cooking?
                   </Typography>
                 </CardContent>
@@ -138,7 +138,7 @@ const ChefBot = () => {
             <Grow direction="left" in={showThirdMessage} timeout={1000}>
               <Card sx={{ marginBottom: "0.5rem", borderBottomRightRadius: "30px", borderTopRightRadius: "0" }}>
                 <CardContent sx={{ paddingBottom: "1rem !important", paddingTop: "1rem !important" }}>
-                  <Typography sx={{ maxInlineSize: "200px", minInlineSize: "100px" }} fontSize="small" variant="body1">
+                  <Typography sx={{ maxInlineSize: "180px", minInlineSize: "100px" }} fontSize="small" variant="body1">
                     Feel free to ask anything about this dish!
                   </Typography>
                 </CardContent>
@@ -150,7 +150,7 @@ const ChefBot = () => {
           <img src={ChefAvatar} alt="Chef" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
         </Avatar>
         <Dialog open={open} onClose={handleClose}>
-          <DialogContent>
+          <Box sx={{ padding: "1.4rem" }}>
             <Box sx={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
               <Avatar sx={{ width: "62px", height: "62px", position: "relative" }} onClick={handleClick}>
                 <img src={ChefAvatar} alt="Chef" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
@@ -175,7 +175,7 @@ const ChefBot = () => {
                 <CloseIcon />
               </IconButton>
             </Box>
-          </DialogContent>
+          </Box>
           <DialogContent sx={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}>
             <Box sx={{ display: "flex", justifyContent: "start", alignItems: "center" }}>
               <Avatar sx={{ width: "2rem", height: "2rem", position: "relative" }} onClick={handleClick}>

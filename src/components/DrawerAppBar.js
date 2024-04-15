@@ -40,9 +40,11 @@ const navItems = {
   // "/": "Home",
   "/recipes": "Recipes",
   "/collections": "Collections",
+  "/marketplace": "Marketplace",
   "/tools": "Tools",
   // "/create-recipe": "create",
   "/contact": "Contact",
+  "/profile": "Profile",
   "/admin/dashboard": "Dashboard",
   // "/auth": "Users",
 };
