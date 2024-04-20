@@ -482,14 +482,14 @@ const SideBar = ({ applyFilters, resetFilters }) => {
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box sx={{ width: "100%" }}>
               <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Include up to 3 ingredients</InputLabel>
-              <Autocomplete limitTags={3} multiple id="include-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={includedIngredients} onChange={handleIncludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="bacon..." variant="outlined" />} />
+              <Autocomplete limitTags={3} multiple id="include-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={includedIngredients} onChange={handleIncludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="avocado..." variant="outlined" />} />
             </Box>
           </ListItem>
           {/* Exclude up to 5 ingredients */}
           <ListItem sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
             <Box sx={{ width: "100%" }}>
               <InputLabel sx={{ fontWeight: "500", color: "#000" }}>Exclude up to 3 ingredients</InputLabel>
-              <Autocomplete limitTags={3} multiple id="exclude-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={excludedIngredients} onChange={handleExcludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="garlic..." variant="outlined" />} />
+              <Autocomplete limitTags={3} multiple id="exclude-ingredients" fullWidth options={ingredients} getOptionLabel={(option) => option.name} value={excludedIngredients} onChange={handleExcludedIngredientChange} renderInput={(params) => <TextField {...params} size="small" label="" placeholder="walnuts..." variant="outlined" />} />
             </Box>
           </ListItem>
 
@@ -509,7 +509,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
                     variant="outlined"
                     size="small"
                     fullWidth
-                    placeholder="Caesar salad..."
+                    placeholder="Greek salad..."
                     value={recipeTitle}
                     onChange={(e) => setRecipeTitle(e.target.value)} // Handle change event of TextField
                   />

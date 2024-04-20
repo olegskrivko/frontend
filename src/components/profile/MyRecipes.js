@@ -71,7 +71,7 @@ function MyRecipes() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
+    <Box>
       <Typography variant="h6" gutterBottom>
         My Recipes
       </Typography>
@@ -93,7 +93,7 @@ function MyRecipes() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

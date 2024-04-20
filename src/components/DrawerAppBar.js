@@ -28,7 +28,7 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import SideBar from "../pages/SideBar";
-
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { BASE_URL } from "../middleware/config";
 // Custom Components
 import { useAuth } from "../middleware/AuthContext";
@@ -40,7 +40,8 @@ const navItems = {
   // "/": "Home",
   "/recipes": "Recipes",
   "/collections": "Collections",
-  "/marketplace": "Marketplace",
+  // "/marketplace": "Marketplace",
+  "/products": "Marketplace",
   "/tools": "Tools",
   // "/create-recipe": "create",
   "/contact": "Contact",
@@ -230,15 +231,22 @@ function DrawerAppBar(props) {
 
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-      <Typography variant="h6" sx={{ my: 2 }}>
-        <Link to="/">Cookify</Link>
-      </Typography>
+      {/* <Typography variant="h6" sx={{ my: 2 }}>
+        <Link to="/">Cookifyx</Link>
+      </Typography> */}
+      <Box style={{ width: "100%", height: "3.5rem", backgroundColor: "orange", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        <Typography variant="h6" component="div">
+          <Link to="/" style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center" }}>
+            <LocalFireDepartmentIcon sx={{ marginRight: 0.4 }} /> Cookify
+          </Link>
+        </Typography>
+      </Box>
       <Divider />
       <List>
         {Object.entries(navItems).map(([path, itemName]) => (
           <ListItem key={path} disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link to={path} style={{ textDecoration: "none", width: "100%" }}>
+            <ListItemButton sx={{ textAlign: "start" }}>
+              <Link to={path} style={{ textDecoration: "none", width: "100%", paddingLeft: "1rem" }}>
                 <ListItemText primary={itemName} />
               </Link>
             </ListItemButton>
@@ -246,8 +254,8 @@ function DrawerAppBar(props) {
         ))}
         {isAuthenticated() && (
           <ListItem disablePadding>
-            <ListItemButton sx={{ textAlign: "center" }}>
-              <Link to="/auth" style={{ textDecoration: "none", width: "100%" }}>
+            <ListItemButton sx={{ textAlign: "start" }}>
+              <Link to="/auth" style={{ textDecoration: "none", width: "100%", paddingLeft: "1rem" }}>
                 <ListItemText onClick={handleLogout} primary={"Logout"} />
               </Link>
             </ListItemButton>

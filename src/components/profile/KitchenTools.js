@@ -71,7 +71,7 @@ function KitchenTools() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
+    <Box>
       <Typography variant="h6" gutterBottom>
         Kitchen Tools
       </Typography>
@@ -88,7 +88,7 @@ function KitchenTools() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

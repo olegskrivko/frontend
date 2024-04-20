@@ -70,11 +70,11 @@ function DietaryRestrictions() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
+    <Box>
       <Typography variant="h6" gutterBottom>
         Dietary Restrictions
       </Typography>
-      <Divider sx={{ my: "0.5rem" }} />
+      <Divider sx={{ my: "1rem" }} />
       <List>
         {user.dietaryRestrictions.map((restriction, index) => (
           <ListItem key={index}>
@@ -82,7 +82,7 @@ function DietaryRestrictions() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

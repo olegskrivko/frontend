@@ -71,11 +71,11 @@ function FavoritesRecipes() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
+    <Box>
       <Typography variant="h6" gutterBottom>
         Favorites Recipes
       </Typography>
-      <Divider sx={{ my: "0.5rem" }} />
+      <Divider sx={{ my: "1rem" }} />
       <List>
         {user.favorites.map((recipe) => (
           <ListItem key={recipe.id} disableGutters>
@@ -93,7 +93,7 @@ function FavoritesRecipes() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { createContext, useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { SnackbarProvider } from "notistack";
 import { AuthProvider } from "./middleware/AuthContext";
@@ -26,6 +26,8 @@ import ManageRecipesPage from "./pages/ManageRecipesPage";
 import ManageUsersPage from "./pages/ManageUsersPage";
 import ToolsPage from "./pages/ToolsPage";
 import MarketplacePage from "./pages/MarketplacePage";
+import ProductsPage from "./pages/ProductsPage";
+import ProductDetails from "./pages/ProductDetails";
 
 import ConversionPage from "./pages/ConversionPage";
 import AboutPage from "./pages/AboutPage";
@@ -33,45 +35,61 @@ import ContactPage from "./pages/ContactPage";
 import NotFoundPage from "./pages/NotFoundPage";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
+// Create a context to hold information about the active page or route
+const PageContext = createContext();
+
 const theme = createTheme();
+
 function App() {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [activePage, setActivePage] = useState("home");
+
+  // Function to toggle the drawer
+  const toggleDrawer = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
+
   return (
     <AuthProvider>
       <ThemeProvider theme={theme}>
         <SnackbarProvider maxSnack={3}>
           <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Layout />}>
-                <Route index element={<Home />} />
-                <Route path="recipes" element={<RecipesPage />} />
-                <Route path="recipes/:id" element={<RecipeDetails />} />
-                <Route path="meals/:id/recipes" element={<MealsPage />} />
-                {/* <Route path="collections" element={<CollectionsPage />} />
+            <PageContext.Provider value={{ isDrawerOpen, activePage }}>
+              <Routes>
+                <Route path="/" element={<Layout />}>
+                  <Route index element={<Home />} />
+                  <Route path="recipes" element={<RecipesPage />} />
+                  <Route path="recipes/:id" element={<RecipeDetails />} />
+                  <Route path="meals/:id/recipes" element={<MealsPage />} />
+                  {/* <Route path="collections" element={<CollectionsPage />} />
                 <Route path="collections/:id" element={<CollectionRecipes />} /> */}
-                <Route path="collections" element={<CollectionsPage />} />
-                <Route path="collections/:slug" element={<CollectionRecipes />} />
-                <Route path="marketplace" element={<MarketplacePage />} />
-                <Route path="tags" element={<TagsPage />} />
-                <Route path="tags/:tag" element={<TagRecipes />} />
-                <Route path="search" element={<SearchPage />} />
-                {/* <Route path="prices" element={<Prices />} /> */}
-                <Route path="auth" element={<AuthPage />} />
-                <Route path="profile" element={<ProfilePage />} />
-                <Route path="settings" element={<SettingsPage />} />
-                <Route path="favorites" element={<FavoritesPage />} />
-                <Route path="my-recipes" element={<MyRecipesPage />} />
-                <Route path="create-recipe" element={<CreateRecipePage />} />
-                <Route path="edit-recipe/:id" element={<EditRecipePage />} />
-                <Route path="admin/dashboard" element={<AdminDashboard />} />
-                <Route path="admin/manage-recipes" element={<ManageRecipesPage />} />
-                <Route path="admin/manage-users" element={<ManageUsersPage />} />
-                <Route path="tools" element={<ToolsPage />} />
-                <Route path="conversion" element={<ConversionPage />} />
-                <Route path="about" element={<AboutPage />} />
-                <Route path="contact" element={<ContactPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-              </Route>
-            </Routes>
+                  <Route path="collections" element={<CollectionsPage />} />
+                  <Route path="collections/:slug" element={<CollectionRecipes />} />
+                  <Route path="marketplace" element={<MarketplacePage />} />
+                  <Route path="products" element={<ProductsPage />} />
+                  <Route path="products/:id" element={<ProductDetails />} />
+                  <Route path="tags" element={<TagsPage />} />
+                  <Route path="tags/:tag" element={<TagRecipes />} />
+                  <Route path="search" element={<SearchPage />} />
+                  {/* <Route path="prices" element={<Prices />} /> */}
+                  <Route path="auth" element={<AuthPage />} />
+                  <Route path="profile" element={<ProfilePage />} />
+                  <Route path="settings" element={<SettingsPage />} />
+                  <Route path="favorites" element={<FavoritesPage />} />
+                  <Route path="my-recipes" element={<MyRecipesPage />} />
+                  <Route path="create-recipe" element={<CreateRecipePage />} />
+                  <Route path="edit-recipe/:id" element={<EditRecipePage />} />
+                  <Route path="admin/dashboard" element={<AdminDashboard />} />
+                  <Route path="admin/manage-recipes" element={<ManageRecipesPage />} />
+                  <Route path="admin/manage-users" element={<ManageUsersPage />} />
+                  <Route path="tools" element={<ToolsPage />} />
+                  <Route path="conversion" element={<ConversionPage />} />
+                  <Route path="about" element={<AboutPage />} />
+                  <Route path="contact" element={<ContactPage />} />
+                  <Route path="*" element={<NotFoundPage />} />
+                </Route>
+              </Routes>
+            </PageContext.Provider>
           </BrowserRouter>
         </SnackbarProvider>
       </ThemeProvider>
@@ -79,7 +97,7 @@ function App() {
   );
 }
 
-export default App;
+export { App as default, PageContext }; // Export both App and PageContext
 
 // Public Routes:
 

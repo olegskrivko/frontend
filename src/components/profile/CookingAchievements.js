@@ -77,11 +77,11 @@ const CookingAchievements = () => {
       <Typography variant="h6" gutterBottom>
         Cooking Achievements
       </Typography>
-      <Divider sx={{ my: "0.5rem" }} />
+      <Divider sx={{ my: "1rem" }} />
       <Grid container spacing={2}>
         {achievements.map((achievement) => (
           <Grid key={achievement.id} item xs={12} sm={6} md={4}>
-            <Paper elevation={3} sx={{ p: 2, display: "flex", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.04)" }}>
+            <Paper elevation={3} sx={{ minHeight: "120px", p: 2, display: "flex", alignItems: "center", backgroundColor: "rgba(0, 0, 0, 0.04)" }}>
               {achievement.icon}
               <Box sx={{ ml: 2 }}>
                 <Typography variant="subtitle1">{achievement.name}</Typography>

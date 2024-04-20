@@ -330,7 +330,7 @@ const Content = () => {
   );
 };
 
-const MarketplacePage = () => {
+const ProductsPage = () => {
   return (
     <Grid container spacing={2}>
       <Sidebar />
@@ -339,7 +339,7 @@ const MarketplacePage = () => {
   );
 };
 
-export default MarketplacePage;
+export default ProductsPage;
 // Herbs & Spices: 🌿
 // Honey & Jams (including Homemade Jams & Preserves): 🍯
 // Meat & Poultry: 🥩

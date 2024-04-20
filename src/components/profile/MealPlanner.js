@@ -71,8 +71,7 @@ function MealPlanner() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
-      {" "}
+    <Box>
       <Typography variant="h6" gutterBottom>
         Meal Planner
       </Typography>
@@ -89,7 +88,7 @@ function MealPlanner() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

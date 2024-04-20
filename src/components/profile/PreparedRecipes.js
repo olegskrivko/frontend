@@ -71,7 +71,7 @@ function PreparedRecipes() {
     bio: "Passionate home cook exploring new recipes and flavors. Follow me for tasty inspiration!",
   };
   return (
-    <div>
+    <Box>
       <Typography variant="h6" gutterBottom>
         Prepared Recipes
       </Typography>
@@ -93,7 +93,7 @@ function PreparedRecipes() {
           </ListItem>
         ))}
       </List>
-    </div>
+    </Box>
   );
 }
 

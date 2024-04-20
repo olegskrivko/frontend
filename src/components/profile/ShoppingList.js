@@ -48,7 +48,7 @@ const ShoppingList = () => {
       <Typography variant="h6" gutterBottom>
         Shopping List
       </Typography>
-      <Divider sx={{ my: "0.5rem" }} />
+      <Divider sx={{ my: "1rem" }} />
       <Typography variant="body1" gutterBottom>
         Total Quantity Needed: {totalQuantityNeeded}
       </Typography>
