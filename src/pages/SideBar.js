@@ -122,7 +122,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const response = await fetch(`${BASE_URL}/cooking-methods`);
         const data = await response.json();
         setCookingMethods(data); // Assuming the data structure is an array of cooking methods
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching cooking methods:", error);
       }
@@ -138,7 +138,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const response = await fetch(`${BASE_URL}/cuisines`);
         const data = await response.json();
         setCuisines(data); // Assuming the data structure is an array of cuisines
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching cuisines:", error);
       }
@@ -155,7 +155,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const data = await response.json();
         setMeals(data); // Assuming the data structure is an array of meals
 
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching cuisines:", error);
       }
@@ -171,7 +171,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const response = await fetch(`${BASE_URL}/diets`);
         const data = await response.json();
         setDiets(data); // Assuming the data structure is an array of diets
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching diets:", error);
       }
@@ -187,7 +187,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const response = await fetch(`${BASE_URL}/occasions`);
         const data = await response.json();
         setOccasions(data); // Assuming the data structure is an array of occasions
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching occasions:", error);
       }
@@ -203,7 +203,7 @@ const SideBar = ({ applyFilters, resetFilters }) => {
         const response = await fetch(`${BASE_URL}/tastes`);
         const data = await response.json();
         setTastes(data); // Assuming the data structure is an array of tastes
-        console.log("ddatadata", data);
+        //console.log("ddatadata", data);
       } catch (error) {
         console.error("Error fetching tastes:", error);
       }

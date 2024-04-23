@@ -59,7 +59,7 @@ const AuthPage = () => {
       <form onSubmit={handleSubmit}>
         {!isLogin && <TextField margin="normal" fullWidth label="Username" name="username" onChange={handleChange} value={formData.username} required={!isLogin} />}
         <TextField margin="normal" fullWidth label="Email" name="email" type="email" onChange={handleChange} value={formData.email} required />
-        <TextField margin="normal" autoComplete="nope" fullWidth label="Password" name="password" type="password" onChange={handleChange} value={formData.password} required />
+        <TextField margin="normal" autoComplete="off" fullWidth label="Password" name="password" type="password" onChange={handleChange} value={formData.password} required />
         <Button type="submit" fullWidth variant="contained" color="primary">
           {isLogin ? "Login" : "Register"}
         </Button>

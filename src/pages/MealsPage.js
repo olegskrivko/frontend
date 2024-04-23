@@ -571,6 +571,7 @@ const MealsPage = () => {
         <Box>
           <div>
             <img
+              // component="img"
               src={`${process.env.PUBLIC_URL}/logos/${currentMeal.name}.jpg`}
               alt={currentMeal.name}
               style={{

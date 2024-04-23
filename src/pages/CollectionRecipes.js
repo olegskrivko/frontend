@@ -5,6 +5,7 @@ import { BASE_URL } from "../middleware/config";
 import { Typography, Box, Grid, Card, CardContent, CardActionArea, CardMedia, CircularProgress } from "@mui/material";
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import AccessTime icon
 import RecipeCardMeals from "../components/RecipeCardMeals";
+import RecipeCardCollection from "../components/RecipeCardCollection";
 // import Desserts from "../images/Desserts.jpg";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
@@ -139,18 +140,17 @@ const CollectionRecipes = () => {
 
       <Grid item xs={12} sm={12} md={9} lg={9}>
         <Box>
-          <div>
-            <img
-              src={`${process.env.PUBLIC_URL}/logos/${currentCollection.name}.jpg`}
-              alt={currentCollection.name}
-              style={{
-                width: "100%",
-                maxHeight: "300px",
-                objectFit: "cover",
-                // borderRadius: "3rem",
-              }}
-            />
-          </div>
+          <CardMedia
+            component="img"
+            src={`${process.env.PUBLIC_URL}/collections/${currentCollection.imageUrl}`}
+            alt={currentCollection.name}
+            style={{
+              width: "100%",
+              maxHeight: "300px",
+              objectFit: "cover",
+              // borderRadius: "3rem",
+            }}
+          ></CardMedia>
 
           {/* Display recipes */}
           <Typography variant="h4" gutterBottom>
@@ -165,7 +165,8 @@ const CollectionRecipes = () => {
             <Grid container spacing={2}>
               {collections.map((collection) => (
                 // <Grid item key={recipe._id} xs={6} sm={6} md={4} lg={3}>
-                <RecipeCardMeals key={collection._id} recipe={collection} />
+                // <RecipeCardMeals key={collection._id} recipe={collection} />
+                <RecipeCardCollection key={collection._id} collection={collection} />
               ))}
             </Grid>
           ) : (

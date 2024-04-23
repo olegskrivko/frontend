@@ -1,54 +1,74 @@
 // RecipesPage.js
 import React, { useEffect, useState } from "react";
-// import { Link, Navigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+
+// React MUI
+import { Link as MuiLink } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import { BASE_URL } from "../middleware/config";
-// import { useAuth } from "../middleware/AuthContext";
+import Button from "@mui/material/Button";
 import Grid from "@mui/material/Grid";
-import { List, Button, ListItem, ListItemText, CircularProgress, Box, Slide } from "@mui/material";
-import SkeletonRecipeCard from "../components/SkeletonRecipeCard";
+import CircularProgress from "@mui/material/CircularProgress";
+import Box from "@mui/material/Box";
+import Slide from "@mui/material/Slide";
 import CustomAlert from "../components/CustomAlert";
 import RecipeCardHome from "../components/RecipeCardHome";
-import Grow from "@mui/material/Grow";
-import Card from "@mui/material/Card";
+import RecipeCardCollection from "../components/RecipeCardCollection";
 import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
-import CardActions from "@mui/material/CardActions";
-import IconButton from "@mui/material/IconButton";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { useTheme } from "@mui/material/styles";
-// Icons
-import FavoriteIcon from "@mui/icons-material/Favorite";
-import imgChef from "../images/svg/vecteezy_cooking-chef-concept_1270240.svg";
-import procimg from "../images/image-processing.gif";
-import saltimg from "../images/image-salt.gif";
-import smokeimg from "../images/image-smoke.gif";
-import miximg from "../images/image-mix.gif";
-import catimg from "../images/image-categories.gif";
-import rabbitimg from "../images/image-rabbit.gif";
-import cookingmix from "../images/cooking-min.gif";
-import cookingmix2 from "../images/cooking-min2.gif";
+
+// Images Imports
+import ChefImage from "../images/svg/vecteezy_cooking-chef-concept_1270240.svg";
+
+import januaryImage from "../images/svg/hamburger-cuate.svg";
+import februaryImage from "../images/svg/hamburger-cuate.svg";
+import marchImage from "../images/svg/hamburger-cuate.svg";
+import aprilImage from "../images/svg/hamburger-cuate.svg";
+import mayImage from "../images/svg/hamburger-cuate.svg";
+import juneImage from "../images/svg/hamburger-cuate.svg";
+import julyImage from "../images/svg/hamburger-cuate.svg";
+import augustImage from "../images/svg/hamburger-cuate.svg";
+import septemberImage from "../images/svg/hamburger-cuate.svg";
+import octoberImage from "../images/svg/hamburger-cuate.svg";
+import novemberImage from "../images/svg/hamburger-cuate.svg";
+import decemberImage from "../images/svg/hamburger-cuate.svg";
+
+import unknownImage from "../images/svg/hamburger-cuate.svg";
+
+import sectionTrendingRecipesImage from "../images/svg/healthy-food-amico.svg";
+
+import sectionPopularRecipesImage from "../images/svg/recipe-book-pana.svg";
+
+// Import Config
+import { BASE_URL } from "../middleware/config";
+// Import Auth
+import { useAuth } from "../middleware/AuthContext";
 
 const Home = () => {
   const theme = useTheme();
-  // variant={isSmallScreen ? "h4" : "h1"}
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
-  const isSmallScreen = useMediaQuery((theme) => theme.breakpoints.down("sm"));
-  // const { isAuthenticated } = useAuth();
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
+  const { isAuthenticated } = useAuth();
+  console.log("isAuthenticated", isAuthenticated);
   const API_URL = `${BASE_URL}/recipes`;
   const API_URL_COLLECTION_ONE = `${BASE_URL}/collections/quick-and-easy-recipes`;
+  const API_URL_COLLECTIONS = `${BASE_URL}/collections`;
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   // const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [categories, setCategories] = useState([]);
   const [collectionOne, setCollectionOne] = useState([]);
+  const [collections, setCollections] = useState([]);
 
   const [season, setSeason] = useState("");
   const [month, setMonth] = useState("");
   const [seasonalTitle, setSeasonalTitle] = useState("");
   const [seasonalSubtitle, setSeasonalSubtitle] = useState("");
+  const [credit, setCredit] = useState("");
+  const [altImg, setAltImg] = useState("");
+  const [creditLink, setCreditLink] = useState("");
+  const [seasonalImage, setSeasonalImage] = useState("");
 
   useEffect(() => {
     // Function to determine seasonal title and subtitle
@@ -60,6 +80,10 @@ const Home = () => {
       let month = "";
       let title = "";
       let subtitle = "";
+      let credit = "";
+      let altImg = "";
+      let creditLink = "";
+      let seasonalImage = "";
 
       switch (currentMonth) {
         case 0: // January
@@ -67,87 +91,145 @@ const Home = () => {
           month = "January";
           title = "Explore Our January Specials";
           subtitle = "Savor unique recipes handpicked for this month";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = januaryImage; // Use imported image
           break;
         case 1: // February
           season = "Winter";
           month = "February";
           title = "Winter Wonderland";
           subtitle = "Experience the magic of winter with cozy and festive recipes";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = februaryImage;
           break;
         case 2: // March
           season = "Spring";
           month = "March";
           title = "Spring Delights";
           subtitle = "Celebrate the freshness of spring with vibrant recipes";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = marchImage; // Use imported image
           break;
         case 3: // April
           season = "Spring";
           month = "April";
           title = "Discover Our April Specials";
           subtitle = "Delight in exclusive recipes curated for this month";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = aprilImage; // Use imported image
           break;
         case 4: // May
           season = "Spring";
           month = "May";
           title = "Blooming Gardens";
           subtitle = "Explore seasonal dishes inspired by nature's awakening";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = mayImage; // Use imported image
           break;
         case 5: // June
           season = "Summer";
           month = "June";
           title = "Coastal Escapes";
           subtitle = "Transport yourself to the seaside with coastal-inspired dishes";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = juneImage; // Use imported image
           break;
         case 6: // July
           season = "Summer";
           month = "July";
           title = "Explore Our July Specials";
           subtitle = "Savor unique recipes handpicked for this month";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = julyImage; // Use imported image
           break;
         case 7: // August
           season = "Summer";
           month = "August";
           title = "Summer Sensations";
           subtitle = "Beat the heat with refreshing recipes inspired by summer";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = augustImage; // Use imported image
           break;
         case 8: // September
           season = "Autumn";
           month = "September";
           title = "Autumn Harvest";
           subtitle = "Embrace the bounty of the season with hearty autumn recipes";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = septemberImage; // Use imported image
           break;
         case 9: // October
           season = "Autumn";
           month = "October";
           title = "Discover Our October Specials";
           subtitle = "Indulge in exclusive recipes curated for this month";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = octoberImage; // Use imported image
           break;
         case 10: // November
           season = "Autumn";
           month = "November";
           title = "Cozy Comforts";
           subtitle = "Stay warm and cozy with comforting dishes perfect for fall";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = novemberImage; // Use imported image
           break;
         case 11: // December
           season = "Winter";
           month = "December";
           title = "Festive Feasts";
           subtitle = "Gather around the table and enjoy the flavors of the holiday season";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = decemberImage; // Use imported image
           break;
         // Add more cases for other months and holidays as needed
         default:
+          season = "Unknown";
+          month = "Unknown";
           title = "Seasonal Specials";
           subtitle = "Explore seasonal recipes and culinary delights";
+          credit = "Food illustrations by Storyset";
+          altImg = "Delicious food prepared with fresh ingredients, showcasing culinary artistry and flavors.";
+          creditLink = "https://storyset.com/food";
+          seasonalImage = unknownImage; // Use a placeholder image or handle accordingly
       }
 
-      return { season, month, title, subtitle };
+      return { season, month, title, subtitle, credit, altImg, creditLink, seasonalImage };
     };
 
-    const { season, month, title, subtitle } = getSeasonalTitleAndSubtitle();
+    const { season, month, title, subtitle, credit, altImg, creditLink, seasonalImage } = getSeasonalTitleAndSubtitle();
     setSeason(season);
     setMonth(month);
     setSeasonalTitle(title);
     setSeasonalSubtitle(subtitle);
+    setCredit(credit);
+    setAltImg(altImg);
+    setCreditLink(creditLink);
+    setSeasonalImage(seasonalImage);
   }, []); // Empty dependency array to run the effect only once
 
   // useEffect(() => {
@@ -193,6 +275,8 @@ const Home = () => {
   //   fetchRecipes();
   //   // eslint-disable-next-line react-hooks/exhaustive-deps
   // }, [API_URL]);
+
+  // Fetch recipes & categories
   useEffect(() => {
     const fetchRecipes = async () => {
       try {
@@ -223,6 +307,29 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [API_URL]);
 
+  // Fetch All Collections
+  useEffect(() => {
+    const fetchCollections = async () => {
+      try {
+        // Fetch All Collections
+        const collectionsResponse = await fetch(API_URL_COLLECTIONS);
+        if (!collectionsResponse.ok) {
+          throw new Error("Failed to fetch collections");
+        }
+        const collectionsData = await collectionsResponse.json();
+        setCollections(collectionsData);
+        console.log("collectionsData", collectionsData);
+      } catch (error) {
+        console.error(error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCollections();
+  }, []);
+
+  // Fetch collectionOne
   useEffect(() => {
     const fetchCollectionOne = async () => {
       try {
@@ -256,8 +363,6 @@ const Home = () => {
   //   return <Navigate to="/auth" state={{ from: "/recipes" }} />;
   // }
 
-  const RecipesPageTitle = "Explore Our Recipe Collection";
-
   if (loading) {
     return (
       <React.Fragment>
@@ -266,40 +371,11 @@ const Home = () => {
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            height: "100vh", // Make the spinner cover the entire viewport vertically
+            height: "90vh", // Make the spinner cover the entire viewport vertically
           }}
         >
           <CircularProgress size={80} style={{ color: "#ff6600" }} /> {/* Adjust the size of the spinner as needed */}
         </div>
-        {/* <Typography variant="h4" style={{ margin: "2rem", textAlign: "center", fontSize: "2rem" }}>
-          {RecipesPageTitle}
-        </Typography>
-        <Grid container spacing={3} style={{ marginTop: "20px" }}>
-          {[...Array(12)].map((_, index) => (
-            <Grid key={index} item xs={12} sm={6} md={4} lg={4}>
-              <SkeletonRecipeCard />
-            </Grid>
-          ))}
-        </Grid> */}
-        {/* <div
-          style={{
-            position: "fixed",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            backgroundColor: "rgba(255, 102, 0, 0.8)", // Orange background color with opacity
-            zIndex: 9999, // Ensure the spinner is on top of other content
-          }}
-        >
-          <CircularProgress
-            size={80} // Adjust the size of the spinner as needed
-            style={{ color: "white" }} // Set the color of the spinner to white
-          />
-        </div> */}
       </React.Fragment>
     );
   }
@@ -318,7 +394,7 @@ const Home = () => {
           <Box position="relative">
             {/* Banner Image */}
             <img
-              src={imgChef}
+              src={ChefImage}
               alt=""
               style={{
                 width: isLargeScreen ? "90%" : "100%",
@@ -336,7 +412,7 @@ const Home = () => {
                   Find Your Recipe
                 </Button>
               ) : (
-                <Button variant="contained" size="large" style={{ marginRight: "20px", backgroundColor: "#ff6600" }}>
+                <Button variant="contained" size="large" style={{ marginTop: "2rem", marginRight: "20px", backgroundColor: "#ff6600" }}>
                   Find Your Recipe
                 </Button>
               )}
@@ -347,7 +423,7 @@ const Home = () => {
                   Share Your Recipe
                 </Button>
               ) : (
-                <Button variant="outlined" size="large" style={{ color: "#ff6600", borderColor: "#ff6600" }}>
+                <Button variant="outlined" size="large" style={{ marginTop: "2rem", color: "#ff6600", borderColor: "#ff6600" }}>
                   Share Your Recipe
                 </Button>
               )}
@@ -355,8 +431,9 @@ const Home = () => {
           </Box>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        {/* Seasonal title */}
+
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        {/* Seasonal Recipes Title */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="left" in={true}>
             <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left", fontSize: isSmallScreen ? "1.8rem" : "2.2rem" }}>
@@ -369,33 +446,37 @@ const Home = () => {
             </Typography>
           </Slide>
         </Grid>
-
-        {/* Seasonal recipes */}
+        {/* Seasonal Recipes */}
         <Grid item xs={12} sm={12} md={7} lg={8} order={{ xs: 2, md: 1 }}>
           <Grid container spacing={3}>
-            {/* Map over a slice of the recipes array containing only the first 6 elements */}
+            {/* Map over a slice of the recipes array containing only the first 4 elements */}
             {recipes.slice(0, 4).map((recipe) => (
               <RecipeCardHome key={recipe._id} recipe={recipe} />
             ))}
           </Grid>
         </Grid>
-        {/* Seasonal image */}
+        {/* Seasonal Image */}
         <Grid item xs={12} sm={12} md={5} lg={4} order={{ xs: 1, md: 2 }}>
-          <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-            <img
-              src={rabbitimg}
-              alt="Description"
+          <Box display="flex" justifyContent="center" alignItems="center" height="100%" style={{ flexDirection: "column", overflow: "hidden" }}>
+            <CardMedia
+              component="img"
+              src={seasonalImage}
+              alt={altImg}
               style={{
                 width: "auto",
                 maxHeight: "280px",
-                // objectFit: "cover",
               }}
             />
+            <Box style={{ marginTop: "0.5rem", display: "flex", alignItems: "center" }}>
+              <MuiLink href={creditLink} target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.6rem", fontStyle: "italic", color: "#999", fontWeight: "300" }}>
+                {credit}
+              </MuiLink>
+            </Box>
           </Box>
         </Grid>
       </Grid>
-      <Grid container spacing={3}>
-        {/* Trending title */}
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        {/* Section Trending Recipes Title  */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="right" in={true}>
             <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "right", fontSize: isSmallScreen ? "1.8rem" : "2.2rem" }}>
@@ -408,31 +489,37 @@ const Home = () => {
             </Typography>
           </Slide>
         </Grid>
-        {/* Trending image */}
+        {/* Trending Recipes Image */}
         <Grid item xs={12} sm={12} md={5} lg={4}>
-          <Box display="flex" justifyContent="center" alignItems="center" height="100%">
-            <img
-              src={saltimg}
-              alt="Description"
+          <Box display="flex" justifyContent="center" alignItems="center" height="100%" style={{ flexDirection: "column", overflow: "hidden" }}>
+            <CardMedia
+              component="img"
+              src={sectionTrendingRecipesImage}
+              alt="Fresh ingredients, including vegetables, mushrooms, eggs, and shrimps, falling into a salad bowl, conveying motion and freshness."
               style={{
                 width: "auto",
                 maxHeight: "280px",
-                // objectFit: "cover",
               }}
             />
+            <Box style={{ marginTop: "0.5rem", display: "flex", alignItems: "center" }}>
+              <MuiLink href="https://storyset.com/food" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.6rem", fontStyle: "italic", color: "#999", fontWeight: "300" }}>
+                Food illustrations by Storyset
+              </MuiLink>
+            </Box>
           </Box>
         </Grid>
-        {/* Trending recipes */}
+        {/* Section Trending Recipes */}
         <Grid item xs={12} sm={12} md={7} lg={8}>
           <Grid container spacing={3}>
-            {/* Map over a slice of the recipes array containing only the first 6 elements */}
+            {/* Map over a slice of the recipes array containing only the first 4 elements */}
             {recipes.slice(0, 4).map((recipe) => (
               <RecipeCardHome key={recipe._id} recipe={recipe} />
             ))}
           </Grid>
         </Grid>
-
-        {/* Popular title */}
+      </Grid>
+      <Grid container spacing={3} sx={{ mt: 2 }}>
+        {/* Section Popular Recipes Title */}
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="left" in={true}>
             <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left", fontSize: isSmallScreen ? "1.8rem" : "2.2rem" }}>
@@ -445,27 +532,35 @@ const Home = () => {
             </Typography>
           </Slide>
         </Grid>
-        {/* Popular recipes */}
+        {/* Section Popular Recipes */}
         <Grid item xs={12} sm={12} md={7} lg={8} order={{ xs: 2, md: 1 }}>
           <Grid container spacing={3}>
-            {/* Map over a slice of the recipes array containing only the first 6 elements */}
-            {recipes.slice(0, 4).map((recipe) => (
+            {/* Map over a slice of the recipes array containing only the first 4 elements */}
+            {/* {recipes.slice(0, 4).map((recipe) => (
               <RecipeCardHome key={recipe._id} recipe={recipe} />
+            ))} */}
+            {collections.slice(0, 4).map((collection) => (
+              <RecipeCardCollection key={collection._id} collection={collection} />
             ))}
           </Grid>
         </Grid>
-        {/* Popular image */}
+        {/* Popular Recipes Image */}
         <Grid item xs={12} sm={12} md={5} lg={4} order={{ xs: 1, md: 2 }}>
-          <Box display="flex" justifyContent="center" alignItems="center" height="100%" style={{ overflow: "hidden" }}>
-            <img
-              src={smokeimg}
-              alt="Description"
+          <Box display="flex" justifyContent="center" alignItems="center" height="100%" style={{ flexDirection: "column", overflow: "hidden" }}>
+            <CardMedia
+              component="img"
+              src={sectionPopularRecipesImage}
+              alt="Recipe book placed on a table surrounded by pots, carrots, and a carafe filled with juice."
               style={{
                 width: "auto",
                 maxHeight: "280px",
-                // objectFit: "cover",
               }}
             />
+            <Box style={{ marginTop: "0.5rem", display: "flex", alignItems: "center" }}>
+              <MuiLink href="https://storyset.com/information" target="_blank" rel="noopener noreferrer" style={{ fontSize: "0.6rem", fontStyle: "italic", color: "#999", fontWeight: "300" }}>
+                Information illustrations by Storyset
+              </MuiLink>
+            </Box>
           </Box>
         </Grid>
       </Grid>

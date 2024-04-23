@@ -23,8 +23,9 @@ import RiceBowlIcon from "@mui/icons-material/RiceBowl";
 import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
-import RecipeCard from "../components/RecipeCard";
+import RecipeCardAllCollections from "../components/RecipeCardAllCollections";
 import RecipeCardSolo from "../components/RecipeCardSolo";
+import RecipeCardCollection from "../components/RecipeCardCollection";
 import Chip from "@mui/material/Chip";
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
@@ -252,7 +253,7 @@ const CollectionsPage = () => {
                           height: "100%",
                         }}
                       >
-                        <RecipeCard key={recipe._id} recipe={recipe} />
+                        <RecipeCardAllCollections key={recipe._id} recipe={recipe} />
                       </Grid>
                     ))}
                   </Grid>
