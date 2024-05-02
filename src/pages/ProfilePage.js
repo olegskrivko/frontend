@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+
 import { Box, Tab, Drawer, Tabs, Grid, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, Checkbox } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
 
@@ -8,7 +10,7 @@ import Paper from "@mui/material/Paper";
 import Divider from "@mui/material/Divider";
 
 import ListItemAvatar from "@mui/material/ListItemAvatar";
-
+import { Link as MuiLink } from "@mui/material";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import PeopleIcon from "@mui/icons-material/People";
 import RecipeIcon from "@mui/icons-material/Receipt";
@@ -32,7 +34,7 @@ import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingList from "../components/profile/ShoppingList";
 import CookingAchievements from "../components/profile/CookingAchievements";
-import FavoritesRecipes from "../components/profile/FavoritesRecipes";
+import FavoriteRecipes from "../components/profile/FavoriteRecipes";
 import MyRecipes from "../components/profile/MyRecipes";
 import ReviewedRecipes from "../components/profile/ReviewedRecipes";
 import PreparedRecipes from "../components/profile/PreparedRecipes";
@@ -42,7 +44,9 @@ import MealPlanner from "../components/profile/MealPlanner";
 import MyAccount from "../components/profile/MyAccount";
 import Marketplace from "../components/profile/Marketplace";
 import StoreIcon from "@mui/icons-material/Store";
+import { BASE_URL } from "../middleware/config";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import { useAuth } from "../middleware/AuthContext";
 // import { Box, Typography, Paper, Divider, Tab, Tabs, Grid } from "@mui/material";
 // import EditIcon from "@mui/icons-material/Edit";
 // import FacebookIcon from "@mui/icons-material/Facebook";
@@ -58,7 +62,11 @@ import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArro
 // import CookingAchievements from "../components/CookingAchievements";
 // import { Link } from "react-router-dom";
 // const ProfilePage = ({user}) => {
+
 const ProfilePage = () => {
+  const { isAuthenticated, logout } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
   const handleDrawerToggle = () => {
@@ -117,6 +125,13 @@ const ProfilePage = () => {
     setTabIndex(newValue);
   };
 
+  const handleLogout = () => {
+    console.log("Logging out...");
+    logout();
+    console.log("Logout successful");
+    navigate("/"); // Redirect to the homepage after logout
+  };
+
   return (
     <Grid container spacing={3}>
       {/* Button to toggle the drawer */}
@@ -162,7 +177,7 @@ const ProfilePage = () => {
           </Box> */}
         </Box>
 
-        <Box style={{ padding: "0 1rem" }}>
+        <Box style={{ padding: "0 1rem", minWidth: "300px" }}>
           {/* <Typography variant="h6" color="textSecondary" gutterBottom sx={{ textAlign: "start" }}>
             WORKSPACE
           </Typography> */}
@@ -254,7 +269,7 @@ const ProfilePage = () => {
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <FavoriteIcon sx={{ marginRight: 1 }} />
-                  <Typography variant="body1">Favorites Recipes</Typography>
+                  <Typography variant="body1">Favorite Recipes</Typography>
                 </Box>
               }
             />
@@ -276,9 +291,9 @@ const ProfilePage = () => {
             <Tab label="Dietary Restrictions" icon={<BookmarkIcon />} />
             <Tab label="Kitchen Tools" icon={<KitchenIcon />} />
             <Tab label="Meal Planner" icon={<EventIcon />} /> */}
-            <Divider sx={{ my: "1rem" }} />
+            <Divider />
 
-            <Tab
+            {/* <Tab
               sx={{ display: "flex", alignItems: "start" }}
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -286,7 +301,27 @@ const ProfilePage = () => {
                   <Typography variant="body1">Log out</Typography>
                 </Box>
               }
-            />
+            /> */}
+            {isAuthenticated() && (
+              <Tab
+                sx={{ display: "flex", alignItems: "start" }}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Link to="/logout" style={{ color: "#757575", display: "flex", justifyContent: "center", alignItems: "center", textDecoration: "none" }}>
+                      <LogoutIcon sx={{ marginRight: 1 }} />
+                      <Box onClick={handleLogout} sx={{ fontWeight: "400" }}>
+                        Logout
+                      </Box>
+                    </Link>
+                  </Box>
+                }
+              />
+              // <Link to="/auth">
+              //   <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
+              //     Logout
+              //   </Button>
+              // </Link>
+            )}
           </Tabs>
           {/* <Button onClick={handleDrawerToggle}>Toggle Sidebar</Button> */}
         </Box>
@@ -386,7 +421,7 @@ const ProfilePage = () => {
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
                   <FavoriteIcon sx={{ marginRight: 1 }} />
-                  <Typography variant="body1">Favorites Recipes</Typography>
+                  <Typography variant="body1">Favorite Recipes</Typography>
                 </Box>
               }
             />
@@ -409,7 +444,7 @@ const ProfilePage = () => {
             <Tab label="Kitchen Tools" icon={<KitchenIcon />} />
             <Tab label="Meal Planner" icon={<EventIcon />} /> */}
             <Divider sx={{ my: "1rem" }} />
-            <Tab
+            {/* <Tab
               sx={{ display: "flex", alignItems: "start" }}
               label={
                 <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -417,7 +452,22 @@ const ProfilePage = () => {
                   <Typography variant="body1">Log out</Typography>
                 </Box>
               }
-            />
+            /> */}
+            {isAuthenticated() && (
+              <Tab
+                sx={{ display: "flex", alignItems: "start" }}
+                label={
+                  <Box sx={{ display: "flex", alignItems: "center" }}>
+                    <Link to="/logout" style={{ color: "#757575", display: "flex", justifyContent: "center", alignItems: "center", textDecoration: "none" }}>
+                      <LogoutIcon sx={{ marginRight: 1 }} />
+                      <Box onClick={handleLogout} sx={{ fontWeight: "400" }}>
+                        Logout
+                      </Box>
+                    </Link>
+                  </Box>
+                }
+              />
+            )}
           </Tabs>
         </Box>
       </Grid>
@@ -489,7 +539,7 @@ const ProfilePage = () => {
         {tabIndex === 9 && (
           <Box style={{ padding: "1rem" }}>
             <Typography variant="body1">
-              <FavoritesRecipes />
+              <FavoriteRecipes />
             </Typography>
           </Box>
         )}

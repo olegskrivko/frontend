@@ -64,7 +64,7 @@ export default function RecipeCard({ recipe }) {
       >
         <CardMedia
           component="img"
-          // image={recipe.coverImage}
+          image={recipe.coverImage}
           alt={recipe.title}
           sx={{
             width: "100%",

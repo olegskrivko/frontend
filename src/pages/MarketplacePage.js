@@ -158,13 +158,14 @@
 // };
 
 // export default MarketplacePage;
-import React from "react";
+import React, { useState, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
-
+import Button from "@mui/material/Box";
+import { Link } from "react-router-dom";
 import SpaIcon from "@mui/icons-material/Spa";
 import HiveIcon from "@mui/icons-material/Hive";
 import SetMealIcon from "@mui/icons-material/SetMeal";
@@ -199,6 +200,10 @@ import MarketplaceCard from "../components/profile/MarketplaceCard";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import StoreIcon from "@mui/icons-material/Store";
+import Drawer from "@mui/material/Drawer";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+
 const seller = {
   businessName: "Fresh Farms",
   logo: "/path/to/logo.jpg",
@@ -226,7 +231,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <Grid item xs={3}>
+    <Box>
       <Paper elevation={3} style={{ padding: "20px" }}>
         <Typography variant="h6" gutterBottom>
           Categories
@@ -294,7 +299,7 @@ const Sidebar = () => {
           <Chip icon={<CreditCardIcon />} size="small" label="Card" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
         </Box>
       </Paper>
-    </Grid>
+    </Box>
   );
 };
 
@@ -331,10 +336,43 @@ const Content = () => {
 };
 
 const MarketplacePage = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
   return (
     <Grid container spacing={2}>
-      <Sidebar />
-      <Content />
+      <Button onClick={handleDrawerToggle} style={{ margin: "8px ", color: "white" }} sx={{ display: { xs: "flex", md: "none", position: "fixed", bottom: "100px", backgroundColor: "orange", justifyContent: "center", alignItems: "center" } }}>
+        <KeyboardDoubleArrowRightIcon style={{ margin: "8px " }} />
+      </Button>
+      {/* Button to toggle the drawer */}
+
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={handleDrawerToggle}
+        variant="temporary"
+        sx={{
+          display: { xs: "block", md: "none" }, // Show only on small screens
+        }}
+      >
+        <Box style={{ width: "100%", height: "3.5rem", backgroundColor: "orange", display: "flex", alignItems: "center", justifyContent: "center" }}>
+          <Typography variant="h6" component="div">
+            <Link to="/" style={{ color: "white", textDecoration: "none", display: "flex", alignItems: "center" }}>
+              <LocalFireDepartmentIcon sx={{ marginRight: 0.4 }} /> Cookify
+            </Link>
+          </Typography>
+        </Box>
+        {/* <MyAccount /> */}
+        <Sidebar />
+      </Drawer>
+
+      <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block" } }}>
+        <Sidebar />
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Content />
+      </Grid>
     </Grid>
   );
 };

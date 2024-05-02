@@ -68,7 +68,7 @@ const TemperatureTool = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Typography variant="h5" gutterBottom sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <DeviceThermostatIcon sx={{ width: "1.5rem", height: "1.5rem", marginRight: "0.8rem" }} /> Temperature Converter
+            Temperature Converter
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>

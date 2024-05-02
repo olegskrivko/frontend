@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Container, TextField, Typography, MenuItem, Button, Grid, Paper, IconButton } from "@mui/material";
-import ScaleIcon from "@mui/icons-material/Scale";
+import { Container, TextField, Typography, MenuItem, Button, Grid, IconButton } from "@mui/material";
 import SwapHorizIcon from "@mui/icons-material/SwapHoriz";
 
 const WeightTool = () => {
@@ -76,7 +75,7 @@ const WeightTool = () => {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Typography variant="h5" gutterBottom sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <ScaleIcon sx={{ width: "1.5rem", height: "1.5rem", marginRight: "0.8rem" }} /> Weight Converter
+            Weight Converter
           </Typography>
         </Grid>
         <Grid item xs={12} sm={12} md={12} lg={12}>

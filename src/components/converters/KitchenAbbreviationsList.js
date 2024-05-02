@@ -7,7 +7,7 @@ const KitchenAbbreviationsList = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <FormatSizeIcon sx={{ width: "1.5rem", height: "1.5rem", marginRight: "0.8rem" }} /> Kitchen Abbreviations and Meanings
+            Kitchen Abbreviations and Meanings
           </Typography>
         </Grid>
         <Grid item xs={12}>

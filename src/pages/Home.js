@@ -1,4 +1,4 @@
-// RecipesPage.js
+// Home.js
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,7 @@ import Box from "@mui/material/Box";
 import Slide from "@mui/material/Slide";
 import CustomAlert from "../components/CustomAlert";
 import RecipeCardHome from "../components/RecipeCardHome";
+import RecipeCardHomeCollection from "../components/RecipeCardHomeCollection";
 import RecipeCardCollection from "../components/RecipeCardCollection";
 import CardMedia from "@mui/material/CardMedia";
 import useMediaQuery from "@mui/material/useMediaQuery";
@@ -49,10 +50,11 @@ const Home = () => {
   const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
   const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { isAuthenticated } = useAuth();
-  console.log("isAuthenticated", isAuthenticated);
+  // console.log("isAuthenticated", isAuthenticated);
   const API_URL = `${BASE_URL}/recipes`;
-  const API_URL_COLLECTION_ONE = `${BASE_URL}/collections/quick-and-easy-recipes`;
+  // const API_URL_COLLECTION_ONE = `${BASE_URL}/collections/quick-and-easy-recipes`;
   const API_URL_COLLECTIONS = `${BASE_URL}/collections`;
+
   const [recipes, setRecipes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -60,7 +62,9 @@ const Home = () => {
   const [categories, setCategories] = useState([]);
   const [collectionOne, setCollectionOne] = useState([]);
   const [collections, setCollections] = useState([]);
-
+  const [currentSeasonCollectionRecipes, setCurrentSeasonCollectionRecipes] = useState([]);
+  const [currentSeasonCollection, setCurrentSeasonCollection] = useState([]);
+  const API_URL_CURRENT_SEASON_COLLECTION = `${BASE_URL}/collections/${""}`;
   const [season, setSeason] = useState("");
   const [month, setMonth] = useState("");
   const [seasonalTitle, setSeasonalTitle] = useState("");
@@ -69,6 +73,41 @@ const Home = () => {
   const [altImg, setAltImg] = useState("");
   const [creditLink, setCreditLink] = useState("");
   const [seasonalImage, setSeasonalImage] = useState("");
+
+  // const getSeasonalTitleAndSubtitle = () => {
+  //   const currentDate = new Date();
+  //   const currentMonth = currentDate.getMonth();
+  //   let season = "";
+
+  //   switch (currentMonth) {
+  //     // Determine the season based on the current month
+  //     // You may need to adjust this based on your definition of seasons
+  //     case 2: // March, April, May: Spring
+  //     case 3:
+  //     case 4:
+  //       season = "Spring";
+  //       break;
+  //     case 5: // June, July, August: Summer
+  //     case 6:
+  //     case 7:
+  //       season = "Summer";
+  //       break;
+  //     case 8: // September, October, November: Autumn
+  //     case 9:
+  //     case 10:
+  //       season = "Autumn";
+  //       break;
+  //     case 11: // December, January, February: Winter
+  //     case 0:
+  //     case 1:
+  //       season = "Winter";
+  //       break;
+  //     default:
+  //       season = "Unknown";
+  //   }
+
+  //   return season;
+  // };
 
   useEffect(() => {
     // Function to determine seasonal title and subtitle
@@ -87,7 +126,7 @@ const Home = () => {
 
       switch (currentMonth) {
         case 0: // January
-          season = "Winter";
+          season = "winter";
           month = "January";
           title = "Explore Our January Specials";
           subtitle = "Savor unique recipes handpicked for this month";
@@ -97,7 +136,7 @@ const Home = () => {
           seasonalImage = januaryImage; // Use imported image
           break;
         case 1: // February
-          season = "Winter";
+          season = "winter";
           month = "February";
           title = "Winter Wonderland";
           subtitle = "Experience the magic of winter with cozy and festive recipes";
@@ -107,7 +146,7 @@ const Home = () => {
           seasonalImage = februaryImage;
           break;
         case 2: // March
-          season = "Spring";
+          season = "spring";
           month = "March";
           title = "Spring Delights";
           subtitle = "Celebrate the freshness of spring with vibrant recipes";
@@ -117,7 +156,7 @@ const Home = () => {
           seasonalImage = marchImage; // Use imported image
           break;
         case 3: // April
-          season = "Spring";
+          season = "spring";
           month = "April";
           title = "Discover Our April Specials";
           subtitle = "Delight in exclusive recipes curated for this month";
@@ -127,7 +166,7 @@ const Home = () => {
           seasonalImage = aprilImage; // Use imported image
           break;
         case 4: // May
-          season = "Spring";
+          season = "spring";
           month = "May";
           title = "Blooming Gardens";
           subtitle = "Explore seasonal dishes inspired by nature's awakening";
@@ -137,7 +176,7 @@ const Home = () => {
           seasonalImage = mayImage; // Use imported image
           break;
         case 5: // June
-          season = "Summer";
+          season = "summer";
           month = "June";
           title = "Coastal Escapes";
           subtitle = "Transport yourself to the seaside with coastal-inspired dishes";
@@ -147,7 +186,7 @@ const Home = () => {
           seasonalImage = juneImage; // Use imported image
           break;
         case 6: // July
-          season = "Summer";
+          season = "summer";
           month = "July";
           title = "Explore Our July Specials";
           subtitle = "Savor unique recipes handpicked for this month";
@@ -157,7 +196,7 @@ const Home = () => {
           seasonalImage = julyImage; // Use imported image
           break;
         case 7: // August
-          season = "Summer";
+          season = "summer";
           month = "August";
           title = "Summer Sensations";
           subtitle = "Beat the heat with refreshing recipes inspired by summer";
@@ -167,7 +206,7 @@ const Home = () => {
           seasonalImage = augustImage; // Use imported image
           break;
         case 8: // September
-          season = "Autumn";
+          season = "autumn";
           month = "September";
           title = "Autumn Harvest";
           subtitle = "Embrace the bounty of the season with hearty autumn recipes";
@@ -177,7 +216,7 @@ const Home = () => {
           seasonalImage = septemberImage; // Use imported image
           break;
         case 9: // October
-          season = "Autumn";
+          season = "autumn";
           month = "October";
           title = "Discover Our October Specials";
           subtitle = "Indulge in exclusive recipes curated for this month";
@@ -187,7 +226,7 @@ const Home = () => {
           seasonalImage = octoberImage; // Use imported image
           break;
         case 10: // November
-          season = "Autumn";
+          season = "autumn";
           month = "November";
           title = "Cozy Comforts";
           subtitle = "Stay warm and cozy with comforting dishes perfect for fall";
@@ -197,7 +236,7 @@ const Home = () => {
           seasonalImage = novemberImage; // Use imported image
           break;
         case 11: // December
-          season = "Winter";
+          season = "winter";
           month = "December";
           title = "Festive Feasts";
           subtitle = "Gather around the table and enjoy the flavors of the holiday season";
@@ -208,7 +247,7 @@ const Home = () => {
           break;
         // Add more cases for other months and holidays as needed
         default:
-          season = "Unknown";
+          season = "unknown";
           month = "Unknown";
           title = "Seasonal Specials";
           subtitle = "Explore seasonal recipes and culinary delights";
@@ -307,6 +346,55 @@ const Home = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [API_URL]);
 
+  // Fetch Current Season Collection
+  // Fetch collection for the current season
+  // useEffect(() => {
+  //   const fetchCurrentSeasonCollection = async () => {
+  //     try {
+  //       const currentSeason = getSeasonalTitleAndSubtitle();
+  //       const collectionResponse = await fetch(`${API_URL_COLLECTIONS}/${currentSeason}`);
+  //       if (!collectionResponse.ok) {
+  //         throw new Error("Failed to fetch current season collection");
+  //       }
+  //       const collectionData = await collectionResponse.json();
+  //       setCurrentSeasonCollection(collectionData);
+  //     } catch (error) {
+  //       console.error(error.message);
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchCurrentSeasonCollection();
+  // }, []);
+  useEffect(() => {
+    const fetchCurrentSeasonCollection = async () => {
+      try {
+        // Fetch Current Season Collection
+
+        const collectionResponse = await fetch(`${API_URL_COLLECTIONS}/${season}`);
+        console.log("collectionResponse", collectionResponse);
+        if (!collectionResponse.ok) {
+          throw new Error("Failed to fetch current season collection");
+        }
+        const collectionData = await collectionResponse.json();
+        //setCurrentSeasonCollection(collectionData);
+        // collectionData.collections.name
+        // collectionData.recipes.[]
+        setCurrentSeasonCollection(collectionData.collection);
+        setCurrentSeasonCollectionRecipes(collectionData.recipes);
+        console.log("setCurrentSeasonCollectionRecipes", currentSeasonCollectionRecipes);
+      } catch (error) {
+        console.error(error.message);
+        setError(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchCurrentSeasonCollection();
+  }, [season]);
+
   // Fetch All Collections
   useEffect(() => {
     const fetchCollections = async () => {
@@ -330,33 +418,33 @@ const Home = () => {
   }, []);
 
   // Fetch collectionOne
-  useEffect(() => {
-    const fetchCollectionOne = async () => {
-      try {
-        // Fetch collectionOne
-        const recipesResponse = await fetch(API_URL_COLLECTION_ONE);
-        if (!recipesResponse.ok) {
-          throw new Error("Failed to fetch recipes");
-        }
-        const recipesData = await recipesResponse.json();
-        setCollectionOne(recipesData);
+  // useEffect(() => {
+  //   const fetchCollectionOne = async () => {
+  //     try {
+  //       // Fetch collectionOne
+  //       const recipesResponse = await fetch(API_URL_COLLECTION_ONE);
+  //       if (!recipesResponse.ok) {
+  //         throw new Error("Failed to fetch recipes");
+  //       }
+  //       const recipesData = await recipesResponse.json();
+  //       setCollectionOne(recipesData);
 
-        // Fetch categories
-        // const categoriesResponse = await fetch(`${BASE_URL}/meals`);
-        // if (categoriesResponse.ok) {
-        //   const categoriesData = await categoriesResponse.json();
-        //   setCategories(categoriesData);
-        // } else {
-        //   console.error("Failed to fetch categories");
-        // }
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchCollectionOne();
-  }, []);
+  //       // Fetch categories
+  //       // const categoriesResponse = await fetch(`${BASE_URL}/meals`);
+  //       // if (categoriesResponse.ok) {
+  //       //   const categoriesData = await categoriesResponse.json();
+  //       //   setCategories(categoriesData);
+  //       // } else {
+  //       //   console.error("Failed to fetch categories");
+  //       // }
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   fetchCollectionOne();
+  // }, []);
 
   // if (redirectToLogin || !isAuthenticated()) {
   //   // If redirectToLogin is true or user is not authenticated, redirect to the login page
@@ -437,12 +525,13 @@ const Home = () => {
         <Grid item xs={12} sm={12} md={12} lg={12}>
           <Slide direction="left" in={true}>
             <Typography variant="h4" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left", fontSize: isSmallScreen ? "1.8rem" : "2.2rem" }}>
-              {seasonalTitle}
+              {currentSeasonCollection && seasonalTitle}
+              {/* {currentSeasonCollection && currentSeasonCollection.name} */}
             </Typography>
           </Slide>
           <Slide direction="left" in={true}>
             <Typography variant="body1" gutterBottom sx={{ textAlign: isSmallScreen ? "center" : "left", fontSize: isSmallScreen ? "1rem" : "1rem" }}>
-              {seasonalSubtitle}
+              {currentSeasonCollection && currentSeasonCollection.description}
             </Typography>
           </Slide>
         </Grid>
@@ -450,9 +539,17 @@ const Home = () => {
         <Grid item xs={12} sm={12} md={7} lg={8} order={{ xs: 2, md: 1 }}>
           <Grid container spacing={3}>
             {/* Map over a slice of the recipes array containing only the first 4 elements */}
-            {recipes.slice(0, 4).map((recipe) => (
+            {/* {recipes.slice(0, 4).map((recipe) => (
               <RecipeCardHome key={recipe._id} recipe={recipe} />
-            ))}
+            ))} */}
+            {/* {collections.slice(0, 4).map((collection) => (
+              <RecipeCardCollection key={collection._id} collection={collection} />
+            ))} */}
+            {/* {collections.slice(0, 4).map((collection) => (
+              <RecipeCardCollection key={collection._id} collection={collection} />
+            ))} */}
+            {/* {currentSeasonCollectionRecipes && currentSeasonCollectionRecipes.slice(0, 4).map((collection) => <p>{collection.title}</p>)} */}
+            {currentSeasonCollectionRecipes && currentSeasonCollectionRecipes.slice(0, 4).map((recipe) => <RecipeCardHomeCollection key={recipe._id} recipe={recipe} />)}
           </Grid>
         </Grid>
         {/* Seasonal Image */}
@@ -497,8 +594,9 @@ const Home = () => {
               src={sectionTrendingRecipesImage}
               alt="Fresh ingredients, including vegetables, mushrooms, eggs, and shrimps, falling into a salad bowl, conveying motion and freshness."
               style={{
-                width: "auto",
-                maxHeight: "280px",
+                // width: "auto",
+                // maxHeight: "280px",
+                objectFit: "cover",
               }}
             />
             <Box style={{ marginTop: "0.5rem", display: "flex", alignItems: "center" }}>

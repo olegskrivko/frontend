@@ -158,12 +158,15 @@
 // };
 
 // export default MarketplacePage;
-import React from "react";
+import React, { useState, useContext } from "react";
 import Grid from "@mui/material/Grid";
 import Paper from "@mui/material/Paper";
 import Typography from "@mui/material/Typography";
 import Chip from "@mui/material/Chip";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import InputLabel from "@mui/material/InputLabel";
+import Slider from "@mui/material/Slider";
 
 import SpaIcon from "@mui/icons-material/Spa";
 import HiveIcon from "@mui/icons-material/Hive";
@@ -199,142 +202,240 @@ import MarketplaceCard from "../components/profile/MarketplaceCard";
 import CreditCardIcon from "@mui/icons-material/CreditCard";
 import PaymentsIcon from "@mui/icons-material/Payments";
 import StoreIcon from "@mui/icons-material/Store";
-const seller = {
-  businessName: "Fresh Farms",
-  logo: "/path/to/logo.jpg",
-  mainProducts: ["Fresh Vegetables", "Organic Fruits", "Free-Range Eggs"],
-  description: "Providing locally grown produce to the community.",
-  location: "123 Main Street, City, Country",
-  certified: true,
-};
+import Drawer from "@mui/material/Drawer";
+import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
+import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
+import WorkOutlineIcon from "@mui/icons-material/WorkOutline";
+
+const sellers = [
+  {
+    businessName: "Fresh Farms",
+    logo: "/path/to/logo1.jpg",
+    mainProducts: ["Fresh Vegetables", "Organic Fruits", "Free-Range Eggs"],
+    description: "Providing locally grown produce to the community.",
+    location: "123 Main Street, City, Country",
+    certified: true,
+  },
+  {
+    businessName: "Organic Oasis",
+    logo: "/path/to/logo2.jpg",
+    mainProducts: ["Farm-Fresh Produce", "Grass-Fed Meat", "Organic Dairy"],
+    description: "Bringing organic goodness straight from the farm to your table.",
+    location: "789 Elm Street, Town, Country",
+    certified: false,
+  },
+  {
+    businessName: "Green Gardens",
+    logo: "/path/to/logo3.jpg",
+    mainProducts: ["Homegrown Herbs", "Fresh Flowers", "Sustainable Seeds"],
+    description: "Cultivating nature's bounty for a greener world.",
+    location: "456 Oak Avenue, Village, Country",
+    certified: true,
+  },
+  {
+    businessName: "Local Harvest",
+    logo: "/path/to/logo4.jpg",
+    mainProducts: ["Locally Sourced Produce", "Artisanal Crafts", "Handmade Goods"],
+    description: "Supporting local artisans and farmers for a stronger community.",
+    location: "101 Pine Street, Hamlet, Country",
+    certified: false,
+  },
+  {
+    businessName: "Farm Fresh",
+    logo: "/path/to/logo5.jpg",
+    mainProducts: ["Farm-to-Table Produce", "Organic Meats", "Fresh Dairy Products"],
+    description: "Bringing the farm's bounty straight to your doorstep.",
+    location: "789 Maple Road, County, Country",
+    certified: true,
+  },
+  {
+    businessName: "Nature's Bounty",
+    logo: "/path/to/logo6.jpg",
+    mainProducts: ["Fresh Harvest", "Natural Remedies", "Handcrafted Soaps"],
+    description: "Harvesting the goodness of nature for a healthier lifestyle.",
+    location: "222 Willow Lane, District, Country",
+    certified: false,
+  },
+];
 
 const Sidebar = () => {
+  const [minimumScore, setMinimumScore] = useState(0);
+  const [maximumDistance, setMaximumDistance] = useState(25);
+
+  const handleMaximumDistanceChange = (event, newValue) => {
+    // Update the difficulty state when the slider value changes
+    setMaximumDistance(newValue);
+  };
+
+  const handleMinimumScoreChange = (event, newValue) => {
+    // Update the difficulty state when the slider value changes
+    setMinimumScore(newValue);
+  };
+
   // Dummy array of categories
   const categories = [
     { label: "Herbs & Spices", icon: <LocalFloristIcon /> },
+    { label: "Berries", icon: <GrainIcon /> },
+    { label: "Vegetables", icon: <SpaIcon /> },
     { label: "Honey & Jams", icon: <HiveIcon /> },
     { label: "Meat & Poultry", icon: <EggAltIcon /> },
-    { label: "Vegetables", icon: <SpaIcon /> },
-    { label: "Berries", icon: <GrainIcon /> },
+    { label: "Beverages", icon: <LocalBarIcon /> },
+    { label: "Dairy & Eggs", icon: <EggIcon /> },
+    { label: "Seafood", icon: <SetMealIcon /> },
     { label: "Bakery & Sweets", icon: <CakeIcon /> },
     { label: "Fruits", icon: <ScatterPlotIcon /> },
-    { label: "Beverages", icon: <LocalBarIcon /> },
+
     { label: "Grains & Legumes", icon: <GrassIcon /> },
-    { label: "Dairy & Eggs (Milk)", icon: <EggIcon /> },
-    { label: "Foraged Foods (Wild berries, mushrooms)", icon: <ForestIcon /> },
-    { label: "Seafood", icon: <SetMealIcon /> },
+
+    { label: "Foraged Foods", icon: <ForestIcon /> },
   ];
 
   return (
-    <Grid item xs={3}>
-      <Paper elevation={3} style={{ padding: "20px" }}>
-        <Typography variant="h6" gutterBottom>
-          Categories
-        </Typography>
-        {categories.map((category, index) => (
-          <Chip key={index} size="small" icon={category.icon} label={category.label} variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-        ))}
-
-        <Typography variant="h6" gutterBottom>
-          Distance from Current Location
-        </Typography>
-        <Typography variant="h6" gutterBottom>
-          Type of Business
-        </Typography>
+    <Box>
+      <Box style={{ padding: "20px", maxWidth: "300px" }}>
         <Box>
-          <Chip icon={<PersonIcon />} label="Individual seller" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<StoreIcon />} label="Small brand" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<GroupsIcon />} label="Family owned" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-        </Box>
-        <Typography variant="h6" gutterBottom>
-          Availability
-        </Typography>
-
-        <Box>
-          <Chip icon={<WorkIcon />} label="Available" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<WorkHistoryIcon />} label="Paused" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Categories</InputLabel>
+          {categories.map((category, index) => (
+            <Chip key={index} size="small" icon={category.icon} label={category.label} variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          ))}
         </Box>
 
-        <Typography variant="h6" gutterBottom>
+        <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Distance {maximumDistance} km</InputLabel>
+          <Slider
+            sx={{ height: "8px", color: "#ff6600" }}
+            value={maximumDistance}
+            onChange={handleMaximumDistanceChange}
+            //valueLabelDisplay="auto"
+            step={5}
+            //             // marks={[{ value: 0, label: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5, label: 5 }]}
+            min={0}
+            max={100}
+          />
+        </Box>
+
+        <Box>
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Type of Business</InputLabel>
+          <Chip icon={<PersonIcon />} label="Individual seller" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<StoreIcon />} label="Small brand" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<GroupsIcon />} label="Family owned" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+        </Box>
+
+        <Box>
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Availability</InputLabel>
+          <Chip icon={<WorkIcon />} label="Available" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<WorkHistoryIcon />} label="Paused" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<WorkOffIcon />} label="On Demand" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<WorkOutlineIcon />} label="Out of Stock" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+        </Box>
+
+        {/* <Typography variant="h6" gutterBottom>
           Certifications
         </Typography>
         <Box>
           <Chip icon={<SpaIcon />} label="Organic" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
           <Chip icon={<FlagIcon />} label="Local" size="small" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-        </Box>
+        </Box> */}
 
-        <Typography variant="h6" gutterBottom>
+        {/* <Typography variant="h6" gutterBottom>
           Delivery Options
-        </Typography>
+        </Typography> */}
+
         <Box>
-          <Chip icon={<LocalShippingIcon />} size="small" label="Local pickup" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<RedeemIcon />} size="small" label="Shipping" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<LocalShippingIcon />} size="small" label="Home delivery" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-          <Chip icon={<Storefront />} size="small" label="Farmers market" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Delivery Options</InputLabel>
+          <Chip icon={<LocalShippingIcon />} size="small" label="Local pickup" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<RedeemIcon />} size="small" label="Shipping" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<LocalShippingIcon />} size="small" label="Home delivery" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
+          <Chip icon={<Storefront />} size="small" label="Farmers market" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px", padding: "0.8rem 0.6rem" }} />
         </Box>
 
-        <Typography variant="h6" gutterBottom>
+        {/* <Typography variant="h6" gutterBottom>
           Price Range
         </Typography>
         <Box>
           <Chip icon={<EuroIcon />} size="small" label="0.99 $" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
           <RemoveIcon />
           <Chip icon={<EuroIcon />} size="small" label="19.99" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
+        </Box> */}
+
+        <Box sx={{ padding: "0 !important", paddingTop: "0.8rem !important" }}>
+          <InputLabel sx={{ fontWeight: "500", color: "#000", paddingBottom: "0.5rem" }}>Minimum Score {minimumScore}</InputLabel>
+          <Slider
+            sx={{ height: "8px", color: "#ff6600" }}
+            value={minimumScore}
+            onChange={handleMinimumScoreChange}
+            //valueLabelDisplay="auto"
+            step={1}
+            //             // marks={[{ value: 0, label: 0 }, { value: 1 }, { value: 2 }, { value: 3 }, { value: 4 }, { value: 5, label: 5 }]}
+            min={0}
+            max={5}
+          />
         </Box>
 
-        <Typography variant="h6" gutterBottom>
-          Minimum Score
-        </Typography>
-
-        <Typography variant="h6" gutterBottom>
+        {/* <Typography variant="h6" gutterBottom>
           Payment Methods
         </Typography>
         <Box>
           <Chip icon={<PaymentsIcon />} size="small" label="Cash" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
           <Chip icon={<CreditCardIcon />} size="small" label="Card" variant="outlined" style={{ marginBottom: "10px", marginRight: "10px" }} />
-        </Box>
-      </Paper>
-    </Grid>
+        </Box> */}
+      </Box>
+    </Box>
   );
 };
 
 const Content = () => {
   // Dummy array of content items
-  const contentItems = [
-    { title: "🍏 Apple", description: "Fresh and crispy apples, perfect for snacking." },
-    { title: "🥚 Eggs", description: "Farm-fresh eggs, rich in protein and nutrients." },
-    { title: "🍞 Bread", description: "Homemade artisan bread, baked daily." },
-    { title: "🧀 Cheese", description: "Artisanal cheese, aged to perfection." },
-    { title: "🥩 Steak", description: "Premium cuts of grass-fed beef, tender and flavorful." },
-    { title: "🍷 Wine", description: "Fine wines from local vineyards, perfect for any occasion." },
-  ];
+  // const contentItems = [
+  //   { title: "🍏 Apple", description: "Fresh and crispy apples, perfect for snacking." },
+  //   { title: "🥚 Eggs", description: "Farm-fresh eggs, rich in protein and nutrients." },
+  //   { title: "🍞 Bread", description: "Homemade artisan bread, baked daily." },
+  //   { title: "🧀 Cheese", description: "Artisanal cheese, aged to perfection." },
+  //   { title: "🥩 Steak", description: "Premium cuts of grass-fed beef, tender and flavorful." },
+  //   { title: "🍷 Wine", description: "Fine wines from local vineyards, perfect for any occasion." },
+  // ];
 
   return (
     <Grid item xs={9}>
       <Grid container spacing={2}>
-        {contentItems.map((item, index) => (
+        {sellers.map((seller, index) => (
           <Grid key={index} item xs={4}>
-            <Paper elevation={3} style={{ padding: "20px", height: "100%" }}>
-              <Typography variant="h6" gutterBottom>
-                {item.title}
-              </Typography>
-              <Typography variant="body1" gutterBottom>
-                {item.description}
-              </Typography>
-            </Paper>
+            <MarketplaceCard seller={seller} />
           </Grid>
         ))}
       </Grid>
-      <MarketplaceCard seller={seller} />
     </Grid>
   );
 };
 
 const ProductsPage = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const handleDrawerToggle = () => {
+    setIsDrawerOpen(!isDrawerOpen);
+  };
   return (
     <Grid container spacing={2}>
-      <Sidebar />
-      <Content />
+      <Button onClick={handleDrawerToggle} style={{ margin: "8px ", color: "white" }} sx={{ display: { xs: "flex", md: "none", position: "fixed", bottom: "100px", backgroundColor: "orange", justifyContent: "center", alignItems: "center" } }}>
+        <KeyboardDoubleArrowRightIcon style={{ margin: "8px " }} />
+      </Button>
+      <Drawer
+        anchor="left"
+        open={isDrawerOpen}
+        onClose={handleDrawerToggle}
+        variant="temporary"
+        sx={{
+          display: { xs: "block", md: "none" }, // Show only on small screens
+        }}
+      >
+        <Sidebar />
+      </Drawer>
+      {/* Button to toggle the drawer */}
+      <Grid item xs={12} md={3} sx={{ display: { xs: "none", md: "block" } }}>
+        <Sidebar />
+      </Grid>
+      <Grid item xs={12} md={9}>
+        <Content />
+      </Grid>
     </Grid>
   );
 };

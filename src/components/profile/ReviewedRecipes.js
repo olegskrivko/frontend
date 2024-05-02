@@ -45,8 +45,8 @@ function ReviewedRecipes() {
       { id: 5, title: "Grilled Salmon with Lemon" },
     ],
     reviewedRecipes: [
-      { id: 4, title: "Mango Chips" },
-      { id: 5, title: "Salmon with Lemon" },
+      { id: 4, title: "Mango Chips", reviewed: "2024-03-20" },
+      { id: 5, title: "Salmon with Lemon", reviewed: "2024-03-20" },
     ],
     preparedRecipes: [
       { id: 4, title: "Mango Chips", preparationCount: 5, firstPrepared: "2023-05-15", lastPrepared: "2024-03-20" },
@@ -84,7 +84,8 @@ function ReviewedRecipes() {
                 <ReviewsIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={recipe.title} />
+            {/* <ListItemText primary={recipe.title} /> */}
+            <ListItemText primary={recipe.title} secondary={`Recipe Reviewed: ${recipe.reviewed}`} />
             <ListItemSecondaryAction>
               <IconButton edge="end">
                 <EditIcon />

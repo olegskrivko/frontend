@@ -1,14 +1,21 @@
 // AuthPage.js
 import React, { useState } from "react";
-import { Container, Typography, TextField, Button, Link } from "@mui/material";
+import { Container, InputAdornment, IconButton, Grid, Typography, TextField, Button, Link } from "@mui/material";
 import { useAuth } from "../middleware/AuthContext"; // Update the import
 import { useNavigate, useLocation } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
+import useMediaQuery from "@mui/material/useMediaQuery";
+import { useTheme } from "@mui/material/styles";
 import { BASE_URL } from "../middleware/config";
 
 const AuthPage = () => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+  const isSmallScreen = useMediaQuery(theme.breakpoints.down("sm"));
   const { login } = useAuth(); // Use the useAuth hook to access the login function
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({ email: "", password: "", username: "" });
+  const [showPassword, setShowPassword] = useState(false); // State to toggle password visibility
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -53,24 +60,60 @@ const AuthPage = () => {
     }
   };
 
+  const handleTogglePasswordVisibility = () => {
+    setShowPassword((prevShowPassword) => !prevShowPassword);
+  };
+
   return (
-    <Container component="main" maxWidth="xs">
-      <Typography variant="h4">{isLogin ? "Login" : "Register"}</Typography>
-      <form onSubmit={handleSubmit}>
-        {!isLogin && <TextField margin="normal" fullWidth label="Username" name="username" onChange={handleChange} value={formData.username} required={!isLogin} />}
-        <TextField margin="normal" fullWidth label="Email" name="email" type="email" onChange={handleChange} value={formData.email} required />
-        <TextField margin="normal" autoComplete="off" fullWidth label="Password" name="password" type="password" onChange={handleChange} value={formData.password} required />
-        <Button type="submit" fullWidth variant="contained" color="primary">
-          {isLogin ? "Login" : "Register"}
-        </Button>
-        <Typography align="center" variant="body2" sx={{ marginTop: 1 }}>
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
-          <Link href="#" onClick={() => setIsLogin(!isLogin)}>
-            {isLogin ? "Register here" : "Login here"}
-          </Link>
-        </Typography>
-      </form>
-    </Container>
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={12}>
+        <Container component="main" maxWidth="xs" style={{ marginTop: isLargeScreen ? "5rem" : "1rem" }}>
+          <Typography variant="h5" textAlign="center">
+            {isLogin ? "Sign In" : "Register"}
+          </Typography>
+          <form onSubmit={handleSubmit}>
+            {!isLogin && <TextField margin="normal" fullWidth label="Username" name="username" onChange={handleChange} value={formData.username} required={!isLogin} />}
+            <TextField margin="normal" fullWidth label="Email" name="email" type="email" onChange={handleChange} value={formData.email} required />
+            {/* <TextField margin="normal" autoComplete="off" fullWidth label="Password" name="password" type="password" onChange={handleChange} value={formData.password} required /> */}
+            <TextField
+              margin="normal"
+              fullWidth
+              label="Password"
+              name="password"
+              type={showPassword ? "text" : "password"} // Toggle type based on showPassword state
+              onChange={handleChange}
+              value={formData.password}
+              required
+              InputProps={{
+                // Add eye icon button to toggle password visibility
+                endAdornment: (
+                  <InputAdornment position="end">
+                    <IconButton onClick={handleTogglePasswordVisibility} edge="end">
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
+                    </IconButton>
+                  </InputAdornment>
+                ),
+              }}
+            />
+            {!isLogin && (
+              <Typography variant="body2" color="textSecondary" gutterBottom>
+                By creating an account, you agree to comply with our <Link href="/terms-of-service">terms of service</Link> and adhere to our <Link href="/community-guidelines">community guidelines</Link>.
+              </Typography>
+            )}
+
+            <Button type="submit" fullWidth variant="contained" color="warning">
+              {isLogin ? "Sign In" : "Register"}
+            </Button>
+            <Typography align="center" variant="body2" sx={{ marginTop: 1 }}>
+              {isLogin ? "Don't have an account? " : "Already have an account? "}
+              <Link href="#" onClick={() => setIsLogin(!isLogin)}>
+                {isLogin ? "Register" : "Sign In"}
+              </Link>
+            </Typography>
+          </form>
+        </Container>
+      </Grid>
+    </Grid>
   );
 };
 

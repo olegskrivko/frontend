@@ -41,8 +41,8 @@ function MyRecipes() {
       { id: 3, title: "Vegetable Stir-Fry" },
     ],
     ownRecipes: [
-      { id: 4, title: "Chocolate Chip Cookies" },
-      { id: 5, title: "Grilled Salmon with Lemon" },
+      { id: 4, title: "Chocolate Chip Cookies", created: "2023-05-15" },
+      { id: 5, title: "Grilled Salmon with Lemon", created: "2024-04-08" },
     ],
     reviewedRecipes: [
       { id: 4, title: "Mango Chips" },
@@ -78,13 +78,26 @@ function MyRecipes() {
       <Divider sx={{ my: "1rem" }} />
       <List>
         {user.ownRecipes.map((recipe) => (
+          // <ListItem key={recipe.id} disableGutters>
+          //   <ListItemAvatar>
+          //     <Avatar>
+          //       <RecipeIcon />
+          //     </Avatar>
+          //   </ListItemAvatar>
+          //   <ListItemText primary={recipe.title} />
+          //   <ListItemSecondaryAction>
+          //     <IconButton edge="end">
+          //       <EditIcon />
+          //     </IconButton>
+          //   </ListItemSecondaryAction>
+          // </ListItem>
           <ListItem key={recipe.id} disableGutters>
             <ListItemAvatar>
               <Avatar>
                 <RecipeIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={recipe.title} />
+            <ListItemText primary={recipe.title} secondary={`Recipe Created: ${recipe.created}`} />
             <ListItemSecondaryAction>
               <IconButton edge="end">
                 <EditIcon />

@@ -63,7 +63,7 @@ const VolumeTool = () => {
       <Grid container spacing={3}>
         <Grid item xs={12}>
           <Typography variant="h5" gutterBottom sx={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-            <LocalDrinkIcon sx={{ width: "1.5rem", height: "1.5rem", marginRight: "0.8rem" }} /> Volume Converter
+            Volume Converter
           </Typography>
         </Grid>
         <Grid item xs={12}>

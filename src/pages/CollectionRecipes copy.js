@@ -6,10 +6,10 @@ import { Typography, Box, Grid, Card, CardContent, CardActionArea, CardMedia, Ci
 import AccessTimeIcon from "@mui/icons-material/AccessTime"; // Import AccessTime icon
 import RecipeCardMeals from "../components/RecipeCardMeals";
 import RecipeCardCollection from "../components/RecipeCardCollection";
+// import RecipeCardCollectionLast from "../components/RecipeCardCollectionLast";
 // import Desserts from "../images/Desserts.jpg";
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
-import RecipeCardCollectionLast from "../components/RecipeCardCollectionLast";
 import BasicPagination from "../components/BasicPagination";
 import SideBar from "./SideBar";
 
@@ -167,8 +167,7 @@ const CollectionRecipes = () => {
               {collections.map((collection) => (
                 // <Grid item key={recipe._id} xs={6} sm={6} md={4} lg={3}>
                 // <RecipeCardMeals key={collection._id} recipe={collection} />
-                // <RecipeCardCollection key={collection._id} collection={collection} />
-                <RecipeCardCollectionLast key={collection._id} collection={collection} />
+                <RecipeCardCollection key={collection._id} collection={collection} />
               ))}
             </Grid>
           ) : (

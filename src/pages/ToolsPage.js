@@ -34,7 +34,7 @@ import { Link } from "react-router-dom";
 import PersonIcon from "@mui/icons-material/Person";
 import ShoppingList from "../components/profile/ShoppingList";
 import CookingAchievements from "../components/profile/CookingAchievements";
-import FavoritesRecipes from "../components/profile/FavoritesRecipes";
+import FavoriteRecipes from "../components/profile/FavoriteRecipes";
 import MyRecipes from "../components/profile/MyRecipes";
 import ScaleIcon from "@mui/icons-material/Scale";
 import ReviewedRecipes from "../components/profile/ReviewedRecipes";
@@ -51,6 +51,7 @@ import TimeTool from "../components/converters/TimeTool";
 import VolumeTool from "../components/converters/VolumeTool";
 import CalorieBurnerCalculator from "../components/converters/CalorieBurnerCalculator";
 import AutorenewIcon from "@mui/icons-material/Autorenew";
+import CalculateIcon from "@mui/icons-material/Calculate";
 import TemperatureTool from "../components/converters/TemperatureTool";
 import LocalDrinkIcon from "@mui/icons-material/LocalDrink";
 import AccessTimeIcon from "@mui/icons-material/AccessTime";
@@ -60,10 +61,23 @@ import KitchenAbbreviationsList from "../components/converters/KitchenAbbreviati
 import FormatSizeIcon from "@mui/icons-material/FormatSize";
 import KitchenAlarmTool from "../components/converters/KitchenAlarmTool";
 import AccessAlarmIcon from "@mui/icons-material/AccessAlarm";
+import DonutSmallIcon from "@mui/icons-material/DonutSmall";
 import WhatshotIcon from "@mui/icons-material/Whatshot";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
-
+import BasalMetabolicRateCalculator from "../components/converters/BasalMetabolicRateCalculator";
+import BodyFatIndexCalculator from "../components/converters/BodyFatIndexCalculator";
+import BodyMassIndexCalculator from "../components/converters/BodyMassIndexCalculator";
+import CalorieBurnEstimator from "../components/converters/CalorieBurnEstimator";
+import TDEECalculator from "../components/converters/TDEECalculator";
+import WaistToHipRatioCalculator from "../components/converters/WaistToHipRatioCalculator";
+import NutritionalGoalsCalculator from "../components/NutritionalGoalsCalculator";
+import AccessibilityNewIcon from "@mui/icons-material/AccessibilityNew";
+import StraightenIcon from "@mui/icons-material/Straighten";
+import SpeedIcon from "@mui/icons-material/Speed";
+import ElectricBoltIcon from "@mui/icons-material/ElectricBolt";
+import HikingIcon from "@mui/icons-material/Hiking";
+import DirectionsRunIcon from "@mui/icons-material/DirectionsRun";
 // import { Box, Typography, Paper, Divider, Tab, Tabs, Grid } from "@mui/material";
 // import EditIcon from "@mui/icons-material/Edit";
 // import FacebookIcon from "@mui/icons-material/Facebook";
@@ -241,6 +255,72 @@ const ToolsPage = () => {
               }
             />
 
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <AccessibilityNewIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">BMI Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <SpeedIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">BMR Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ElectricBoltIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">TDEE Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DirectionsRunIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Calorie Burn Estimator</Typography>
+                </Box>
+              }
+            />
+
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <CalculateIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Body Fat Index</Typography>
+                </Box>
+              }
+            />
+
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <StraightenIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Waist-to-Hip Ratio</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DonutSmallIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Nutritional Goals</Typography>
+                </Box>
+              }
+            />
+
             {/* <Tab label="Own Recipes" icon={<RecipeIcon />} />
             <Tab label="Shopping List" icon={<BookmarkIcon />} />
             <Tab label="Cooking Achievements" icon={<BookmarkIcon />} />
@@ -336,6 +416,71 @@ const ToolsPage = () => {
                 </Box>
               }
             />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <AccessibilityNewIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">BMI Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <SpeedIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">BMR Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <ElectricBoltIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">TDEE Calculator</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DirectionsRunIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Calorie Burn Est.</Typography>
+                </Box>
+              }
+            />
+
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <CalculateIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Body Fat Index</Typography>
+                </Box>
+              }
+            />
+
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <StraightenIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Waist To Hip Ratio</Typography>
+                </Box>
+              }
+            />
+            <Tab
+              sx={{ display: "flex", alignItems: "start" }}
+              label={
+                <Box sx={{ display: "flex", alignItems: "center" }}>
+                  <DonutSmallIcon sx={{ marginRight: 1 }} />
+                  <Typography variant="body1">Nutritional Goals</Typography>
+                </Box>
+              }
+            />
 
             {/* <Divider sx={{ my: "1rem" }} /> */}
           </Tabs>
@@ -401,6 +546,55 @@ const ToolsPage = () => {
           <Box style={{ padding: "1rem" }}>
             <Typography variant="body1">
               <CalorieBurnerCalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 8 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <BodyMassIndexCalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 9 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <BasalMetabolicRateCalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 10 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <TDEECalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 11 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <CalorieBurnEstimator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 12 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <BodyFatIndexCalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 13 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <WaistToHipRatioCalculator />
+            </Typography>
+          </Box>
+        )}
+        {tabIndex === 14 && (
+          <Box style={{ padding: "1rem" }}>
+            <Typography variant="body1">
+              <NutritionalGoalsCalculator />
             </Typography>
           </Box>
         )}

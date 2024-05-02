@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import CircularProgress from "@mui/material/CircularProgress";
 import LocalCafeIcon from "@mui/icons-material/LocalCafe";
 import CakeIcon from "@mui/icons-material/Cake";
 import BreakfastDiningIcon from "@mui/icons-material/BreakfastDining";
@@ -24,6 +25,7 @@ import LocalPizzaIcon from "@mui/icons-material/LocalPizza";
 import WaterDropIcon from "@mui/icons-material/WaterDrop";
 import FastfoodIcon from "@mui/icons-material/Fastfood";
 import RecipeCardAllCollections from "../components/RecipeCardAllCollections";
+import CustomAlert from "../components/CustomAlert";
 import RecipeCardSolo from "../components/RecipeCardSolo";
 import RecipeCardCollection from "../components/RecipeCardCollection";
 import Chip from "@mui/material/Chip";
@@ -151,6 +153,8 @@ const CollectionsPage = () => {
   const [collections, setCollections] = useState([]);
   const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(true); // New loading state
+  // const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const sliderRef = useRef(null);
   useEffect(() => {
     const fetchCollections = async () => {
@@ -180,89 +184,100 @@ const CollectionsPage = () => {
     slidesToScroll: 1,
     fade: true,
   };
+  if (isLoading) {
+    return (
+      <React.Fragment>
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "90vh", // Make the spinner cover the entire viewport vertically
+          }}
+        >
+          <CircularProgress size={80} style={{ color: "#ff6600" }} /> {/* Adjust the size of the spinner as needed */}
+        </div>
+      </React.Fragment>
+    );
+  }
 
+  if (error) {
+    return <CustomAlert errorMessage={error} />;
+  }
   return (
     <Grid container spacing={3}>
-      {/* ... */}
-      {isLoading ? (
-        // Render a loading indicator or message while data is being fetched
-        <Typography variant="body1">Loading...</Typography>
-      ) : (
-        // Render the actual content once data is loaded
+      {/* Collections Page Title */}
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Typography variant="h4" textAlign="center">
+          Recipe inspiration
+        </Typography>
+        <Typography variant="subtitle1" textAlign="center">
+          Whether you're after an old favourite or inspiration for something new, we have the perfect recipe.
+        </Typography>
+      </Grid>
+      {/* Collections Page Cover */}
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <CardMedia
+          component="img"
+          src={coverImg}
+          alt=""
+          style={{
+            width: "100%",
+            maxHeight: "400px",
+            objectFit: "cover",
+            // borderRadius: "3rem",
+          }}
+        />
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
+        <Typography variant="h5" textAlign="center">
+          Most popular recipe collections
+        </Typography>
+      </Grid>
+      <Grid item xs={12} sm={12} md={12} lg={12}>
         <Box>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Typography variant="h4" textAlign="center">
-              Recipe inspiration
-            </Typography>
-            <Typography variant="subtitle1" textAlign="center">
-              Whether you're after an old favourite or inspiration for something new, we have the perfect recipe.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <div>
-              <img
-                src={coverImg}
-                alt={"aa"}
-                style={{
-                  width: "100%",
-                  maxHeight: "400px",
-                  objectFit: "cover",
-                  // borderRadius: "3rem",
-                }}
-              />
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Typography variant="h5" textAlign="left">
-              Most popular recipe collections
-            </Typography>
-          </Grid>
-          <Grid item xs={12} sm={12} md={12} lg={12}>
-            <Box>
-              {collections.map((collection, index) => (
-                <Box key={index} mb={3}>
-                  <Typography variant="h6" textAlign="left" mb={1}>
-                    <Link
-                      to={`/collections/${collection.slug}`}
-                      style={{
-                        textDecoration: "none",
-                        color: "black",
-                      }}
-                      sx={{
-                        "&:visited": {
-                          color: "black",
-                        },
-                      }}
-                    >
-                      {collection.name}
-                    </Link>
-                  </Typography>
+          {collections.map((collection, index) => (
+            <Box key={index} mb={3}>
+              <Typography variant="h6" textAlign="left" mb={1}>
+                <Link
+                  to={`/collections/${collection.slug}`}
+                  style={{
+                    textDecoration: "none",
+                    color: "black",
+                  }}
+                  sx={{
+                    "&:visited": {
+                      color: "black",
+                    },
+                  }}
+                >
+                  {collection.name}
+                </Link>
+              </Typography>
 
-                  <Grid container spacing={3} sx={{ display: "flex" }}>
-                    {collection.recipes.slice(0, 4).map((recipe) => (
-                      <Grid
-                        item
-                        xs={6}
-                        sm={6}
-                        md={4}
-                        lg={4}
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          height: "100%",
-                        }}
-                      >
-                        <RecipeCardAllCollections key={recipe._id} recipe={recipe} />
-                      </Grid>
-                    ))}
+              <Grid container spacing={3} sx={{ display: "flex" }}>
+                {collection.recipes.slice(0, 4).map((recipe) => (
+                  <Grid
+                    item
+                    xs={6}
+                    sm={6}
+                    md={3}
+                    lg={3}
+                    sx={{
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                    }}
+                  >
+                    <RecipeCardAllCollections key={recipe._id} recipe={recipe} />
                   </Grid>
-                </Box>
-              ))}
+                ))}
+              </Grid>
             </Box>
-          </Grid>
+          ))}
         </Box>
-      )}
+      </Grid>
     </Grid>
   );
 };

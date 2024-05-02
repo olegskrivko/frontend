@@ -28,6 +28,13 @@ import ExpandLess from "@mui/icons-material/ExpandLess";
 import ExpandMore from "@mui/icons-material/ExpandMore";
 import LocalFireDepartmentIcon from "@mui/icons-material/LocalFireDepartment";
 import SideBar from "../pages/SideBar";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
+import AccountCircle from "@mui/icons-material/AccountCircle";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import MenuItem from "@mui/material/MenuItem";
+import Menu from "@mui/material/Menu";
 import KeyboardDoubleArrowRightIcon from "@mui/icons-material/KeyboardDoubleArrowRight";
 import { BASE_URL } from "../middleware/config";
 // Custom Components
@@ -45,8 +52,9 @@ const navItems = {
   "/tools": "Tools",
   // "/create-recipe": "create",
   "/contact": "Contact",
-  "/profile": "Profile",
-  "/admin/dashboard": "Dashboard",
+  // "/more": "More",
+  // "/profile": "Profile",
+  // "/admin/dashboard": "Dashboard",
   // "/auth": "Users",
 };
 
@@ -335,42 +343,10 @@ function DrawerAppBar(props) {
       </List>
     </Box>
   );
-  // const filtersDrawer = ({ meals, handleDrawerToggle, handleMealsToggle, mealsOpen }) => (
-  //   <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
-  //     <Typography variant="h6" sx={{ my: 2 }}>
-  //       Cookify
-  //     </Typography>
-  //     <Divider />
-  //     <List>
-  //       <ListSubheader
-  //         onClick={handleMealsToggle}
-  //         sx={{
-  //           cursor: "pointer",
-  //           textAlign: "left",
-  //           backgroundColor: (theme) => theme.palette.grey[200], // Use theme for background color
-  //           padding: "8px 16px",
-  //           fontWeight: "bold",
-  //         }}
-  //       >
-  //         Meals
-  //       </ListSubheader>
-  //       <Collapse in={mealsOpen} timeout="auto" unmountOnExit>
-  //         <List>
-  //           {meals.map((meal) => (
-  //             <ListItem key={meal._id} disablePadding>
-  //               <ListItemButton sx={{ textAlign: "left" }}>
-  //                 <Link to={`meals/${meal._id}`} style={{ textDecoration: "none", width: "100%" }}>
-  //                   <ListItemText primary={meal.name} />
-  //                 </Link>
-  //               </ListItemButton>
-  //             </ListItem>
-  //           ))}
-  //         </List>
-  //       </Collapse>
-  //       {/* ... (existing code for other items) */}
-  //     </List>
-  //   </Box>
-  // );
+
+  const handleProfile = () => {
+    navigate("/profile");
+  };
 
   return (
     <Box sx={{ display: "flex", p: 3 }}>
@@ -403,19 +379,32 @@ function DrawerAppBar(props) {
                   <Button sx={{ color: "#fff", fontWeight: "400" }}>{itemName}</Button>
                 </Link>
               ))}
-              {isAuthenticated() && (
+
+              {/* {isAuthenticated() && (
                 <Link to="/auth">
                   <Button onClick={handleLogout} sx={{ color: "#fff", fontWeight: "400" }}>
                     Logout
                   </Button>
                 </Link>
-              )}
-              {!isAuthenticated() && (
+              )} */}
+              {/* {!isAuthenticated() && (
                 <Link to="/auth">
-                  <Button sx={{ color: "#fff", fontWeight: "400" }}>Login</Button>
+                  <Button sx={{ color: "#fff", fontWeight: "400", backgroundColor: "#8a3324", borderRadius: "1.2rem", padding: "0.4rem 1rem" }}>Sign In</Button>
                 </Link>
-              )}
+              )} */}
             </Box>
+            {!isAuthenticated() && (
+              <Link to="/auth">
+                <Button sx={{ color: "#fff", fontWeight: "400", backgroundColor: "#8a3324", borderRadius: "1.2rem", padding: "0.4rem 1rem" }}>Sign In</Button>
+              </Link>
+            )}
+
+            {isAuthenticated() && (
+              <IconButton size="large" aria-label="account of current user" aria-controls="menu-appbar-profile" aria-haspopup="true" onClick={handleProfile} color="inherit">
+                <AccountCircle />
+              </IconButton>
+            )}
+
             {/* Add the following button for opening the filters drawer */}
             <IconButton color="inherit" aria-label="open filters" onClick={handleFiltersToggle} sx={{ display: { sm: "none" } }}>
               <SearchIcon />

@@ -388,7 +388,7 @@ import { Link } from "react-router-dom";
 
 import ShoppingList from "../components/profile/ShoppingList";
 import CookingAchievements from "../components/profile/CookingAchievements";
-import FavoritesRecipes from "../components/profile/FavoritesRecipes";
+import FavoriteRecipes from "../components/profile/FavoriteRecipes";
 import MyRecipes from "../components/profile/MyRecipes";
 import ReviewedRecipes from "../components/profile/ReviewedRecipes";
 import PreparedRecipes from "../components/profile/PreparedRecipes";
@@ -657,7 +657,7 @@ const ProfilePage = () => {
         {tabIndex === 0 && (
           <Paper style={{ padding: "1rem" }}>
             <Typography variant="body1">
-              <FavoritesRecipes />
+              <FavoriteRecipes />
             </Typography>
           </Paper>
         )}

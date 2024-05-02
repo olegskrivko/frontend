@@ -26,7 +26,7 @@ import LogoutIcon from "@mui/icons-material/Logout";
 
 import { Link } from "react-router-dom";
 
-function FavoritesRecipes() {
+function FavoriteRecipes() {
   const user = {
     name: "John Doe",
     avatar: "/path/to/avatar.jpg",
@@ -36,9 +36,9 @@ function FavoritesRecipes() {
     level: 3,
     nextLevelRecipes: 20,
     favorites: [
-      { id: 1, title: "Spaghetti Carbonara" },
-      { id: 2, title: "Chicken Tikka Masala" },
-      { id: 3, title: "Vegetable Stir-Fry" },
+      { id: 1, title: "Spaghetti Carbonara", favorited: "2024-03-20" },
+      { id: 2, title: "Chicken Tikka Masala", favorited: "2024-03-22" },
+      { id: 3, title: "Vegetable Stir-Fry", favorited: "2024-04-08" },
     ],
     ownRecipes: [
       { id: 4, title: "Chocolate Chip Cookies" },
@@ -84,7 +84,8 @@ function FavoritesRecipes() {
                 <FavoriteIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={recipe.title} />
+            {/* <ListItemText primary={recipe.title} /> */}
+            <ListItemText primary={recipe.title} secondary={`Recipe Favorited: ${recipe.favorited}`} />
             <ListItemSecondaryAction>
               <IconButton edge="end">
                 <BookmarkIcon />
@@ -97,4 +98,4 @@ function FavoritesRecipes() {
   );
 }
 
-export default FavoritesRecipes;
+export default FavoriteRecipes;
